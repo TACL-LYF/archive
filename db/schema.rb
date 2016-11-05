@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105195219) do
+ActiveRecord::Schema.define(version: 20161105200157) do
 
   create_table "camps", force: :cascade do |t|
     t.string   "name"
@@ -18,6 +18,24 @@ ActiveRecord::Schema.define(version: 20161105195219) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["year"], name: "index_camps_on_year", unique: true
+  end
+
+  create_table "families", force: :cascade do |t|
+    t.string   "primary_parent_first_name"
+    t.string   "primary_parent_last_name"
+    t.string   "primary_parent_email"
+    t.string   "primary_parent_phone_number"
+    t.string   "secondary_parent_first_name"
+    t.string   "secondary_parent_last_name"
+    t.string   "secondary_parent_email"
+    t.string   "secondary_parent_phone_number"
+    t.string   "suite"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
 end
