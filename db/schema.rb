@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20161111010520) do
 
   create_table "campers", force: :cascade do |t|
@@ -35,9 +34,6 @@ ActiveRecord::Schema.define(version: 20161111010520) do
     t.datetime "updated_at", null: false
     t.index ["year"], name: "index_camps_on_year", unique: true
   end
-=======
-ActiveRecord::Schema.define(version: 20161105200157) do
->>>>>>> ae9cf84d616d7cb422d9a2818b14910dca90ce1d
 
   create_table "families", force: :cascade do |t|
     t.string   "primary_parent_first_name"
@@ -57,7 +53,6 @@ ActiveRecord::Schema.define(version: 20161105200157) do
     t.datetime "updated_at",                    null: false
   end
 
-<<<<<<< HEAD
   create_table "registrations", force: :cascade do |t|
     t.integer  "grade"
     t.integer  "shirt_size"
@@ -79,6 +74,4 @@ ActiveRecord::Schema.define(version: 20161105200157) do
     t.index ["camper_id"], name: "index_registrations_on_camper_id"
   end
 
-=======
->>>>>>> ae9cf84d616d7cb422d9a2818b14910dca90ce1d
 end
