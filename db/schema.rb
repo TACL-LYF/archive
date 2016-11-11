@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105200157) do
+ActiveRecord::Schema.define(version: 20161111001946) do
+
+  create_table "campers", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "birthdate"
+    t.integer  "gender"
+    t.string   "email"
+    t.string   "medical_conditions_and_medication"
+    t.string   "diet_and_food_allergies"
+    t.integer  "status",                            default: 0
+    t.integer  "family_id"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.index ["family_id"], name: "index_campers_on_family_id"
+  end
 
   create_table "camps", force: :cascade do |t|
     t.string   "name"

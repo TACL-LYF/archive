@@ -1,5 +1,6 @@
 class Family < ApplicationRecord
   include RegFormHelper
+  has_many :campers, inverse_of: :family
 
   before_save { self.email = email.downcase }
   with_options :if => Proc.new { |p| p.required_for_step?(:parent) } do
@@ -18,7 +19,7 @@ class Family < ApplicationRecord
   cattr_accessor :reg_steps do %w[parent referral] end
   attr_accessor :reg_step
 
-  def parent_full_name
+  def parent_name
     "#{primary_parent_first_name} #{primary_parent_last_name}"
   end
 end
