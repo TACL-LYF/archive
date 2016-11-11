@@ -21,7 +21,11 @@ class Family < ApplicationRecord
   cattr_accessor :reg_steps do %w[parent referral] end
   attr_accessor :reg_step
 
-  def parent_name
+  def primary_parent
     "#{primary_parent_first_name} #{primary_parent_last_name}"
+  end
+
+  def secondary_parent
+    "#{secondary_parent_first_name} #{secondary_parent_last_name}"
   end
 end

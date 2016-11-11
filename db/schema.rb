@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111001946) do
+ActiveRecord::Schema.define(version: 20161111010520) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20161111001946) do
     t.datetime "birthdate"
     t.integer  "gender"
     t.string   "email"
-    t.string   "medical_conditions_and_medication"
-    t.string   "diet_and_food_allergies"
+    t.text     "medical_conditions_and_medication"
+    t.text     "diet_and_food_allergies"
     t.integer  "status",                            default: 0
     t.integer  "family_id"
     t.datetime "created_at",                                    null: false
@@ -51,6 +51,27 @@ ActiveRecord::Schema.define(version: 20161111001946) do
     t.string   "zip"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "registrations", force: :cascade do |t|
+    t.integer  "grade"
+    t.integer  "shirt_size"
+    t.boolean  "bus"
+    t.text     "additional_notes"
+    t.string   "waiver_signature"
+    t.datetime "waiver_date"
+    t.integer  "group"
+    t.string   "camp_family"
+    t.string   "cabin"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "camp_id"
+    t.integer  "camper_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
+    t.index ["camp_id"], name: "index_registrations_on_camp_id"
+    t.index ["camper_id"], name: "index_registrations_on_camper_id"
   end
 
 end
