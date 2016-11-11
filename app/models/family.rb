@@ -1,4 +1,5 @@
 class Family < ApplicationRecord
+<<<<<<< HEAD
   include RegFormHelper
   has_many :campers, inverse_of: :family
 
@@ -28,4 +29,6 @@ class Family < ApplicationRecord
   def secondary_parent
     "#{secondary_parent_first_name} #{secondary_parent_last_name}"
   end
+=======
+>>>>>>> ae9cf84d616d7cb422d9a2818b14910dca90ce1d
 end
