@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111010520) do
+ActiveRecord::Schema.define(version: 20161115235556) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -51,6 +51,24 @@ ActiveRecord::Schema.define(version: 20161111010520) do
     t.string   "zip"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "referral_methods", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "allow_details"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "referrals", force: :cascade do |t|
+    t.integer  "family_id"
+    t.string   "details"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "referral_method_id"
+    t.index ["family_id"], name: "index_referrals_on_family_id"
+    t.index ["family_id"], name: "index_referrals_on_family_id_and_referral_method_id", unique: true
+    t.index ["referral_method_id"], name: "index_referrals_on_referral_method_id"
   end
 
   create_table "registrations", force: :cascade do |t|

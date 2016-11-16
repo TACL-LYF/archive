@@ -1,7 +1,14 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# make some referral methods
+detailed = ["TACL-LYF Counselors", "TACL-LYF Campers and Families",
+  "Other Taiwanese Organizations", "Other"]
+["TACL-LYF Counselors", "TACL-LYF Campers and Families", "JTASA", "TAP",
+  "Other Taiwanese Organizations", "Chinese School", "Newspaper", "Flyers",
+  "Other"].each do |method|
+  ReferralMethod.create!(name: method, allow_details: detailed.include?(method))
+end
+referral_methods = ReferralMethod.all
+
+# make some camps
+camp = Camp.create!(year: 2016, name: "When LYF Gives You Lemons")
+prev_camp = Camp.create!(year: 2015, name: "Circle of LYF")
+Camp.create!(year: 2017, name: "To Be Determined")
