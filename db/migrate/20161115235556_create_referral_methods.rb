@@ -8,5 +8,6 @@ class CreateReferralMethods < ActiveRecord::Migration[5.0]
     end
 
     add_reference :referrals, :referral_method, foreign_key: true
+    add_index :referrals, [:family_id, :referral_method_id], unique: true
   end
 end

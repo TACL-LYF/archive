@@ -61,13 +61,13 @@ ActiveRecord::Schema.define(version: 20161115235556) do
   end
 
   create_table "referrals", force: :cascade do |t|
-    t.integer  "family_id"
     t.string   "details"
+    t.integer  "family_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "referral_method_id"
+    t.index ["family_id", "referral_method_id"], name: "index_referrals_on_family_id_and_referral_method_id", unique: true
     t.index ["family_id"], name: "index_referrals_on_family_id"
-    t.index ["family_id"], name: "index_referrals_on_family_id_and_referral_method_id", unique: true
     t.index ["referral_method_id"], name: "index_referrals_on_referral_method_id"
   end
 
