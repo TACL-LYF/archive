@@ -2,7 +2,7 @@ class Camper < ApplicationRecord
   include RegFormHelper
   belongs_to :family, inverse_of: :campers
   has_many :registrations, inverse_of: :camper
-
+  accepts_nested_attributes_for :registrations
   before_save { self.email = email.downcase if !email.nil? }
   with_options :if => Proc.new { |c| c.required_for_step?(:camper) } do
     validates :first_name, :last_name, presence: true, length: { maximum: 50 }

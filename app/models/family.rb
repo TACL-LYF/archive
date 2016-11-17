@@ -1,6 +1,14 @@
 class Family < ApplicationRecord
   include RegFormHelper
   has_many :campers, inverse_of: :family
+  has_many :referrals, inverse_of: :family
+  has_many :referral_methods, through: :referrals
+  accepts_nested_attributes_for :referrals, allow_destroy: true
+
+  cattr_accessor :reg_steps do %w[parent referral] end
+  attr_accessor :reg_step, :first_time
+  validates :first_time, presence: true,
+            :if => Proc.new { |c| c.required_for_step?(:parent) }
 
   before_save { self.primary_parent_email = primary_parent_email.downcase }
   before_save { self.secondary_parent_email = secondary_parent_email.downcase if !secondary_parent_email.nil?}
@@ -17,9 +25,6 @@ class Family < ApplicationRecord
     validates :state, length: { is: 2 }
     validates :zip, length: { minimum: 5 }
   end
-
-  cattr_accessor :reg_steps do %w[parent referral] end
-  attr_accessor :reg_step
 
   def primary_parent
     "#{primary_parent_first_name} #{primary_parent_last_name}"

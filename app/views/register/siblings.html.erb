@@ -1,0 +1,38 @@
+<% provide(:title, 'LYF Camp Registration 2017 | Register a Sibling') %>
+<div class="row">
+  <div class="col-md-12">
+    <h1>LYF Camp 2017 Registration <small>Register a Sibling</small></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <p>Would you like to register a sibling? If registered at the same time, a discount of $40 per sibling is applied.<br>
+    Please note that siblings MUST have the same parent contact information.</p>
+    <p>You are currently registering the following camper(s):</p>
+    <ul>
+      <% @regs.each do |r| %>
+        <li>
+          <b><%= r %></b>
+        </li>
+      <% end %>
+    </ul>
+    <p>What would you like to do?</p>
+    <%= form_for :wizard, url: wizard_path, method: :put do |f| %>
+      <div class="radio">
+        <%= f.label :sibling_new do %>
+          <%= f.radio_button :sibling, "new" %> Add registration for a sibling
+        <% end %>
+      </div>
+      <div class="radio">
+        <%= f.label :sibling_none do %>
+          <%= f.radio_button :sibling, "none" %> Continue without registering any additional siblings
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+          <%= f.submit "Continue", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
