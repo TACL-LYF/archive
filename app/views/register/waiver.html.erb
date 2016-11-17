@@ -1,0 +1,42 @@
+<% provide(:title, 'LYF Camp Registration 2017 | Additional Notes &amp; Waiver') %>
+<div class="row">
+  <div class="col-md-12">
+    <h1>LYF Camp 2017 Registration <small>Additional Notes &amp; Waiver</small></h1>
+  </div>
+</div>
+<%= form_for @reg, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= f.label :additional_notes, "Additional Notes (Optional)" %>
+      <p class="help-block">Miscellaneous items such as: pickup and drop-off times if your child will not be present for all of camp (arriving late/leaving early), group requests, other concerns, etc.<br><b>Please note that group requests are not guaranteed.</b></p>
+      <%= f.text_area :additional_notes, rows: 4, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Waiver</h2>
+      <p><small>I, the undersigned, hereby grant permission for the above-named participant to attend the Taiwanese American Citizens League - Leading Youth Forward Camp and to fully participate in the activities thereof. I consent to have pictures and/or video taken during TACL-LYF Camp of the above-named participant to be printed or posted on the internet for advertising, distribution, or other camp-related purposes. In order that the above-named participant may receive necessary medical treatment in the event of injury or illness, I understand that an effort will be made to contact me immediately and hereby authorize any adult person, being an officer, staff member or volunteer of the TACL-LYF Camp, to treat or diagnose the above-named participant. As the parent or legal guardian of the above named participant, I am responsible for the health care decision of such participant and am authorized to consent to the services to be rendered. I agree to pay for the care of the above-named participant and represent that my consent and agreement are legal and that no consent from any other person is required by law. I hereby release and agree to hold harmless TACL, the TACL-LYF Camp, Walker Creek Ranch, and each of its officers, directors, employees, staff members, and volunteers from any and all liability arising out of personal injury, property damage or loss, or wrongful death resulting from: (i) the exercise of the authority granted herein, (ii) the above-named participant’s participation in the TACL-LYF Camp, and (iii) the negligence, both persuasive and active, or other acts, by any of the releasees. I hereby waive, discharge, and relinquish any action or causes of action which may hereafter arise out of such liability, whether known or unknown. I also consent to the immediate expulsion of the above-named participant from the TACL-LYF Camp for unauthorized excursions outside of the Walker Creek Ranch campground.</small></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <%= f.label :waiver_signature, "Guardian Signature" %>
+      <p class="help-block">Enter your full name to accept the above waiver.</p>
+      <%= f.text_field :waiver_signature, class: 'form-control' %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :waiver_date, "Date" %>
+      <p class="help-block">Enter today's date to accept the above waiver.</p>
+      <%= f.date_select :waiver_date, { order: [:day, :month, :year], prompt: { day: 'Day', month: 'Month', year: 'Year' }}, { class: 'date form-control' } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
+    </div>
+    <div class="col-md-2 col-md-offset-8">
+      <%= f.submit "Continue", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

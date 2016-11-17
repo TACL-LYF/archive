@@ -1,0 +1,103 @@
+<% provide(:title, 'LYF Camp Registration 2017 | Parent Information') %>
+<div class="row">
+  <div class="col-md-12">
+    <h1>LYF Camp 2017 Registration <small>Parent Information</small></h1>
+  </div>
+</div>
+<%= form_for @family, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Primary Parent Contact Information</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= f.label :primary_parent_first_name, "First Name" %>
+      <%= f.text_field :primary_parent_first_name, class: 'form-control' %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :primary_parent_last_name, "Last Name" %>
+      <%= f.text_field :primary_parent_last_name, class: 'form-control' %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :primary_parent_email, "Email" %>
+      <%= f.email_field :primary_parent_email, class: 'form-control' %>
+      <p class="help-block">This will be our primary means of contact. Please double check this for accuracy!</p>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :primary_parent_phone_number, "Phone Number" %>
+      <%= f.telephone_field :primary_parent_phone_number, placeholder: '(###) ###-####', class: 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Secondary Parent Contact Information <small>(Optional)</small></h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= f.label :secondary_parent_first_name, "First Name" %>
+      <%= f.text_field :secondary_parent_first_name, class: 'form-control' %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :secondary_parent_last_name, "Last Name" %>
+      <%= f.text_field :secondary_parent_last_name, class: 'form-control' %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :secondary_parent_email, "Email" %>
+      <%= f.email_field :secondary_parent_email, class: 'form-control' %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :secondary_parent_phone_number, "Phone Number" %>
+      <%= f.telephone_field :secondary_parent_phone_number, placeholder: '(###) ###-####', class: 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Address</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= f.label :suite, "Apt/Suite" %>
+      <%= f.text_field :suite, class: 'form-control' %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :street, "Street Address" %>
+      <%= f.text_field :street, class: 'form-control' %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :city, "City" %>
+      <%= f.text_field :city, class: 'form-control' %>
+    </div>
+    <div class="col-md-1 form-group">
+      <%= f.label :state, "State" %>
+      <%= f.text_field :state, class: 'form-control' %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :zip, "Zip" %>
+      <%= f.text_field :zip, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= f.label :first_time, "Is this the first time your family is registering a camper at LYF Camp?" %>
+      <div class="radio">
+        <%= f.label "first_time_true" do %>
+          <%= f.radio_button :first_time, true %> Yes
+        <% end %>
+      </div>
+      <div class="radio">
+        <%= f.label "first_time_false" do %>
+          <%= f.radio_button :first_time, false %> No
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-md-offset-10">
+      <%= f.submit "Continue", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,66 @@
+<% provide(:title, 'LYF Camp Registration 2017 | Camper Information') %>
+<div class="row">
+  <div class="col-md-12">
+    <h1>LYF Camp 2017 Registration <small>Camper Information</small></h1>
+  </div>
+</div>
+<%= form_for @camper, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="row">
+    <div class="col-md-4 form-group">
+      <%= f.label :first_name, "Camper First Name" %>
+      <%= f.text_field :first_name, class: 'form-control' %>
+    </div>
+    <div class="col-md-4 form-group">
+      <%= f.label :last_name, "Camper Last Name" %>
+      <%= f.text_field :last_name, class: 'form-control' %>
+    </div>
+    <div class="col-md-4 form-group">
+      <%= f.label :email, "Camper Email (Optional)" %>
+      <%= f.email_field :email, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 form-group">
+      <%= f.label :birthdate, 'Camper Birthdate' %>
+      <div class="row">
+        <div class="col-md-12">
+          <%= f.date_select :birthdate, { start_year: Date.today.year - 20, end_year: Date.today.year - 5, order: [:day, :month, :year], prompt: { day: 'Day', month: 'Month', year: 'Year' }}, { class: 'date form-control' } %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 form-group">
+      <%= f.label :gender, "Camper Gender" %>
+      <%= collection_radio_buttons(:camper, :gender, Camper.genders, :first, :first) do |b| %>
+        <div class="radio">
+          <%= b.label { b.radio_button + b.text.titlecase } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <%= f.label :medical_conditions_and_medication, "Medical Conditions and Medication" %>
+      <p class="help-block">
+        List any pre-existing medical conditions, such as asthma, learning disabilities, non-food allergies (bee stings), etc that your child may have. If your child takes any regular medication, please provide medication name, dosage and frequency instructions, along with contraindications. If none, please write "N/A"
+      </p>
+      <%= f.text_area(:medical_conditions_and_medication, rows: 4, class: 'form-control') %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= f.label :diet_and_food_allergies, "Diet Considerations and Food Allergies" %>
+      <p class="help-block">
+        Please indicate any special dietary restrictions and or food allergies your child may have (please indicate the severity as well). Example: No eggs or dairy. Partial/full allergies: nuts, seafood, etc. If none, please write "N/A"
+      </p>
+      <br>
+      <%= f.text_area(:diet_and_food_allergies, rows: 4, class: 'form-control') %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
+    </div>
+    <div class="col-md-2 col-md-offset-8">
+      <%= f.submit "Continue", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

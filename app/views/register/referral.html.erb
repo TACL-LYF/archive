@@ -1,0 +1,42 @@
+<% provide(:title, 'LYF Camp Registration 2017 | Referral Information') %>
+<div class="row">
+  <div class="col-md-12">
+    <h1>LYF Camp 2017 Registration <small>Referral Information</small></h1>
+  </div>
+</div>
+<%= form_for @family, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>How did you hear about us?</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p>Please check all that apply.</p>
+      <%= f.fields_for :referrals, @referrals, include_id: false do |rf| %>
+        <div class="checkbox">
+          <%= rf.label :_destroy do %>
+            <%= rf.check_box :_destroy, {:checked => @rm_ids.include?(rf.object.referral_method_id)}, '0', '1' %>
+            <%= rf.hidden_field :referral_method_id %>
+            <%= rf.object.referral_method.name %>
+          <% end %>
+          <% if rf.object.referral_method.allow_details %>
+            <div class="form-group">
+              <%= rf.label :details, 'Please specify: ' %>
+              <%= rf.text_field :details, class: "auto-width form-control" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
+    </div>
+    <div class="col-md-2 col-md-offset-8">
+      <%= f.submit "Continue", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
