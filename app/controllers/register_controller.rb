@@ -76,7 +76,8 @@ class RegisterController < ApplicationController
         redirect_to wizard_path
       end
     when "details"
-      session[:reg] = reg_params(step).to_h
+      session[:reg] = {} if session[:family].nil?
+      session[:reg] = session[:reg].merge(reg_params(step).to_h)
       @reg = build_reg_from_session
       if @reg.valid?
         redirect_to wizard_path(next_step)
@@ -172,7 +173,7 @@ class RegisterController < ApplicationController
     def reg_params(step)
       permitted_attrs = case step
         when "details"
-          [:grade, :shirt_size, :bus]
+          [:grade, :shirt_size, :bus].push(*Registration.stored_attributes[:additional_shirts])
         when "waiver"
           [:additional_notes, :waiver_signature, :waiver_date]
         end

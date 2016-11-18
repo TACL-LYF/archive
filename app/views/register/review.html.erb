@@ -23,7 +23,7 @@
     <p><b>Email (optional):</b><br>
     <%= @camper.email %></p>
   </div>
-  <div class="col-md-1">
+  <div class="col-md-2">
     <p><b>Gender:</b><br>
     <%= @camper.gender %></p>
   </div>
@@ -35,9 +35,18 @@
     <p><b>Grade:</b><br>
     <%= @reg.grade.ordinalize %></p>
   </div>
-  <div class="col-md-1">
+</div>
+<div class="row">
+  <div class="col-md-2">
     <p><b>Shirt Size:</b><br>
-    <%= @reg.shirt_size %></p>
+    <%= @reg.shirt_size.titlecase %></p>
+  </div>
+  <div class="col-md-10">
+    <p><b>Additional Shirts:</b><br>
+      <% @reg.additional_shirts.each do |size, quantity| %>
+        <%= "#{size.titlecase} (#{quantity})<br>".html_safe unless quantity == "" %>
+      <% end %>
+    </p>
   </div>
 </div>
 <div class="row">

@@ -21,15 +21,24 @@
       <p class="help-block">One t-shirt is included in the camp fee. All fits are based on American Apparel Unisex sizes. Please refer to the size chart <a href="#">here</a>.</p>
       <div class="row">
         <div class="col-md-4">
-          <%= f.select(:shirt_size, Registration.shirt_sizes.keys.to_a.map {|s| [s.titlecase, s]}, {include_blank: true}, {class: "form-control"}) %>
+          <%= f.select "shirt_size", Registration.stored_attributes[:additional_shirts].map {|s| [s.to_s.titlecase, s]}, {include_blank: true}, {class: "form-control"} %>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <p><b>TODO: additional shirt stuff</b></p>
+      <p><b>Additional Shirts</b></p>
+      <p class="help-block">If you would like to purchase extra shirts, please enter the quantities for each size below. <b>Additional shirts are $15 each.</b></p>
     </div>
+  </div>
+  <div class="row">
+    <% Registration.stored_attributes[:additional_shirts].each do |size| %>
+      <div class="col-md-2">
+        <%= f.label size, size.to_s.titlecase %>
+        <%= f.number_field size, min: 1, class: "form-control" %>
+      </div>
+    <% end %>
   </div>
   <div class="row">
     <div class="col-md-12">
