@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115235556) do
+ActiveRecord::Schema.define(version: 20161118004457) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -85,8 +85,9 @@ ActiveRecord::Schema.define(version: 20161115235556) do
     t.string   "state"
     t.integer  "camp_id"
     t.integer  "camper_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.text     "additional_shirts"
     t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
     t.index ["camp_id"], name: "index_registrations_on_camp_id"
     t.index ["camper_id"], name: "index_registrations_on_camper_id"
