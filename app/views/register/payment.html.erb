@@ -6,8 +6,51 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <p>to be completed</p>
-    <%= form_for @family, url: wizard_path, method: :put do |f| %>
+    <h3>Summary</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-condensed">
+      <% @breakdown[:campers].each do |camper| %>
+        <tr>
+          <th colspan=2>Registration Fee - <%= camper[:name] %></th>
+          <th class="text-right"><%= number_to_currency @breakdown[:registration_fee] %></th>
+        </tr>
+        <% if @breakdown.key?(:discount) %>
+        <tr>
+          <td colspan=2><%= "Discount from code #{@breakdown[:discount][:code]} (#{@breakdown[:discount][:percent]}%)" %></td>
+          <td class="text-right">- <%= number_to_currency @breakdown[:discount][:amount] %></td>
+        </tr>
+        <% elsif camper.key?(:sibling_discount) %>
+        <tr>
+          <td colspan=2>Sibling Discount</td>
+          <td class="text-right">- <%= number_to_currency camper[:sibling_discount] %></td>
+        </tr>
+        <% end %>
+        <% if camper[:extra_shirts_total] > 0 %>
+        <tr>
+          <td colspan=2><%= "Extra Shirts (#{number_to_currency @breakdown[:shirt_price]} each) - #{camper[:extra_shirts]}" %></td>
+          <td class="text-right"><%= number_to_currency camper[:extra_shirts_total] %></td>
+        </tr>
+        <% end %>
+      <% end %>
+      <% if @breakdown[:additional_donation] > 0 %>
+        <tr>
+          <th colspan=2>Additional Donation</th>
+          <th class="text-right"><%= number_to_currency @breakdown[:additional_donation] %></th>
+        </tr>
+      <% end %>
+      <tr>
+        <th colspan=2 class="text-right">Total:</th>
+        <th class="text-right"><%= number_to_currency @breakdown[:total] %></th>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= form_for @payment, url: wizard_path, method: :put do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="row">
         <div class="col-md-2">

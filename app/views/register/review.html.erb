@@ -43,9 +43,7 @@
   </div>
   <div class="col-md-10">
     <p><b>Additional Shirts:</b><br>
-      <% @reg.additional_shirts.each do |size, quantity| %>
-        <%= "#{size.titlecase} (#{quantity})<br>".html_safe unless quantity == "" %>
-      <% end %>
+      <%= @reg.list_additional_shirts %>
     </p>
   </div>
 </div>
