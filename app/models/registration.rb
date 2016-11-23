@@ -23,7 +23,8 @@ class Registration < ApplicationRecord
   store :additional_shirts, accessors: SHIRT_SIZES
 
   def total_additional_shirts
-    additional_shirts.values.map(&:to_i).reduce(:+)
+    num_shirts = additional_shirts.values.map(&:to_i).reduce(:+)
+    return num_shirts || 0
   end
 
   def list_additional_shirts

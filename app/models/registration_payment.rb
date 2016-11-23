@@ -15,7 +15,7 @@ class RegistrationPayment < ApplicationRecord
     fee = camp.registration_fee
     sibling_discount = camp.sibling_discount
     shirt_price = camp.shirt_price
-    discount = self.registration_discount
+    discount = RegistrationDiscount.get(self.discount_code)
 
     # keep a running total for this payment as we loop through registrations
     running_total = self.additional_donation || 0
@@ -27,12 +27,12 @@ class RegistrationPayment < ApplicationRecord
     }
 
     unless discount.nil?
-      d = {
+      breakdown[:discount] = {
         code: discount.code,
         percent: discount.discount_percent,
-        amount: fee * (discount.discount_percent/100)
+        amount: fee * (discount.discount_percent.to_f/100)
       }
-      breakdown[:discount] = d
+      set_discount(discount)
     end
 
     campers = []
@@ -59,6 +59,10 @@ class RegistrationPayment < ApplicationRecord
   end
 
   private
+    def set_discount(discount)
+      self.registration_discount = discount
+    end
+
     # custom validation method to ensure all associated registrations are for
     # the same camp year
     def same_camp_registrations
