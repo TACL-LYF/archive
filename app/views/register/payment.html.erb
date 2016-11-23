@@ -35,7 +35,7 @@
         </tr>
         <% end %>
       <% end %>
-      <% if @breakdown[:additional_donation] > 0 %>
+      <% if @breakdown[:additional_donation] %>
         <tr>
           <th colspan=2>Additional Donation</th>
           <th class="text-right"><%= number_to_currency @breakdown[:additional_donation] %></th>
@@ -52,6 +52,15 @@
   <div class="col-md-12">
     <%= form_for @payment, url: wizard_path, method: :put do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
+      <% if @payment.discount_code.blank? %>
+        <div class="row">
+          <div class="col-md-12">
+            <%= f.label :discount_code, "Financial Aid Discount Code:" %>
+            <%= f.text_field :discount_code, class: "auto-width form-control" %>
+            <%= f.submit "Apply Code", name: :apply_code, class: "auto-width btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
       <div class="row">
         <div class="col-md-2">
           <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>

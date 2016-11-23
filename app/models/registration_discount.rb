@@ -3,6 +3,7 @@ class RegistrationDiscount < ApplicationRecord
   belongs_to :registration_payment, inverse_of: :registration_discount, optional: true
 
   before_save { self.code = code.upcase }
+  before_save :toggle_redeem_if_payment_exists
 
   validates :code, :discount_percent, presence: true
   validates :code, uniqueness: { scope: :camp_id }
@@ -15,8 +16,18 @@ class RegistrationDiscount < ApplicationRecord
     where(code: normalize_code(code), redeemed: false).take
   end
 
+  protected
+    def toggle_redeem_if_payment_exists
+      if self.registration_payment
+        self.redeemed = true
+      else
+        self.redeemed = false
+      end
+    end
+
   private
     def self.normalize_code(code)
+      code ||= ""
       code.gsub(/\s+/, '').upcase
     end
 end
