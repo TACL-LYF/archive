@@ -17,11 +17,11 @@ jQuery(function ($) {
     } else {
       token = response.id;
       $("#wizard_stripe_card_token").val(token);
-      $("[data-stripe=number]").remove();
-      $("[data-stripe=cvc]").remove();
-      $("[data-stripe=exp_year]").remove();
-      $("[data-stripe=exp_month]").remove();
-      $("[data-stripe=address_zip]").remove();
+      $("[data-stripe=number]").val('');
+      $("[data-stripe=cvc]").val('');
+      $("[data-stripe=exp_year]").val('');
+      $("[data-stripe=exp_month]").val('');
+      $("[data-stripe=address_zip]").val('');
       $form.get(0).submit();
     }
     return false;
