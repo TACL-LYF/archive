@@ -1,9 +1,15 @@
 {
   "name": "archives",
   "scripts": {
-    "postdeploy": "rails db:schema:load db:seed"
+    "postdeploy": "rails db:schema:load; rails db:seed"
   },
   "env": {
+    "STRIPE_PUBLISHABLE_KEY": {
+      "required": true
+    },
+    "STRIPE_SECRET_KEY" : {
+      "required": true
+    }
   },
   "formation": {
   },
