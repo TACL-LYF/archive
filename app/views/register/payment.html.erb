@@ -48,27 +48,57 @@
     </table>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <%= form_for @payment, url: wizard_path, method: :put do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      <% if @payment.discount_code.blank? %>
-        <div class="row">
-          <div class="col-md-12">
-            <%= f.label :discount_code, "Financial Aid Discount Code:" %>
-            <%= f.text_field :discount_code, class: "auto-width form-control" %>
-            <%= f.submit "Apply Code", name: :apply_code, class: "auto-width btn btn-primary" %>
-          </div>
-        </div>
-      <% end %>
+<%= form_for @payment, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <% if @payment.discount_code.blank? %>
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <%= f.label :discount_code, "Financial Aid Discount Code:" %>
+        <%= f.text_field :discount_code, class: "auto-width form-control" %>
+        <%= f.submit "Apply Code", name: :apply_code, class: "auto-width btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<%= form_for :wizard, url: wizard_path, html: {id: "registration_form"}, method: :put do |f| %>
+  <%= f.hidden_field :stripe_card_token %>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Payment Details</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= label_tag :card_number, "Credit Card Number " %>
+      <%= text_field_tag :card_number, nil, name: nil, class: "form-control", "data-stripe" => "number" %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= label_tag :card_exp_month, "Card Expiration" %>
       <div class="row">
-        <div class="col-md-2">
-          <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
-        </div>
-        <div class="col-md-4 col-md-offset-6">
-          <%= f.submit "Submit Payment & Complete Registration", class: "btn btn-primary" %>
+        <div class="col-md-12">
+          <%= select_month nil, {use_two_digit_numbers: true, prompt: "MM"}, {name: nil, id: "card_exp_month", class: "date form-control", "data-stripe" => "exp_month"} %>
+          <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15, prompt: "YYYY"}, {name: nil, id: "card_exp_year", class: "date form-control", "data-stripe" => "exp_year"} %>
         </div>
       </div>
-    <% end %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= label_tag :card_verificaion, "CVC" %>
+      <%= text_field_tag :card_verificaion, nil, name: nil, class: "form-control", "data-stripe" => "cvc" %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= label_tag :card_billing_zip, "Billing Zip" %>
+      <%= text_field_tag :card_billing_zip, nil, name: nil, class: "form-control", "data-stripe" => "address_zip" %>
+    </div>
+    <div class="col-md-3 stripe_error">
+       <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
+    </div>
+    <div class="col-md-4 col-md-offset-6">
+      <%= f.submit "Submit Payment & Complete Registration", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

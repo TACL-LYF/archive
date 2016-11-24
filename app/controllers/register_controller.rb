@@ -40,7 +40,8 @@ class RegisterController < ApplicationController
       @payment.valid? if flash[:form_has_errors]
     when "payment"
       @payment = build_payment
-      @breakdown = @payment.get_payment_breakdown
+      @payment.calculate_total
+      @breakdown = @payment.breakdown
       @payment.valid? if flash[:form_has_errors]
     end
     render_wizard
@@ -150,9 +151,9 @@ class RegisterController < ApplicationController
         @family = Family.new(session[:family])
         city = @family.city
         state = @family.state
+        stripe_token = stripe_params(step)[:stripe_card_token]
         @family.transaction do
-          # hardcode stripe token for now
-          @payment = RegistrationPayment.new(session[:payment].merge(stripe_token: "TEST"))
+          @payment = RegistrationPayment.new(session[:payment].merge(stripe_token: stripe_token))
           campers = session[:campers]
           campers.each_with_index do |camper, i|
             reg_fields = session[:regs][i].merge(camp: Camp.first, city: city,
@@ -160,12 +161,17 @@ class RegisterController < ApplicationController
             c = @family.campers.build(camper)
             r = c.registrations.build(reg_fields)
             @payment.registrations << r
-            c.save!
           end
-          @payment.get_payment_breakdown
-          if @family.save! && @payment.save!
-            clear_session
-            redirect_to wizard_path(:confirmation)
+          if @family.save!
+            @payment.calculate_total
+            @payment.process_payment
+            if @payment.save!
+              clear_session
+              redirect_to wizard_path(:confirmation)
+            else
+              flash[:danger] = "Something went wrong."
+              redirect_to wizard_path
+            end
           else
             flash[:danger] = "Something went wrong."
             redirect_to wizard_path
@@ -215,6 +221,14 @@ class RegisterController < ApplicationController
           [:additional_donation, :donation_amount]
         end
       params.require(:registration_payment).permit(permitted_attrs).merge(reg_step: step)
+    end
+
+    def stripe_params(step)
+      permitted_attrs = case step
+        when "payment"
+          [:stripe_card_token]
+        end
+      params.require(:wizard).permit(permitted_attrs).merge(reg_step: step)
     end
 
     def initialize_referrals(family)

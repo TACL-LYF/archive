@@ -90,7 +90,8 @@ ActiveRecord::Schema.define(version: 20161119035727) do
     t.decimal  "total",               precision: 10, scale: 2
     t.decimal  "additional_donation", precision: 10, scale: 2
     t.string   "discount_code"
-    t.string   "stripe_token"
+    t.string   "stripe_charge_id"
+    t.text     "breakdown"
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
   end

@@ -4,7 +4,8 @@ class CreateRegistrationPayments < ActiveRecord::Migration[5.0]
       t.decimal :total, precision: 10, scale: 2
       t.decimal :additional_donation, precision: 10, scale: 2
       t.string :discount_code
-      t.string :stripe_token
+      t.string :stripe_charge_id
+      t.text :breakdown
 
       t.timestamps
     end
