@@ -11,44 +11,6 @@ class RegisterController < ApplicationController
       clear_session
     when "parent"
       @family = Family.new(session[:family])
-
-      # famparams = @family
-      # userid = {'USERID' => "015TAIWA7538"}
-      # addrid = {'ID' => "0"}
-      # builder = Builder::XmlMarkup.new do |xml|
-      #   userid.each do | name, choice |
-      #     xml.AddressValidateRequest( name, :USERID => choice ) {
-      #       xml.IncludeOptionalElements "true"
-      #       xml.ReturnCarrierRoute "true"
-      #       addrid.each do | name, choice |
-      #       xml.Address( name, :ID => choice ) {
-      #         xml.FirmName
-      #         xml.Address1 famparams[:suite]
-      #         xml.Address2 famparams[:street]
-      #         xml.City famparams[:city]
-      #         xml.State famparams[:state]
-      #         xml.Zip5 famparams[:zip]
-      #         xml.Zip4
-      #       }
-      #       end
-      #     }
-      #   end
-      # end
-      # url = URI.parse("http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=")
-      # request = Net::HTTP::Post.new(url.path)
-      # request.body = builder
-      # response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
-      # if response
-      #   puts 'hi'
-      #   puts response
-      #   @family.valid? if flash[:form_has_errors]
-      # end
-
-      # xml.instruct! :xml, :version => "1.1", :encoding => "UTF-8"
-
-      # addr = {:Address1 => famparams[:suite], :Address2 => famparams[:street], => :City famparams[:city], :State => famparams[:state], :Zip5 => famparams[:zip]}
-      # addr.to_xml(:root => %q[AddressValidateRequest USERID='015TAIWA7538']) include: {%q[Address ID='0']}
-
       @family.valid? if flash[:form_has_errors]
     when "referral"
       if session[:family]["first_time"] == "true"
@@ -86,6 +48,7 @@ class RegisterController < ApplicationController
   end
 
   require 'builder'
+  require 'nokogiri'
   require 'net/http'
   require 'uri'
   def update
@@ -120,19 +83,26 @@ class RegisterController < ApplicationController
       end
       url = URI.parse("http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=")
       request = Net::HTTP::Post.new(url.path)
-      request.body = builder.to_xml(:skip_instruct => true)
-      puts 'INPUT'
+      request.body = builder.doc.root.to_xml
+      # view input in terminal
+      puts 'BEGIN INPUT'
       puts request.body
+      puts 'END INPUT'
       response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
       if response
-        puts 'OUTPUT'
+        # view output in terminal
+        puts 'BEGIN OUTPUT'
         puts response.body
+        puts 'END OUTPUT'
         if @family.valid?
           redirect_to wizard_path(next_step)
         else
           flash[:form_has_errors] = true
           redirect_to wizard_path
         end
+      else
+        flash[:form_has_errors] = true
+        redirect_to wizard_path
       end
 
       # if @family.valid?
