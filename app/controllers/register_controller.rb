@@ -89,7 +89,9 @@ class RegisterController < ApplicationController
       puts request.body
       puts 'END INPUT'
       response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
-      if response
+      response_hash = Hash.from_xml(response.body).symbolize_keys
+      puts response_hash
+      if response_hash[:error] != nil
         # view output in terminal
         puts 'BEGIN OUTPUT'
         puts response.body
@@ -101,8 +103,7 @@ class RegisterController < ApplicationController
           redirect_to wizard_path
         end
       else
-        flash[:form_has_errors] = true
-        redirect_to wizard_path
+        redirect_to :back, :flash => { :error => "Please review the address!" }
       end
 
       # if @family.valid?
