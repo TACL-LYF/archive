@@ -99,13 +99,13 @@ class RegisterController < ApplicationController
       famparams = @family
       userid = {'USERID' => "015TAIWA7538"}
       addrid = {'ID' => "0"}
-      xml = Builder::XmlMarkup.new
+      builder = Nokogiri::XML::Builder.new do |xml|
         userid.each do | name, choice |
-          xml.AddressValidateRequest( name, :USERID => choice ) {
+          xml.AddressValidateRequest( :USERID => choice ) {
             xml.IncludeOptionalElements "true"
             xml.ReturnCarrierRoute "true"
             addrid.each do | name, choice |
-            xml.Address( name, :ID => choice ) {
+            xml.Address( :ID => choice ) {
               xml.FirmName
               xml.Address1 famparams[:suite]
               xml.Address2 famparams[:street]
@@ -118,11 +118,11 @@ class RegisterController < ApplicationController
           }
         end
       end
-      puts 'INPUT'
-      puts xml.to_s
       url = URI.parse("http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=")
       request = Net::HTTP::Post.new(url.path)
-      request.body = xml
+      request.body = builder.to_xml(:skip_instruct => true)
+      puts 'INPUT'
+      puts request.body
       response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
       if response
         puts 'OUTPUT'
