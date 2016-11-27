@@ -5,12 +5,40 @@ class RegisterController < ApplicationController
     ["siblings"] | RegistrationPayment.reg_steps | ["confirmation"]
   steps *all_steps
 
+  require 'builder'
   def show
     case step
     when "begin"
       clear_session
     when "parent"
       @family = Family.new(session[:family])
+      famparams = @family
+      userid = {'USERID' => "015TAIWA7538"}
+      addrid = {'ID' => "0"}
+      builder = Builder::XmlMarkup.new do |xml|
+        userid.each do | name, choice |
+          xml.AddressValidateRequest( name, :USERID => choice) {
+            xml.IncludeOptionalElements "true"
+            xml.ReturnCarrierRoute "true"
+            addrid.each do | name, choice |
+            xml.Address( name, :ID => choice) {
+              xml.FirmName
+              xml.Address1 famparams[:suite]
+              xml.Address2 famparams[:street]
+              xml.City famparams[:city]
+              xml.State famparams[:state]
+              xml.Zip5 famparams[:zip]
+              xml.Zip4
+            }
+            end
+          }
+        end
+      end
+      http = Net::HTTP.new("http://production.shippingapis.com/ShippingAPI.dll?API=Verify&XML=")
+      # xml.instruct! :xml, :version => "1.1", :encoding => "UTF-8"
+
+      # addr = {:Address1 => famparams[:suite], :Address2 => famparams[:street], => :City famparams[:city], :State => famparams[:state], :Zip5 => famparams[:zip]}
+      # addr.to_xml(:root => %q[AddressValidateRequest USERID='015TAIWA7538']) include: {%q[Address ID='0']}
       @family.valid? if flash[:form_has_errors]
     when "referral"
       if session[:family]["first_time"] == "true"

@@ -38,6 +38,26 @@ ActiveRecord::Schema.define(version: 20161119035727) do
     t.index ["year"], name: "index_camps_on_year", unique: true
   end
 
+  create_table "fake_registration", force: :cascade do |t|
+    t.string   "addr1"
+    t.string   "addr2"
+    t.string   "city"
+    t.string   "state"
+    t.integer  "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "fakes", force: :cascade do |t|
+    t.string   "addr1"
+    t.string   "addr2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "families", force: :cascade do |t|
     t.string   "primary_parent_first_name"
     t.string   "primary_parent_last_name"
