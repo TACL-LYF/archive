@@ -1,57 +1,58 @@
 <% provide(:title, 'LYF Camp Registration 2017 | Donate to LYF') %>
 <div class="row">
   <div class="col-md-12">
-    <h1>LYF Camp 2017 Registration <small>Thank you for your support!</small></h1>
+    <h2>Add A Donation</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <p>LYF Camp has been dedicated to raising up the next generation to be community leaders. In just four short years we have doubled the amount of workshops, tripled our number of clinics, and grown from 65 to 140 campers, all while extending our camp by two days. Thanks to your support, we are able to say that each new year is the biggest in LYF Camp history. But we’re not done growing yet! We are extremely excited for what’s in store for this year, and what we have planned for the future.</p>
-    <p>Please select donation amount below.</p>
-    <p><b>I would like to make a donation. I understand that your organization is non-profit and that my contribution is tax deductible.</b></p>
-    <%= form_for @payment, url: wizard_path, method: :put do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      <div class="radio">
-        <%= f.label :additional_donation do %>
-          <%= f.radio_button :additional_donation, 25 %> $25
-        <% end %>
-      </div>
-      <div class="radio">
-        <%= f.label :additional_donation do %>
-          <%= f.radio_button :additional_donation, 50 %> $50
-        <% end %>
-      </div>
-      <div class="radio">
-        <%= f.label :additional_donation do %>
-          <%= f.radio_button :additional_donation, 100 %> $100
-        <% end %>
-      </div>
-      <div class="radio">
-        <%= f.label :additional_donation do %>
-          <%= f.radio_button :additional_donation, 200 %> $200
-        <% end %>
-      </div>
-      <div class="radio">
-        <%= f.label :additional_donation do %>
-          <%= f.radio_button :additional_donation, 500 %> $500
-        <% end %>
-      </div>
-      <div class="radio">
-        <%= f.label :additional_donation do %>
-          <%= f.radio_button :additional_donation, 1000 %> $1,000
-        <% end %>
-      </div>
-      <div class="radio">
-        <%= f.label :additional_donation do %>
-          <%= f.radio_button :additional_donation, "other" %> Other: $
-          <%= f.number_field :donation_amount, class: "auto-width form-control" %>
-        <% end %>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-md-offset-10">
-          <%= f.submit "Continue", class: "btn btn-primary" %>
+<%= form_for @payment, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="row space-above-wide">
+    <div class="col-md-12">
+      <p>LYF Camp has been dedicated to raising up the next generation to be community leaders. In just four short years we have doubled the amount of workshops, tripled our number of clinics, and grown from 65 to 140 campers, all while extending our camp by two days. Thanks to your support, we are able to say that each new year is the biggest in LYF Camp history. But we’re not done growing yet! We are extremely excited for what’s in store for this year, and what we have planned for the future.</p>
+      <p>If you would like to make an (optional) additional donation to LYF, please select a donation amount below. This amount will be added to the registration fees and you will be charged the total at the end of this form.</p>
+      <p class="space-above-wide"><b>I would like to make a donation. I understand that your organization is non-profit and that my contribution is tax deductible.</b></p>
+
+        <div class="radio">
+          <%= f.label :additional_donation do %>
+            <%= f.radio_button :additional_donation, 25 %> $25
+          <% end %>
+        </div>
+        <div class="radio">
+          <%= f.label :additional_donation do %>
+            <%= f.radio_button :additional_donation, 50 %> $50
+          <% end %>
+        </div>
+        <div class="radio">
+          <%= f.label :additional_donation do %>
+            <%= f.radio_button :additional_donation, 100 %> $100
+          <% end %>
+        </div>
+        <div class="radio">
+          <%= f.label :additional_donation do %>
+            <%= f.radio_button :additional_donation, 200 %> $200
+          <% end %>
+        </div>
+        <div class="radio">
+          <%= f.label :additional_donation do %>
+            <%= f.radio_button :additional_donation, 500 %> $500
+          <% end %>
+        </div>
+        <div class="radio">
+          <%= f.label :additional_donation do %>
+            <%= f.radio_button :additional_donation, 1000 %> $1,000
+          <% end %>
+        </div>
+        <div class="radio">
+          <%= f.label :additional_donation do %>
+            <%= f.radio_button :additional_donation, "other" %> Other: $
+            <%= f.number_field :donation_amount, class: "auto-width form-control" %>
+          <% end %>
         </div>
       </div>
-    <% end %>
-  </div>
-</div>
+    </div>
+    <div class="row space-above-chasm">
+      <div class="col-md-2">
+        <%= f.submit "Continue", class: "btn btn-block" %>
+      </div>
+    </div>
+<% end %>

@@ -1,9 +1,30 @@
+$border-radius-base: 0;
+$border-radius-large: 0;
+$border-radius-small: 0;
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+/* VAG font */
+@font-face {
+  font-family: 'VAGRundschriftD';
+  src: font-url('VAGRundschriftD.eot');
+  src: font-url('VAGRundschriftD.eot#iefix') format('embedded-opentype'),
+       font-url('VAGRundschriftD.woff') format('woff'),
+       font-url('VAGRundschriftD.ttf') format('truetype'),
+       font-url('VAGRundschriftD.svg#VAGRundschriftD') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* mixins, variables, etc. */
 
 $gray-medium-light: #eaeaea;
+$redmagenta: #ed1651;
+$teal: #48bfac;
+$lightblue: #0089cf;
+$redorange: #f37321;
+$darkpurple: #472488;
+$darkgreen: #37b550;
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -11,11 +32,17 @@ $gray-medium-light: #eaeaea;
   box-sizing:         border-box;
 }
 
+@mixin vag_font {
+  font-family: VAGRundschriftD, sans-serif;
+  font-weight: normal;
+  letter-spacing: 0.05rem;
+}
+
 
 /* universal */
 
 body {
-  padding-top: 60px;
+  padding-top: 30px;
 }
 
 section {

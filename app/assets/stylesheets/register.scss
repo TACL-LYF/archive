@@ -1,3 +1,16 @@
+h1, h2, h3, h4, h5, h6, {
+  margin: 2.875rem 0 0;
+  @include vag_font;
+}
+
+.vag {
+  @include vag_font;
+}
+
+.container.left {
+  margin-left: 0;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -11,4 +24,141 @@ input.auto-width {
 .form-control.date {
   display: inline-block;
   width: auto;
+  margin-right: 0.8rem;
+}
+
+.form-control, .form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+label {
+  @include vag_font;
+}
+
+label + .help-block {
+  margin-top: 0;
+}
+
+.checkbox label, .radio label, label.checkbox-inline, label.radio-inline {
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+}
+
+.btn {
+  color: #fff;
+  padding: 0.65rem 1.5rem 0.5rem;
+  border: 0;
+  @include vag_font;
+}
+
+.btn-big {
+  padding: 1.5rem 5rem 1.35rem;
+}
+
+.stripe_error {
+  color: $state-danger-text;
+  font-weight: strong;
+}
+
+@mixin accent($step, $color) {
+ .#{$step} {
+  .accent {
+    color: $color;
+  }
+  .btn {
+    background: $color;
+    &:hover, &:focus {
+      color: #fff;
+      background: #000;
+    }
+  }
+  .btn-white {
+    color: #000;
+    background: #fff;
+    border: 1px solid #000;
+    &:hover {
+      color: #fff;
+      background: #000;
+    }
+  }
+  .form-control:focus {
+    border-color: $color;
+  }
+ }
+}
+
+$steps: (
+  landing: $redmagenta,
+  parent: $teal,
+  referral: $teal,
+  camper: $lightblue,
+  details: $lightblue,
+  waiver: $lightblue,
+  coordinator: $lightblue,
+  review: $lightblue,
+  siblings: $redorange,
+  donation: $darkpurple,
+  payment: $darkgreen
+) !default;
+
+@each $step, $color in $steps {
+  @include accent($step, $color);
+}
+
+ol.registration_outline {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+  @include vag_font;
+}
+
+ol.registration_outline > li {
+  counter-increment: customlistcounter;
+}
+
+ol.registration_outline > li:before {
+  content: counter(customlistcounter) " ";
+  float: left;
+  width: 1.25em;
+}
+
+ol.registration_outline:first-child {
+  counter-reset: customlistcounter;
+}
+
+/* spacing */
+.space-below-massive {
+  margin-bottom: 5rem;
+}
+.space-below-chasm {
+  margin-bottom: 3rem;
+}
+.space-below-wide {
+  margin-bottom: 2rem;
+}
+.space-below-med {
+  margin-bottom: 1.5rem;
+}
+.space-below-narrow {
+  margin-bottom: 1rem;
+}
+.space-below-none {
+  margin-bottom: 0;
+}
+.space-above-massive {
+  margin-top: 5rem;
+}
+.space-above-chasm {
+  margin-top: 3rem;
+}
+.space-above-wide {
+  margin-top: 2rem;
+}
+.space-above-med {
+  margin-top: 1.5rem;
+}
+.space-above-narrow {
+  margin-top: 1rem;
 }

@@ -1,13 +1,16 @@
 class RegisterController < ApplicationController
   include Wicked::Wizard
+  layout :registration_layout
 
-  all_steps = ["begin"] | Family.reg_steps | Camper.reg_steps | Registration.reg_steps |
+  all_steps = ["landing"] | Family.reg_steps | Camper.reg_steps | Registration.reg_steps |
     ["siblings"] | RegistrationPayment.reg_steps | ["confirmation"]
   steps *all_steps
 
   def show
+    @current_step = step
+    @outline = get_outline
     case step
-    when "begin"
+    when "landing"
       clear_session
     when "parent"
       @family = Family.new(session[:family])
@@ -280,6 +283,21 @@ class RegisterController < ApplicationController
       session[:camper] = nil
       session[:reg] = nil
       session[:payment] = nil
+    end
+
+    def registration_layout
+      step == "landing" ? "registration_landing" : "registration_form"
+    end
+
+    def get_outline
+      outline = {
+        parent_info: [ "parent", "referral" ],
+        camper_info: [ "camper", "details", "waiver", "coordinator", "review" ],
+        register_a_sibling: [ "siblings" ],
+        add_a_donation: [ "donation" ],
+        payment: [ "payment" ]
+      }
+      return outline
     end
 
     # TODO: handle session overflow

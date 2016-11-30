@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %></title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'https://js.stripe.com/v1/', 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_tag "Stripe.setPublishableKey(\'#{STRIPE_PUBLIC_KEY}\');" %>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+      </script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container left <%= @current_step %>">
+      <div class="row">
+        <div class="col-md-2 affix">
+          <%= render 'outline' %>
+        </div>
+        <div class="col-md-9 col-md-offset-3">
+          <% flash.each do |message_type, message| %>
+            <% unless message_type == 'form_has_errors' %>
+              <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+            <% end %>
+          <% end %>
+          <%= yield %>
+        </div>
+      </div>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
+  </body>
+</html>

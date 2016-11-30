@@ -1,19 +1,14 @@
 <% provide(:title, 'LYF Camp Registration 2017 | Referral Information') %>
 <div class="row">
   <div class="col-md-12">
-    <h1>LYF Camp 2017 Registration <small>Referral Information</small></h1>
+    <h2>How did you hear about us?</h2>
   </div>
 </div>
 <%= form_for @family, url: wizard_path, method: :put do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="row">
+  <div class="row space-above-wide">
     <div class="col-md-12">
-      <h3>How did you hear about us?</h3>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>Please check all that apply.</p>
+      <p class="space-below-wide">Please check all that apply.</p>
       <%= f.fields_for :referrals, @referrals, include_id: false do |rf| %>
         <div class="checkbox">
           <%= rf.label :_destroy do %>
@@ -31,12 +26,12 @@
       <% end %>
     </div>
   </div>
-  <div class="row">
+  <div class="row space-above-chasm">
     <div class="col-md-2">
-      <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
     </div>
-    <div class="col-md-2 col-md-offset-8">
-      <%= f.submit "Continue", class: "btn btn-primary" %>
+    <div class="col-md-2">
+      <%= f.submit "Continue", class: "btn btn-block" %>
     </div>
   </div>
 <% end %>

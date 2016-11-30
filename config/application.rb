@@ -13,6 +13,9 @@ module Archives
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths += %W(#{config.root}/lib)
 
+    # add fonts directory to asset pipeline
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
     # tell rails to use RSpec to generate starter files for the test suite
     config.generators do |g|
       g.test_framework :rspec,

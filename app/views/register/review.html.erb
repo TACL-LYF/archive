@@ -1,80 +1,84 @@
 <% provide(:title, 'LYF Camp Registration 2017 | Review Camper Details') %>
 <div class="row">
   <div class="col-md-12">
-    <h1>LYF Camp 2017 Registration <small>Review Camper Details</small></h1>
+    <h2>Review Camper Details</h2>
   </div>
 </div>
-<div class="row">
+<div class="row space-above-wide">
   <div class="col-md-12">
     <p>Please make sure all of the following fields are correct. If you need to make changes, use the "Back" button to return to the previous pages.</p>
     <p>Once you proceed beyond this step, you will not be able to go back and edit your responses for this camper.</p>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-2">
-    <p><b>First Name:</b><br>
-    <%= @camper.first_name %></p>
+  <div class="col-md-4">
+    <h5>First Name:</h5>
+    <p><%= @camper.first_name %></p>
   </div>
-  <div class="col-md-2">
-    <p><b>Last Name:</b><br>
-    <%= @camper.last_name %></p>
+  <div class="col-md-4">
+    <h5>Last Name:</h5>
+    <p><%= @camper.last_name %></p>
   </div>
-  <div class="col-md-2">
-    <p><b>Email (optional):</b><br>
-    <%= @camper.email %></p>
-  </div>
-  <div class="col-md-2">
-    <p><b>Gender:</b><br>
-    <%= @camper.gender %></p>
-  </div>
-  <div class="col-md-2">
-    <p><b>Birthdate:</b><br>
-    <%= @camper.birthdate.strftime('%B %e, %Y') %></p>
-  </div>
-  <div class="col-md-2">
-    <p><b>Grade:</b><br>
-    <%= @reg.grade.ordinalize %></p>
+  <div class="col-md-4">
+    <h5>Email (optional):</h5>
+    <p><%= @camper.email %></p>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-2">
-    <p><b>Shirt Size:</b><br>
-    <%= @reg.shirt_size.titlecase %></p>
+  <div class="col-md-4">
+    <h5>Gender:</h5>
+    <p><%= @camper.gender %></p>
   </div>
-  <div class="col-md-10">
-    <p><b>Additional Shirts:</b><br>
-      <%= @reg.list_additional_shirts %>
+  <div class="col-md-4">
+    <h5>Birthdate:</h5>
+    <p><%= @camper.birthdate.strftime('%B %e, %Y') %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Grade:</h5>
+    <p><%= @reg.grade.ordinalize %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h5>Shirt Size:</h5>
+    <p><%= @reg.shirt_size.titlecase %></p>
+  </div>
+  <div class="col-md-8">
+    <h5>Additional Shirts:</h5>
+      <p><%= @reg.list_additional_shirts %>
     </p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-6">
-    <p><b>Medical Condtions and Medication:</b><br>
-    <%= @camper.medical_conditions_and_medication %></p>
+    <h5>Medical Condtions and Medication:</h5>
+    <p><%= @camper.medical_conditions_and_medication %></p>
   </div>
   <div class="col-md-6">
-    <p><b>Diet Considerations and Food Allergies:</b><br>
-    <%= @camper.diet_and_food_allergies %></p>
+    <h5>Diet Considerations and Food Allergies:</h5>
+    <p><%= @camper.diet_and_food_allergies %></p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
-    <p><b>Bus to campsite?</b><br>
-    <%= @reg.bus %></p>
+    <h5>Bus to campsite?</h5>
+    <p><%= @reg.bus %></p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= form_for @camper, url: wizard_path, method: :put do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-      <div class="row">
-        <div class="col-md-2">
-          <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
-        </div>
-        <div class="col-md-2 col-md-offset-8">
-          <%= f.submit "Continue", class: "btn btn-primary" %>
-        </div>
-      </div>
-    <% end %>
+    <h5>Additional Notes:</h5>
+    <p><%= @reg.additional_notes %></p>
   </div>
+</div>
+<div class="row space-above-massive">
+  <%= form_for @camper, url: wizard_path, method: :put do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
+    </div>
+    <div class="col-md-2">
+      <%= f.submit "Continue", class: "btn btn-block" %>
+    </div>
+  <% end %>
 </div>

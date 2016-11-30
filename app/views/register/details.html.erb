@@ -1,34 +1,34 @@
 <% provide(:title, 'LYF Camp Registration 2017 | Registration Details') %>
 <div class="row">
   <div class="col-md-12">
-    <h1>LYF Camp 2017 Registration <small>Registration Details</small></h1>
+    <h2>Registration Details</h2>
   </div>
 </div>
 <%= form_for @reg, url: wizard_path, method: :put do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="row">
+  <div class="row space-above-wide">
     <div class="col-md-4 form-group">
       <%= f.label :grade, "Camper Grade" %>
-      <p class="help-block">Please enter the grade that your child will <b>complete</b> in Spring 2017.</p>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <%= f.select(:grade, (3..12).collect {|g| [g.ordinalize, g]}, {include_blank: true}, {class: "form-control"}) %>
         </div>
       </div>
+      <p class="help-block">Please enter the grade that your child will <b>complete</b> in Spring 2017.</p>
     </div>
-    <div class="col-md-8 form-group">
+    <div class="col-md-4 form-group">
       <%= f.label :shirt_size, "T-shirt Size" %>
-      <p class="help-block">One t-shirt is included in the camp fee. All fits are based on American Apparel Unisex sizes. Please refer to the size chart <a href="#">here</a>.</p>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
           <%= f.select "shirt_size", Registration.stored_attributes[:additional_shirts].map {|s| [s.to_s.titlecase, s]}, {include_blank: true}, {class: "form-control"} %>
         </div>
       </div>
+      <p class="help-block">One t-shirt is included in the camp fee. All fits are based on American Apparel Unisex sizes. Please refer to the size chart <a href="#">here</a>.</p>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <p><b>Additional Shirts</b></p>
+      <h4>Additional Shirts</h4>
       <p class="help-block">If you would like to purchase extra shirts, please enter the quantities for each size below. <b>Additional shirts are $15 each.</b></p>
     </div>
   </div>
@@ -40,15 +40,15 @@
       </div>
     <% end %>
   </div>
-  <div class="row">
+  <div class="row space-above-wide">
     <div class="col-md-12">
       <h2>Bus and Parents Program</h2>
-      <p>Due to the distance of the campsite, LYF Camp will provide complimentary buses both to and from the campsite. Buses will pick campers up on Sunday morning from the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). On the return trip, all campers will be dropped off at TECO in Milpitas for the Parents Program, Closing Ceremony, and pick up.  </p>
+      <p class="space-above-narrow">Due to the distance of the campsite, LYF Camp will provide complimentary buses both to and from the campsite. Buses will pick campers up on Sunday morning from the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). On the return trip, all campers will be dropped off at TECO in Milpitas for the Parents Program, Closing Ceremony, and pick up.  </p>
       <p>We highly encourage parents to attend the Parents Program on the last day of camp. The Parents Program is a celebration of song, dance, and performance to highlight the week’s achievements and memories. Parents will get the chance to experience camp for themselves and learn exactly what it is their campers learn at LYF Camp.</p>
       <p>This year, Parents Program will be held on Friday, June 17th, 1:00pm - 4:00pm at the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). LYF Camp and our programming will end at 4:00pm. If you are unable to pick up your camper(s), please make arrangements with another parent.</p>
       <p>To help us arrange the buses, please select the answer that best fits your plans.</p>
       <p class="help-block">Note: This will only reserve one seat per camper, so make sure to answer this question each time you register a camper. All campers will be returning to Milpitas on Friday via bus. If your camper needs to be picked up from the campsite early, please make a note in the "Additional Notes" box on the next page.</p>
-      <div class="radio">
+      <div class="radio space-above-med">
         <%= f.label :bus_true do %>
           <%= f.radio_button :bus, true %> I am interested in taking the bus both TO AND FROM the campsite.
         <% end %>
@@ -60,12 +60,12 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row space-above-chasm">
     <div class="col-md-2">
-      <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
     </div>
-    <div class="col-md-2 col-md-offset-8">
-      <%= f.submit "Continue", class: "btn btn-primary" %>
+    <div class="col-md-2">
+      <%= f.submit "Continue", class: "btn btn-block" %>
     </div>
   </div>
 <% end %>

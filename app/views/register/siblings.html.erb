@@ -1,23 +1,23 @@
 <% provide(:title, 'LYF Camp Registration 2017 | Register a Sibling') %>
 <div class="row">
   <div class="col-md-12">
-    <h1>LYF Camp 2017 Registration <small>Register a Sibling</small></h1>
+    <h2>Register A Sibling</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <p>Would you like to register a sibling? If registered at the same time, a discount of $40 per sibling is applied.<br>
-    Please note that siblings MUST have the same parent contact information.</p>
-    <p>You are currently registering the following camper(s):</p>
-    <ul>
-      <% @regs.each do |r| %>
-        <li>
-          <b><%= r %></b>
-        </li>
-      <% end %>
-    </ul>
-    <p>What would you like to do?</p>
-    <%= form_for :wizard, url: wizard_path, method: :put do |f| %>
+<%= form_for :wizard, url: wizard_path, method: :put do |f| %>
+  <div class="row space-above-wide">
+    <div class="col-md-12">
+      <p>Would you like to register a sibling? If registered at the same time, a discount of $40 per sibling is applied.<br>
+      Please note that siblings MUST have the same parent contact information.</p>
+      <h5>You are currently registering the following camper(s):</h5>
+      <ul>
+        <% @regs.each do |r| %>
+          <li>
+            <%= r %>
+          </li>
+        <% end %>
+      </ul>
+      <p class="space-above-wide">What would you like to do?</p>
       <div class="radio">
         <%= f.label :sibling_new do %>
           <%= f.radio_button :sibling, "new" %> Add registration for a sibling
@@ -28,11 +28,11 @@
           <%= f.radio_button :sibling, "none" %> Continue without registering any additional siblings
         <% end %>
       </div>
-      <div class="row">
-        <div class="col-md-2 col-md-offset-10">
-          <%= f.submit "Continue", class: "btn btn-primary" %>
-        </div>
-      </div>
-    <% end %>
+    </div>
   </div>
-</div>
+  <div class="row space-above-massive">
+    <div class="col-md-2">
+      <%= f.submit "Continue", class: "btn btn-block" %>
+    </div>
+  </div>
+<% end %>

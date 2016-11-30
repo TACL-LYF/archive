@@ -1,12 +1,12 @@
 <% provide(:title, 'LYF Camp Registration 2017 | Camper Information') %>
 <div class="row">
   <div class="col-md-12">
-    <h1>LYF Camp 2017 Registration <small>Camper Information</small></h1>
+    <h2>Camper Information</h2>
   </div>
 </div>
 <%= form_for @camper, url: wizard_path, method: :put do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <div class="row">
+  <div class="row space-above-wide">
     <div class="col-md-4 form-group">
       <%= f.label :first_name, "Camper First Name" %>
       <%= f.text_field :first_name, class: 'form-control' %>
@@ -15,14 +15,16 @@
       <%= f.label :last_name, "Camper Last Name" %>
       <%= f.text_field :last_name, class: 'form-control' %>
     </div>
+  </div>
+  <div class="row space-above-med">
     <div class="col-md-4 form-group">
       <%= f.label :email, "Camper Email (Optional)" %>
       <%= f.email_field :email, class: 'form-control' %>
     </div>
   </div>
-  <div class="row">
+  <div class="row space-above-med">
     <div class="col-md-4 form-group">
-      <%= f.label :birthdate, 'Camper Birthdate' %>
+      <%= f.label :birthdate, 'Camper Date of Birth' %>
       <div class="row">
         <div class="col-md-12">
           <%= f.date_select :birthdate, { start_year: Date.today.year - 20, end_year: Date.today.year - 5, order: [:day, :month, :year], prompt: { day: 'Day', month: 'Month', year: 'Year' }}, { class: 'date form-control' } %>
@@ -30,37 +32,36 @@
       </div>
     </div>
     <div class="col-md-4 form-group">
-      <%= f.label :gender, "Camper Gender" %>
+      <%= f.label :gender, "Camper Gender", class: 'show' %>
       <%= collection_radio_buttons(:camper, :gender, Camper.genders, :first, :first) do |b| %>
-        <div class="radio">
-          <%= b.label { b.radio_button + b.text.titlecase } %>
-        </div>
+        <%= b.label(class: 'radio-inline') { b.radio_button + b.text.titlecase } %>
       <% end %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6 form-group">
-      <%= f.label :medical_conditions_and_medication, "Medical Conditions and Medication" %>
+  <div class="row space-above-med">
+    <div class="col-md-12 form-group">
+      <%= f.label :medical_conditions_and_medication, "Medical Conditions and Medication", class: 'space-below-none' %>
       <p class="help-block">
         List any pre-existing medical conditions, such as asthma, learning disabilities, non-food allergies (bee stings), etc that your child may have. If your child takes any regular medication, please provide medication name, dosage and frequency instructions, along with contraindications. If none, please write "N/A"
       </p>
-      <%= f.text_area(:medical_conditions_and_medication, rows: 4, class: 'form-control') %>
+      <%= f.text_area(:medical_conditions_and_medication, rows: 6, class: 'form-control') %>
     </div>
-    <div class="col-md-6 form-group">
-      <%= f.label :diet_and_food_allergies, "Diet Considerations and Food Allergies" %>
+  </div>
+  <div class="row space-above-med">
+    <div class="col-md-12 form-group">
+      <%= f.label :diet_and_food_allergies, "Diet Considerations and Food Allergies", class: 'space-below-none' %>
       <p class="help-block">
         Please indicate any special dietary restrictions and or food allergies your child may have (please indicate the severity as well). Example: No eggs or dairy. Partial/full allergies: nuts, seafood, etc. If none, please write "N/A"
       </p>
-      <br>
-      <%= f.text_area(:diet_and_food_allergies, rows: 4, class: 'form-control') %>
+      <%= f.text_area(:diet_and_food_allergies, rows: 6, class: 'form-control') %>
     </div>
   </div>
-  <div class="row">
+  <div class="row space-above-chasm">
     <div class="col-md-2">
-      <%= link_to "Back", previous_wizard_path, class: "btn btn-default btn-block" %>
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
     </div>
-    <div class="col-md-2 col-md-offset-8">
-      <%= f.submit "Continue", class: "btn btn-primary" %>
+    <div class="col-md-2">
+      <%= f.submit "Continue", class: "btn btn-block" %>
     </div>
   </div>
 <% end %>
