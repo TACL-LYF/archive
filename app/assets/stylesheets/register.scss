@@ -109,7 +109,8 @@ $steps: (
   review: $lightblue,
   siblings: $redorange,
   donation: $darkpurple,
-  payment: $darkgreen
+  payment: $darkgreen,
+  confirmation: $redmagenta
 ) !default;
 
 @each $step, $color in $steps {

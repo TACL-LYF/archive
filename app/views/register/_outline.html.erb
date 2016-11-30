@@ -5,6 +5,8 @@
     <li<%= " class=accent" if steps.include? @current_step %>><%= outline_step.to_s.titlecase%></li>
   <% end %>
 </ol>
-<p class="space-above-massive">
-  <%= link_to "Cancel Registration", wizard_path(:landing), data: { confirm: "Are you sure you want to cancel this registration? Any changes you have made on any part of this form will not be saved." }, class: "btn btn-white" %>
-</p>
+<% unless @current_step == "confirmation" %>
+  <p class="space-above-massive">
+    <%= link_to "Cancel Registration", wizard_path(:landing), data: { confirm: "Are you sure you want to cancel this registration? Any changes you have made on any part of this form will not be saved." }, class: "btn btn-white" %>
+  </p>
+<% end %>

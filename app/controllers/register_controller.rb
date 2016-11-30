@@ -295,7 +295,8 @@ class RegisterController < ApplicationController
         camper_info: [ "camper", "details", "waiver", "coordinator", "review" ],
         register_a_sibling: [ "siblings" ],
         add_a_donation: [ "donation" ],
-        payment: [ "payment" ]
+        payment: [ "payment" ],
+        confirmation: [ "confirmation" ]
       }
       return outline
     end
