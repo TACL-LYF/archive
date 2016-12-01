@@ -43,6 +43,7 @@ $darkgreen: #37b550;
 
 body {
   padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 section {
@@ -63,7 +64,6 @@ textarea {
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
-  width: 100%;
   @include box_sizing;
 }
 

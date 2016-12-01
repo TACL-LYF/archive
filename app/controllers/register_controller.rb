@@ -37,6 +37,7 @@ class RegisterController < ApplicationController
       @camper = build_camper(session[:camper])
       @reg = build_reg(session[:camper], session[:reg])
     when "siblings"
+      clear_current_registration
       @regs = session[:campers].collect{ |c| c["first_name"]+" "+c["last_name"]}
     when "donation"
       @payment = build_payment
@@ -211,7 +212,7 @@ class RegisterController < ApplicationController
     def reg_params(step)
       permitted_attrs = case step
         when "details"
-          [:grade, :shirt_size, :bus].push(*Registration.stored_attributes[:additional_shirts])
+          [:grade, :shirt_size, :bus, :returning].push(*Registration.stored_attributes[:additional_shirts])
         when "waiver"
           [:additional_notes, :waiver_signature, :waiver_date]
         end
@@ -272,6 +273,9 @@ class RegisterController < ApplicationController
       session[:regs] ||= []
       session[:campers] << session[:camper]
       session[:regs] << session[:reg]
+    end
+
+    def clear_current_registration
       session[:camper] = nil
       session[:reg] = nil
     end

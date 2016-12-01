@@ -15,6 +15,7 @@ gem 'jbuilder',                '2.4.1'
 gem 'wicked'
 gem 'stripe'
 gem 'envyable'
+gem 'data-confirm-modal'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.11'
