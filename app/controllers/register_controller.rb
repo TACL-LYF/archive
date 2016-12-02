@@ -16,14 +16,10 @@ class RegisterController < ApplicationController
       @family = Family.new(session[:family])
       @family.valid? if flash[:form_has_errors]
     when "referral"
-      if session[:family]["first_time"] == "true"
-        @family = Family.new(session[:family])
-        @rm_ids = @family.referrals.collect{|r| r.referral_method_id}
-        @referrals = initialize_referrals(@family)
-        @family.valid? if flash[:form_has_errors]
-      else
-        skip_step
-      end
+      @family = Family.new(session[:family])
+      @rm_ids = @family.referrals.collect{|r| r.referral_method_id}
+      @referrals = initialize_referrals(@family)
+      @family.valid? if flash[:form_has_errors]
     when "camper"
       @camper = build_camper(session[:camper])
       @camper.valid? if flash[:form_has_errors]
@@ -98,7 +94,7 @@ class RegisterController < ApplicationController
     when "details"
       session[:reg] ||= {}
       regparams = reg_params(step)
-      session[:reg] = session[:reg].merge(regparams.to_h).delete_if {|k,v| v.blank?}
+      session[:reg] = session[:reg].merge(regparams.to_h).delete_if {|k,v| v.blank? || v == "0"}
       @reg = build_reg(session[:camper], session[:reg])
       if @reg.valid?
         redirect_to wizard_path(next_step)
@@ -211,7 +207,7 @@ class RegisterController < ApplicationController
             :primary_parent_email, :primary_parent_phone_number,
             :secondary_parent_first_name, :secondary_parent_last_name,
             :secondary_parent_email, :secondary_parent_phone_number, :suite,
-            :street, :city, :state, :zip, :first_time]
+            :street, :city, :state, :zip]
         when "referral"
           [referrals_attributes: [:referral_method_id, :details, :_destroy]]
         end

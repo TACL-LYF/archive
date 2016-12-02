@@ -81,17 +81,6 @@
       <%= f.text_field :zip, class: 'form-control' %>
     </div>
   </div>
-  <div class="row space-above-wide">
-    <div class="col-md-12 form-group">
-      <%= f.label :first_time, "Is this the first time your family is registering a camper at LYF Camp?", class: 'show' %>
-      <%= f.label "first_time_true", class: 'radio-inline' do %>
-        <%= f.radio_button :first_time, true %> Yes
-      <% end %>
-      <%= f.label "first_time_false", class: 'radio-inline' do %>
-        <%= f.radio_button :first_time, false %> No
-      <% end %>
-    </div>
-  </div>
   <div class="row space-above-chasm">
     <div class="col-md-2">
       <%= f.submit "Continue", class: "btn btn-block" %>

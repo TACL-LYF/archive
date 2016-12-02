@@ -6,13 +6,11 @@ class Family < ApplicationRecord
   accepts_nested_attributes_for :referrals, allow_destroy: true
 
   cattr_accessor :reg_steps do %w[parent referral] end
-  attr_accessor :reg_step, :first_time
+  attr_accessor :reg_step
 
   before_save { self.primary_parent_email = primary_parent_email.downcase }
   before_save { self.secondary_parent_email = secondary_parent_email.downcase if !secondary_parent_email.nil?}
 
-  validates :first_time, presence: true,
-            :if => Proc.new { |c| c.reg_step == "parent" }
   with_options :if => Proc.new { |p| p.required_for_step?(:parent) } do
     validates :primary_parent_first_name, :primary_parent_last_name,
               :primary_parent_phone_number, :street, :city, presence: true

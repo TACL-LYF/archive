@@ -11,9 +11,8 @@ h1, h2, h3, h4, h5, h6, {
   margin-left: 1rem;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+ul.padding-smaller {
+  padding-left: 1.6rem;
 }
 
 input.auto-width {
