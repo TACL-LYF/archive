@@ -1,0 +1,40 @@
+<% provide(:title, 'Camper Involvement') %>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Camper Involvement</h2>
+  </div>
+</div>
+<div class="row space-above-wide">
+  <div class="col-md-12">
+    <p>Returning campers who will have completed grade 10 by LYF Camp 2017 will have the opportunity to take on leadership roles at camp as an Activity Coordinator. These opportunities include leading or co-leading a clinic, a Large Group Icebreaker or Family activity, running a Night Market booth, and monitoring bus transit(s). We hope these opportunities will provide campers chances to take on leading a group of campers, to practice leadership and planning skills, and to get a taste of what LYF staff do before and during camp!</p>
+  </div>
+</div>
+<%= form_for @reg, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="row space-above-wide">
+    <div class="col-md-12 form-group">
+      <%= f.label :camper_involvement, "Please check any roles that your camper is interested in taking on. (Optional)" %>
+      <% Registration.stored_attributes[:camper_involvement].each do |role| %>
+        <div class="checkbox">
+          <%= f.label role do %>
+            <%= f.check_box role, {}, '1', '' %>
+            <%= role.to_s.titlecase %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row space-above-chasm">
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
+    </div>
+    <div class="col-md-2">
+      <%= f.submit "Continue", class: "btn btn-block" %>
+    </div>
+    <% unless session[:regs].blank? %>
+      <div class="col-md-5 col-md-offset-3">
+        <%= link_to "I don't want to register this sibling", wizard_path(:siblings), class: "btn btn-grey btn-block" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

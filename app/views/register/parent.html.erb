@@ -58,10 +58,6 @@
     </div>
   </div>
   <div class="row space-above-wide">
-    <div class="col-md-2 form-group">
-      <%= f.label :suite, "Apt/Suite" %>
-      <%= f.text_field :suite, class: 'form-control' %>
-    </div>
     <div class="col-md-4 form-group">
       <%= f.label :street, "Street Address" %>
       <%= f.text_field :street, class: 'form-control' %>
@@ -69,6 +65,10 @@
     <div class="col-md-4 form-group">
       <%= f.label :city, "City" %>
       <%= f.text_field :city, class: 'form-control' %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :suite, "Apt/Suite" %>
+      <%= f.text_field :suite, class: 'form-control' %>
     </div>
   </div>
   <div class="row">
@@ -83,7 +83,7 @@
   </div>
   <div class="row space-above-wide">
     <div class="col-md-12 form-group">
-      <%= f.label :first_time, "Is this the first time your family is registering a camper at LYF Camp?" %><br>
+      <%= f.label :first_time, "Is this the first time your family is registering a camper at LYF Camp?", class: 'show' %>
       <%= f.label "first_time_true", class: 'radio-inline' do %>
         <%= f.radio_button :first_time, true %> Yes
       <% end %>

@@ -39,17 +39,6 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4">
-    <h5>Shirt Size:</h5>
-    <p><%= @reg.shirt_size.titlecase %></p>
-  </div>
-  <div class="col-md-8">
-    <h5>Additional Shirts:</h5>
-      <p><%= @reg.list_additional_shirts %>
-    </p>
-  </div>
-</div>
-<div class="row">
   <div class="col-md-6">
     <h5>Medical Condtions and Medication:</h5>
     <p><%= @camper.medical_conditions_and_medication %></p>
@@ -58,6 +47,28 @@
     <h5>Diet Considerations and Food Allergies:</h5>
     <p><%= @camper.diet_and_food_allergies %></p>
   </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h5>Shirt Size:</h5>
+    <p><%= @reg.shirt_size.titlecase %></p>
+  </div>
+  <div class="col-md-8">
+    <h5>Additional Shirts:</h5>
+    <p><%= @reg.list_additional_shirts %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h5>JTASA Chapter:</h5>
+    <p><%= @reg.jtasa_chapter %></p>
+  </div>
+  <% if @reg.camper_involvement? %>
+    <div class="col-md-8">
+      <h5>Interested in the following leadership roles at camp:</h5>
+      <p><%= @reg.list_camper_involvement %></p>
+    </div>
+  <% end %>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -80,10 +91,10 @@
     <div class="col-md-2">
       <%= f.submit "Continue", class: "btn btn-block" %>
     </div>
-    <div class="col-md-5 col-md-offset-3">
-      <% unless session[:regs].blank? %>
+    <% unless session[:regs].blank? %>
+      <div class="col-md-5 col-md-offset-3">
         <%= link_to "I don't want to register this sibling", wizard_path(:siblings), class: "btn btn-grey btn-block" %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   <% end %>
 </div>

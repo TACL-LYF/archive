@@ -1,11 +1,22 @@
-<% provide(:title, 'Registration Details') %>
+<% provide(:title, 'Camper Information, Continued') %>
 <div class="row">
   <div class="col-md-12">
-    <h2>Registration Details</h2>
+    <h2>Camper Information, Continued</h2>
   </div>
 </div>
 <%= form_for @reg, url: wizard_path, method: :put do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
+  <div class="row space-above-chasm">
+    <div class="col-md-12 form-group">
+      <%= f.label :returning, "Has this camper attended LYF Camp before?", class: 'show' %>
+      <%= f.label "returning_true", class: 'radio-inline' do %>
+        <%= f.radio_button :returning, true %> Yes
+      <% end %>
+      <%= f.label "returning_false", class: 'radio-inline' do %>
+        <%= f.radio_button :returning, false %> No
+      <% end %>
+    </div>
+  </div>
   <div class="row space-above-wide">
     <div class="col-md-4 form-group">
       <%= f.label :grade, "Camper Grade" %>
@@ -42,6 +53,18 @@
   </div>
   <div class="row space-above-wide">
     <div class="col-md-12">
+      <h4>JTASA Members!</h4>
+      <p>LYF will contribute $20 to your JTASA chapter for each camper who is a verified member or officer.</p>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label :jtasa_chapter, "Please provide your high school below." %>
+        <%= f.text_field :jtasa_chapter, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+  <div class="row space-above-wide">
+    <div class="col-md-12">
       <h2>Bus and Parents Program</h2>
       <p class="space-above-narrow">Due to the distance of the campsite, LYF Camp will provide complimentary buses both to and from the campsite. Buses will pick campers up on Sunday morning from the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). On the return trip, all campers will be dropped off at TECO in Milpitas for the Parents Program, Closing Ceremony, and pick up.  </p>
       <p>We highly encourage parents to attend the Parents Program on the last day of camp. The Parents Program is a celebration of song, dance, and performance to highlight the week’s achievements and memories. Parents will get the chance to experience camp for themselves and learn exactly what it is their campers learn at LYF Camp.</p>
@@ -67,10 +90,10 @@
     <div class="col-md-2">
       <%= f.submit "Continue", class: "btn btn-block" %>
     </div>
-    <div class="col-md-5 col-md-offset-3">
-      <% unless session[:regs].blank? %>
+    <% unless session[:regs].blank? %>
+      <div class="col-md-5 col-md-offset-3">
         <%= link_to "I don't want to register this sibling", wizard_path(:siblings), class: "btn btn-grey btn-block" %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 <% end %>
