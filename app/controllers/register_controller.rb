@@ -28,10 +28,12 @@ class RegisterController < ApplicationController
       @camper = build_camper(session[:camper])
       @camper.valid? if flash[:form_has_errors]
     when "details"
+      @shirt_sizes = Registration.stored_attributes[:additional_shirts]
       @reg = build_reg(session[:camper], session[:reg])
       @reg.valid? if flash[:form_has_errors]
     when "camper_involvement"
       if eligible_for_camper_involvement
+        @camper_roles = Registration.stored_attributes[:camper_involvement]
         @reg = build_reg(session[:camper], session[:reg])
         @reg.valid? if flash[:form_has_errors]
       else
@@ -61,9 +63,9 @@ class RegisterController < ApplicationController
   def update
     case step
     when "parent"
-      famparams = family_params(step).delete_if {|k,v| v.blank?}
+      famparams = family_params(step)
       session[:family] ||= {}
-      session[:family] = session[:family].merge(famparams.to_h)
+      session[:family] = session[:family].merge(famparams.to_h).delete_if {|k,v| v.blank?}
       @family = Family.new(session[:family])
       if @family.valid?
         redirect_to wizard_path(next_step)
@@ -219,7 +221,7 @@ class RegisterController < ApplicationController
     def camper_params(step)
       permitted_attrs = case step
         when "camper"
-          [:first_name, :last_name, :gender, :birthdate, :email,
+          [:first_name, :last_name, :gender, :birthdate, :email, :returning,
             :medical_conditions_and_medication, :diet_and_food_allergies]
         end
       params.require(:camper).permit(permitted_attrs).merge(reg_step: step)
@@ -228,7 +230,7 @@ class RegisterController < ApplicationController
     def reg_params(step)
       permitted_attrs = case step
         when "details"
-          [:returning, :grade, :shirt_size, :jtasa_chapter, :bus].push(*Registration.stored_attributes[:additional_shirts])
+          [:grade, :shirt_size, :jtasa_chapter, :bus].push(*Registration.stored_attributes[:additional_shirts])
         when "waiver"
           [:additional_notes, :waiver_signature, :waiver_date]
         when "camper_involvement"
@@ -287,7 +289,7 @@ class RegisterController < ApplicationController
     end
 
     def eligible_for_camper_involvement
-      session[:reg]["returning"] == "true" && session[:reg]["grade"].to_i >= 10
+      session[:camper]["returning"] == "true" && session[:reg]["grade"].to_i >= 10
     end
 
     def store_reg_in_session

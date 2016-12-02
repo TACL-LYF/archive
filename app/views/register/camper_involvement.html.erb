@@ -14,7 +14,7 @@
   <div class="row space-above-wide">
     <div class="col-md-12 form-group">
       <%= f.label :camper_involvement, "Please check any roles that your camper is interested in taking on. (Optional)" %>
-      <% Registration.stored_attributes[:camper_involvement].each do |role| %>
+      <% @camper_roles.each do |role| %>
         <div class="checkbox">
           <%= f.label role do %>
             <%= f.check_box role, {}, '1', '' %>

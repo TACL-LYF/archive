@@ -1,26 +1,26 @@
 <% provide(:title, 'Parent Information') %>
 <div class="row">
   <div class="col-md-12">
-    <h2>Parent Information</h2>
+    <h2>Parent/Guardian Information</h2>
+    <p class="space-above-narrow">Please double check Parent/Guardian information carefully. This will be our primary means of contact.<br>Camper information will be input on the next page.</p>
   </div>
 </div>
 <%= form_for @family, url: wizard_path, method: :put do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="row space-above-wide">
     <div class="col-md-4 form-group">
-      <%= f.label :primary_parent_first_name, "First Name" %>
+      <%= f.label :primary_parent_first_name, "Parent First Name" %>
       <%= f.text_field :primary_parent_first_name, class: 'form-control' %>
     </div>
     <div class="col-md-4 form-group">
-      <%= f.label :primary_parent_last_name, "Last Name" %>
+      <%= f.label :primary_parent_last_name, "Parent Last Name" %>
       <%= f.text_field :primary_parent_last_name, class: 'form-control' %>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 form-group">
-      <%= f.label :primary_parent_email, "Email" %>
+      <%= f.label :primary_parent_email, "Parent Email" %>
       <%= f.email_field :primary_parent_email, class: 'form-control' %>
-      <p class="help-block">This will be our primary means of contact. Please double check this for accuracy!</p>
     </div>
     <div class="col-md-4 form-group">
       <%= f.label :primary_parent_phone_number, "Phone Number" %>

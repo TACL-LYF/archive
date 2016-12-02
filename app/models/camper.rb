@@ -13,11 +13,13 @@ class Camper < ApplicationRecord
   validates :medical_conditions_and_medication, :diet_and_food_allergies,
             presence: { message: "required. If none, please write \"N/A\"" },
             :if => Proc.new { |c| c.required_for_step?(:camper) }
+  validates :returning, presence: true,
+            :if => Proc.new { |c| c.reg_step == "camper" }
   enum gender: { male: 0, female: 1 }
   enum status: { active: 0, graduated: 1 }
 
   cattr_accessor :reg_steps do %w[camper] end
-  attr_accessor :reg_step
+  attr_accessor :reg_step, :returning
 
   def full_name
     "#{first_name} #{last_name}"

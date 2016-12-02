@@ -5,11 +5,9 @@ class Registration < ApplicationRecord
   belongs_to :registration_payment, inverse_of: :registrations, optional: true
 
   cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
-  attr_accessor :reg_step, :returning
+  attr_accessor :reg_step
 
   validates :camp, :camper, :city, :state, presence: true
-  validates :returning, presence: true,
-            :if => Proc.new { |c| c.reg_step == "details" }
   validates :grade, :inclusion => 3..12,
             :if => Proc.new { |r| r.required_for_step?(:details) }
   validates :shirt_size, presence: true,

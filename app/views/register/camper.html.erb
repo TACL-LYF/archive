@@ -16,13 +16,13 @@
       <%= f.text_field :last_name, class: 'form-control' %>
     </div>
   </div>
-  <div class="row space-above-med">
+  <div class="row space-above-wide">
     <div class="col-md-4 form-group">
       <%= f.label :email, "Camper Email (Optional)" %>
       <%= f.email_field :email, class: 'form-control' %>
     </div>
   </div>
-  <div class="row space-above-med">
+  <div class="row space-above-wide">
     <div class="col-md-4 form-group">
       <%= f.label :birthdate, 'Camper Date of Birth' %>
       <div class="row">
@@ -38,7 +38,18 @@
       <% end %>
     </div>
   </div>
-  <div class="row space-above-med">
+  <div class="row space-above-wide">
+    <div class="col-md-12 form-group">
+      <%= f.label :returning, "Has this camper attended LYF Camp before?", class: 'show' %>
+      <%= f.label "returning_true", class: 'radio-inline' do %>
+        <%= f.radio_button :returning, true %> Yes
+      <% end %>
+      <%= f.label "returning_false", class: 'radio-inline' do %>
+        <%= f.radio_button :returning, false %> No
+      <% end %>
+    </div>
+  </div>
+  <div class="row space-above-wide">
     <div class="col-md-12 form-group">
       <%= f.label :medical_conditions_and_medication, "Medical Conditions and Medication", class: 'space-below-none' %>
       <p class="help-block">
@@ -47,7 +58,7 @@
       <%= f.text_area(:medical_conditions_and_medication, rows: 6, class: 'form-control') %>
     </div>
   </div>
-  <div class="row space-above-med">
+  <div class="row space-above-wide">
     <div class="col-md-12 form-group">
       <%= f.label :diet_and_food_allergies, "Diet Considerations and Food Allergies", class: 'space-below-none' %>
       <p class="help-block">
