@@ -21,6 +21,8 @@ class RegisterController < ApplicationController
       @referrals = initialize_referrals(@family)
       @family.valid? if flash[:form_has_errors]
     when "camper"
+      @new_sibling = session[:prev_step] == "siblings"
+      session[:prev_step] = nil
       @camper = build_camper(session[:camper])
       @camper.valid? if flash[:form_has_errors]
     when "details"
@@ -36,6 +38,7 @@ class RegisterController < ApplicationController
         skip_step
       end
     when "waiver"
+      @camper_involvement = eligible_for_camper_involvement
       @reg = build_reg(session[:camper], session[:reg])
       @reg.valid? if flash[:form_has_errors]
     when "review"
@@ -97,6 +100,7 @@ class RegisterController < ApplicationController
       session[:reg] = session[:reg].merge(regparams.to_h).delete_if {|k,v| v.blank? || v == "0"}
       @reg = build_reg(session[:camper], session[:reg])
       if @reg.valid?
+        session[:prev_step] = step
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
@@ -115,6 +119,7 @@ class RegisterController < ApplicationController
       session[:reg] = session[:reg].merge(reg_params(step).delete_if {|k,v| v.blank?}.to_h)
       @reg = build_reg(session[:camper], session[:reg])
       if @reg.valid?
+        session[:prev_step] = step
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
@@ -130,6 +135,7 @@ class RegisterController < ApplicationController
       else
         sibling = params[:wizard][:sibling]
         if sibling == "new"
+          session[:prev_step] = step
           flash[:info] = 'Please enter details for the sibling you would like to register.'
           redirect_to wizard_path(:camper)
         elsif sibling == "none"

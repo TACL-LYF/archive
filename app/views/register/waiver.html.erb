@@ -33,7 +33,7 @@
   </div>
   <div class="row space-above-chasm">
     <div class="col-md-2">
-      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
+      <%= link_to "Back", @camper_involvement ? previous_wizard_path : wizard_path(:details), class: "btn btn-white btn-block" %>
     </div>
     <div class="col-md-2">
       <%= f.submit "Continue", class: "btn btn-block" %>
