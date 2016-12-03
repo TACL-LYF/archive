@@ -8,16 +8,19 @@ class Registration < ApplicationRecord
   attr_accessor :reg_step
 
   validates :camp, :camper, :city, :state, presence: true
-  validates :grade, :inclusion => 3..12,
-            :if => Proc.new { |r| r.required_for_step?(:details) }
+  validates :grade, inclusion: 3..12,
+            if: Proc.new { |r| r.required_for_step?(:details) }
   validates :shirt_size, presence: true,
-            :if => Proc.new { |r| r.required_for_step?(:details) }
-  with_options :if => Proc.new { |r| r.required_for_step?(:details) } do
+            if: Proc.new { |r| r.required_for_step?(:details) }
+  with_options if: Proc.new { |r| r.required_for_step?(:details) } do
     validates_inclusion_of :bus, in: [true, false],
                            message: "information required"
   end
-  validates :waiver_signature, :waiver_date, presence: true,
-            :if => Proc.new { |r| r.required_for_step?(:waiver) }
+  with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
+    validates :waiver_signature, :waiver_date, presence: true
+    validate :waiver_signature_matches_name, on: :create, unless: "waiver_signature.nil?"
+  end
+
   enum shirt_size: Hash[SHIRT_SIZES.zip (0..SHIRT_SIZES.size)]
   enum group: ('A'..'Z').to_a.map!(&:to_sym)
   store :additional_shirts, accessors: SHIRT_SIZES
@@ -41,4 +44,10 @@ class Registration < ApplicationRecord
     list.blank? ? "None" : list
   end
 
+  def waiver_signature_matches_name
+    parent_name = camper.family.primary_parent.gsub(/\s+/, "").downcase
+    unless parent_name == waiver_signature.gsub(/\s+/, "").downcase
+      errors.add(:waiver_signature, "doesn't seem to match the primary parent name")
+    end
+  end
 end

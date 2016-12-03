@@ -8,6 +8,7 @@ class Family < ApplicationRecord
   cattr_accessor :reg_steps do %w[parent referral] end
   attr_accessor :reg_step
 
+  before_validation :normalize_names
   before_save { self.primary_parent_email = primary_parent_email.downcase }
   before_save { self.secondary_parent_email = secondary_parent_email.downcase if !secondary_parent_email.nil?}
 
@@ -32,4 +33,12 @@ class Family < ApplicationRecord
   def secondary_parent
     "#{secondary_parent_first_name} #{secondary_parent_last_name}"
   end
+
+  protected
+    def normalize_names
+      self.primary_parent_first_name.strip!
+      self.primary_parent_last_name.strip!
+      self.secondary_parent_first_name.strip! unless secondary_parent_first_name.nil?
+      self.secondary_parent_last_name.strip! unless secondary_parent_last_name.nil?
+    end
 end
