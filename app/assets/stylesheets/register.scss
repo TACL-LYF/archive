@@ -126,6 +126,10 @@ $steps: (
   @include accent($step, $color);
 }
 
+.review h5 {
+  font-size: 1.6rem;
+}
+
 ol.registration_outline {
   list-style-type: none;
   margin-left: 0;
