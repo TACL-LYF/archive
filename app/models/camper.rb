@@ -39,7 +39,7 @@ class Camper < ApplicationRecord
 
   protected
     def normalize_name
-      self.first_name.strip!
-      self.last_name.strip!
+      self.first_name.strip! unless first_name.nil?
+      self.last_name.strip! unless last_name.nil?
     end
 end

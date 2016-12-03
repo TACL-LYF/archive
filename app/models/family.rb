@@ -36,8 +36,8 @@ class Family < ApplicationRecord
 
   protected
     def normalize_names
-      self.primary_parent_first_name.strip!
-      self.primary_parent_last_name.strip!
+      self.primary_parent_first_name.strip! unless primary_parent_first_name.nil?
+      self.primary_parent_last_name.strip! unless primary_parent_last_name.nil?
       self.secondary_parent_first_name.strip! unless secondary_parent_first_name.nil?
       self.secondary_parent_last_name.strip! unless secondary_parent_last_name.nil?
     end
