@@ -4,7 +4,11 @@ class RegistrationPayment < ApplicationRecord
   has_one :registration_discount, inverse_of: :registration_payment
 
   validates :total, :stripe_charge_id, presence: true,
-            :if => Proc.new { |r| r.required_for_step?(:payment) }
+            if: Proc.new { |r| r.required_for_step?(:payment) }
+  validates :donation_amount, allow_nil: true,
+            numericality: { greater_than_or_equal_to: 0 },
+            format: { with: /\A\d+(?:\.\d{0,2})?\z/ },
+            if: Proc.new { |r| r.required_for_step?(:donation) }
   validate :same_camp_registrations
 
   serialize :breakdown, Hash

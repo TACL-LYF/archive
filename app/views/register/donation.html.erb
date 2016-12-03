@@ -45,7 +45,7 @@
         <div class="radio">
           <%= f.label :additional_donation do %>
             <%= f.radio_button :additional_donation, "other" %> Other: $
-            <%= f.number_field :donation_amount, class: "auto-width form-control" %>
+            <%= f.number_field :donation_amount, min: 0, class: "auto-width form-control" %>
           <% end %>
         </div>
       </div>
