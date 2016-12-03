@@ -14,7 +14,7 @@
   <body>
     <div class="container left <%= @current_step %>">
       <div class="row">
-        <div class="col-md-2 affix">
+        <div class="col-md-2 affix form-outline">
           <%= render 'outline' %>
         </div>
         <div class="col-md-9 col-md-offset-3">
@@ -26,6 +26,7 @@
           <%= yield %>
         </div>
       </div>
+      <%= render 'registration_policy' %>
       <%= debug(params) if Rails.env.development? %>
     </div>
   </body>

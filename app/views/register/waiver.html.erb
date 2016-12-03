@@ -21,12 +21,12 @@
   </div>
   <div class="row space-above-med">
     <div class="col-md-6 form-group">
-      <%= f.label :waiver_signature, "Guardian Signature" %>
+      <%= f.label :waiver_signature, "Parent/Guardian Signature" %>
       <p class="help-block">Enter your full name to accept the above waiver.</p>
       <%= f.text_field :waiver_signature, class: 'form-control' %>
     </div>
     <div class="col-md-6 form-group">
-      <%= f.label :waiver_date, "Date" %>
+      <%= f.label :waiver_date, "Today's Date" %>
       <p class="help-block">Enter today's date to accept the above waiver.</p>
       <%= f.date_select :waiver_date, { order: [:day, :month, :year], prompt: { day: 'Day', month: 'Month', year: 'Year' }}, { class: 'date form-control' } %>
     </div>

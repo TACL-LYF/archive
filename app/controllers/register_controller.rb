@@ -147,7 +147,7 @@ class RegisterController < ApplicationController
         params[:registration_payment][:additional_donation] = amount
       end
       session[:payment] ||= {}
-      session[:payment] = session[:payment].merge(payment_params(step).delete_if {|k,v| v.blank?}.to_h)
+      session[:payment] = session[:payment].merge(payment_params(step).to_h).delete_if {|k,v| v.blank? || v == "0"}
       @payment = build_payment
       if @payment.valid?
         redirect_to wizard_path(next_step)
@@ -183,7 +183,6 @@ class RegisterController < ApplicationController
             @payment.registrations << r
           end
           if @family.save!
-            @payment.calculate_total
             @payment.process_payment
             if @payment.save!
               clear_session

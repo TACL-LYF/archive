@@ -3,6 +3,10 @@ h1, h2, h3, h4, h5, h6, {
   @include vag_font;
 }
 
+.modal-body h3 {
+  line-height: 1.4;
+}
+
 .vag {
   @include vag_font;
 }
@@ -72,11 +76,12 @@ label + .help-block {
 
 @mixin accent($step, $color) {
  .#{$step} {
-  .accent {
+  .accent, a {
     color: $color;
   }
   .btn {
     background: $color;
+    color: #fff;
     &:hover, &:focus {
       color: #fff;
       background: #000;
@@ -149,6 +154,10 @@ ol.registration_outline > li:before {
 
 ol.registration_outline:first-child {
   counter-reset: customlistcounter;
+}
+
+.form-outline a {
+  color: $gray;
 }
 
 /* spacing */

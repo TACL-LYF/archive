@@ -61,7 +61,7 @@
 <div class="row">
   <div class="col-md-4">
     <h5>JTASA Chapter:</h5>
-    <p><%= @reg.jtasa_chapter %></p>
+    <p><%= @reg.jtasa_chapter || "None" %></p>
   </div>
   <% if @reg.camper_involvement? %>
     <div class="col-md-8">
