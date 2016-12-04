@@ -198,34 +198,34 @@ class RegisterController < ApplicationController
             end
           end
         rescue Stripe::CardError => e
-          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          msg = log_error_to_debugger_and_return_msg(e)
           flash[:danger] = "There was a problem processing your payment: #{msg}"
           redirect_to wizard_path
         rescue Stripe::RateLimitError => e
           # Too many requests made to the API too quickly
-          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          msg = log_error_to_debugger_and_return_msg(e)
           flash[:danger] = "There was a problem processing your payment: #{msg} Please try again in a bit."
           redirect_to wizard_path
         rescue Stripe::InvalidRequestError => e
           # Invalid parameters were supplied to Stripe's API
-          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          msg = log_error_to_debugger_and_return_msg(e)
           flash[:danger] = "There was a problem processing your payment: #{msg}"
           redirect_to wizard_path
         rescue Stripe::AuthenticationError => e
           # Authentication with Stripe's API failed
           # (maybe you changed API keys recently)
-          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          msg = log_error_to_debugger_and_return_msg(e)
           flash[:danger] = "There was a problem processing your payment: #{msg}"
           redirect_to wizard_path
         rescue Stripe::APIConnectionError => e
           # Network communication with Stripe failed
-          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          msg = log_error_to_debugger_and_return_msg(e)
           flash[:danger] = "There was a problem processing your payment: #{msg}"
           redirect_to wizard_path
         rescue Stripe::StripeError => e
           # Display a very generic error to the user, and maybe send
           # yourself an email
-          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          msg = log_error_to_debugger_and_return_msg(e)
           flash[:danger] = "There was a problem processing your payment."
           redirect_to wizard_path
         rescue => e
@@ -365,6 +365,7 @@ class RegisterController < ApplicationController
     end
 
     def log_error_to_debugger_and_return_msg(e)
+      err = e.json_body[:error]
       logger.debug "Status is: #{e.http_status}"
       logger.debug "Type is: #{err[:type]}"
       logger.debug "Code is: #{err[:code]}"
