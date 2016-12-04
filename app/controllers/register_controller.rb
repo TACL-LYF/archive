@@ -168,33 +168,71 @@ class RegisterController < ApplicationController
           redirect_to wizard_path
         end
       else
-        @family = Family.new(session[:family])
-        city = @family.city
-        state = @family.state
-        stripe_token = stripe_params(step)[:stripe_card_token]
-        @family.transaction do
-          @payment = RegistrationPayment.new(session[:payment].merge(stripe_token: stripe_token))
-          campers = session[:campers]
-          campers.each_with_index do |camper, i|
-            reg_fields = session[:regs][i].merge(camp: Camp.first, city: city,
-              state: state)
-            c = @family.campers.build(camper)
-            r = c.registrations.build(reg_fields)
-            @payment.registrations << r
-          end
-          if @family.save!
-            @payment.process_payment
-            if @payment.save!
-              clear_session
-              redirect_to wizard_path(:confirmation)
+        begin
+          @family = Family.new(session[:family])
+          city = @family.city
+          state = @family.state
+          stripe_token = stripe_params(step)[:stripe_card_token]
+          @family.transaction do
+            @payment = RegistrationPayment.new(session[:payment].merge(stripe_token: stripe_token))
+            campers = session[:campers]
+            campers.each_with_index do |camper, i|
+              reg_fields = session[:regs][i].merge(camp: Camp.first, city: city,
+                state: state)
+              c = @family.campers.build(camper)
+              r = c.registrations.build(reg_fields)
+              @payment.registrations << r
+            end
+            if @family.save!
+              @payment.process_payment
+              if @payment.save!
+                clear_session
+                redirect_to wizard_path(:confirmation)
+              else
+                flash[:danger] = "Something went wrong."
+                redirect_to wizard_path
+              end
             else
               flash[:danger] = "Something went wrong."
               redirect_to wizard_path
             end
-          else
-            flash[:danger] = "Something went wrong."
-            redirect_to wizard_path
           end
+        rescue Stripe::CardError => e
+          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          flash[:danger] = "There was a problem processing your payment: #{msg}"
+          redirect_to wizard_path
+        rescue Stripe::RateLimitError => e
+          # Too many requests made to the API too quickly
+          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          flash[:danger] = "There was a problem processing your payment: #{msg} Please try again in a bit."
+          redirect_to wizard_path
+        rescue Stripe::InvalidRequestError => e
+          # Invalid parameters were supplied to Stripe's API
+          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          flash[:danger] = "There was a problem processing your payment: #{msg}"
+          redirect_to wizard_path
+        rescue Stripe::AuthenticationError => e
+          # Authentication with Stripe's API failed
+          # (maybe you changed API keys recently)
+          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          flash[:danger] = "There was a problem processing your payment: #{msg}"
+          redirect_to wizard_path
+        rescue Stripe::APIConnectionError => e
+          # Network communication with Stripe failed
+          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          flash[:danger] = "There was a problem processing your payment: #{msg}"
+          redirect_to wizard_path
+        rescue Stripe::StripeError => e
+          # Display a very generic error to the user, and maybe send
+          # yourself an email
+          msg = log_error_to_debugger_and_return_msg(e.json_body[:error])
+          flash[:danger] = "There was a problem processing your payment."
+          redirect_to wizard_path
+        rescue => e
+          logger.debug "Error submitting registration form"
+          logger.debug e
+          flash[:danger] = "Something went wrong."
+          redirect_to wizard_path
         end
       end
     end
@@ -324,6 +362,15 @@ class RegisterController < ApplicationController
         confirmation: [ "confirmation" ]
       }
       return outline
+    end
+
+    def log_error_to_debugger_and_return_msg(e)
+      logger.debug "Status is: #{e.http_status}"
+      logger.debug "Type is: #{err[:type]}"
+      logger.debug "Code is: #{err[:code]}"
+      logger.debug "Param is: #{err[:param]}"
+      logger.debug "Message is: #{err[:message]}"
+      return err[:message]
     end
 
     # TODO: handle session overflow
