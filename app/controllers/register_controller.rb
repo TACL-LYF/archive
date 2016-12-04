@@ -184,7 +184,6 @@ class RegisterController < ApplicationController
               @payment.registrations << r
             end
             if @family.save!
-              @payment.process_payment
               if @payment.save!
                 clear_session
                 redirect_to wizard_path(:confirmation)

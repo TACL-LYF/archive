@@ -3,6 +3,8 @@ class RegistrationPayment < ApplicationRecord
   has_many :registrations, inverse_of: :registration_payment
   has_one :registration_discount, inverse_of: :registration_payment
 
+  before_create :process_payment
+
   validates :total, :stripe_charge_id, presence: true,
             if: Proc.new { |r| r.required_for_step?(:payment) }
   validates :donation_amount, allow_nil: true,
@@ -71,16 +73,6 @@ class RegistrationPayment < ApplicationRecord
     return total
   end
 
-  def process_payment
-    calculate_total if total.blank?
-    amount = (total*100).to_i
-    r = self.registrations.first
-    desc = "LYF Camp #{r.camp.year} Registration Payment for #{r.camper.family.primary_parent_email}"
-    charge_obj = Stripe::Charge.create(source: stripe_token, amount: amount,
-                                       description: desc, currency: 'usd')
-    self.stripe_charge_id = charge_obj.id
-  end
-
   private
     def set_discount(discount)
       self.registration_discount = discount
@@ -93,5 +85,15 @@ class RegistrationPayment < ApplicationRecord
         errors.add(:base, :registrations_for_different_camps,
           message: "registrations must all be for the same camp year")
       end
+    end
+
+    def process_payment
+      calculate_total if total.blank?
+      amount = (total*100).to_i
+      r = self.registrations.first
+      desc = "LYF Camp #{r.camp.year} Registration Payment for #{r.camper.family.primary_parent_email}"
+      charge_obj = Stripe::Charge.create(source: stripe_token, amount: amount,
+                                         description: desc, currency: 'usd')
+      self.stripe_charge_id = charge_obj.id
     end
 end
