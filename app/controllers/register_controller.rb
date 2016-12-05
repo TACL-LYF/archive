@@ -185,6 +185,7 @@ class RegisterController < ApplicationController
             end
             if @family.save!
               if @payment.save!
+                RegistrationPaymentMailer.registration_confirmation(@payment).deliver_now
                 clear_session
                 redirect_to wizard_path(:confirmation)
               else

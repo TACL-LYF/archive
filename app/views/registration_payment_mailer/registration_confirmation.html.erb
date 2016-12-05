@@ -1,0 +1,116 @@
+<div style="max-width: 600px; margin: 0 auto;">
+  <p style="text-align: center;">
+    <%= link_to image_tag('http://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/images/logo@2x.png', size: '130'), 'http://lyf.tacl.org', target: '_blank' %>
+  </p>
+
+  <h1 style="text-align: center;">LYF Camp 2017 Registration Confirmation</h1>
+
+  <p>
+    Thank you for registering for LYF Camp 2017! We have received your payment and registration(s) for the following camper(s):
+  </p>
+
+  <table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none; margin-top: 1.5rem;">
+    <% @breakdown[:campers].each do |camper| %>
+      <tr>
+        <th colspan=2 style="border-top: 1px solid #ccc;">
+          Camper Registration - <%= camper[:name] %> (Shirt Size: <%= camper[:shirt_size] %>)
+        </th>
+        <th style="text-align: right; border-top: 1px solid #ccc;">
+          <%= number_to_currency @breakdown[:registration_fee] %>
+        </th>
+      </tr>
+      <% if @breakdown.key?(:discount) %>
+      <tr>
+        <td colspan=2 style="padding-left: 20px;">
+          <%= "Discount from code #{@breakdown[:discount][:code]} (#{@breakdown[:discount][:percent]}%)" %>
+        </td>
+        <td style="text-align: right;">
+          - <%= number_to_currency @breakdown[:discount][:amount] %>
+        </td>
+      </tr>
+      <% elsif camper.key?(:sibling_discount) %>
+      <tr>
+        <td colspan=2 style="padding-left: 20px;">
+          Sibling Discount
+        </td>
+        <td style="text-align: right;">
+          - <%= number_to_currency camper[:sibling_discount] %>
+        </td>
+      </tr>
+      <% end %>
+      <% if camper[:extra_shirts_total] > 0 %>
+      <tr>
+        <td colspan=2 style="padding-left: 20px;">
+          <%= "Extra Shirts (#{number_to_currency @breakdown[:shirt_price]} each) - #{camper[:extra_shirts]}" %>
+        </td>
+        <td style="text-align: right;">
+          <%= number_to_currency camper[:extra_shirts_total] %>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+    <% if @breakdown[:additional_donation] %>
+      <tr>
+        <th colspan=2 style="border-top: 1px solid #ccc;">
+          Additional Donation
+        </th>
+        <th style="text-align: right; border-top: 1px solid #ccc;">
+          <%= number_to_currency @breakdown[:additional_donation] %>
+        </th>
+      </tr>
+    <% end %>
+    <tr>
+      <th style="border-top: 1px solid #ccc;">
+        <%= "#{@brand} #{"*"*12}#{@last_four}" %>
+      </th>
+      <th style="text-align: right; border-top: 1px solid #ccc;">
+        Total:
+      </th>
+      <th style="text-align: right; border-top: 1px solid #ccc;">
+        <%= number_to_currency @breakdown[:total] %>
+      </th>
+    </tr>
+  </table>
+
+  <p style="margin-top: 1.5rem;">
+    If your registration needs to be updated, or you would like to include any comments, please email annie.huang@tacl.org.
+  </p>
+
+  <p>
+    A final email will be sent out at the end of May as Camp approaches. Additionally, you will be receiving a Camper Welcome Packet which contains a packing list, camp schedule, camp rules, and Parent's Program information.
+  </p>
+
+  <hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
+
+  <h3 style="margin-top: 1.5rem;">Save the date!</h3>
+  <ul>
+    <li style="margin-bottom: 0.5rem;">
+      <b>Winter Reunion</b> - January 7th, 2017
+      <ul>
+        <li>2:00pm - 5:00pm @ TECO Center Milpitas</li>
+        <li>100 S. Milpitas Blvd. Milpitas, CA 95035</li>
+      </ul>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <b>Parent Orientation</b> - June 10th, 2017
+      <ul>
+        <li>2:00pm - 4:00pm @ TECO Center Milpitas</li>
+        <li>100 S. Milpitas Blvd. Milpitas, CA 95035</li>
+      </ul>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <b>Parent's Program</b> - June 24th, 2017
+      <ul>
+        <li>1:00pm - 4:00pm @ TECO Center Milpitas</li>
+        <li>100 S. Milpitas Blvd. Milpitas, CA 95035</li>
+      </ul>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <b>Summer Reunion, 35th Anniversary</b> - August 19th, 2017
+      <ul>
+        <li>11:00am - 4:00pm @ Newark Community Center</li>
+        <li>35501 Cedar Blvd. Newark, CA 94560</li>
+      </ul>
+    </li>
+  </ul>
+</div>

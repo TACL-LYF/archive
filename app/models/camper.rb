@@ -29,12 +29,12 @@ class Camper < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def get_status
-    status.titlecase
+  def status
+    self[:status].titlecase
   end
 
-  def get_gender
-    gender[0].upcase
+  def gender_abbr
+    self[:gender][0].upcase
   end
 
   protected

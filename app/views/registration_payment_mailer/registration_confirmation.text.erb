@@ -1,0 +1,47 @@
+LYF Camp 2017 Registration Confirmation
+
+Thank you for registering for LYF Camp 2017! We have received your payment and registration(s) for the following camper(s):
+
+==============================
+<% @breakdown[:campers].each do |camper| %>
+Camper Registration - <%= camper[:name] %>  (Shirt Size: <%= camper[:shirt_size] %>): <%= number_to_currency @breakdown[:registration_fee] %>
+<% if @breakdown.key?(:discount) %>
+- <%= "Discount from code #{@breakdown[:discount][:code]} (#{@breakdown[:discount][:percent]}%)" %>: - <%= number_to_currency @breakdown[:discount][:amount] %>
+<% elsif camper.key?(:sibling_discount) %>
+- Sibling Discount: - <%= number_to_currency camper[:sibling_discount] %>
+<% end %>
+<% if camper[:extra_shirts_total] > 0 %>
+- <%= "Extra Shirts (#{number_to_currency @breakdown[:shirt_price]} each) - #{camper[:extra_shirts]}" %>: <%= number_to_currency camper[:extra_shirts_total] %>
+<% end %>
+------------------------------
+<% end %>
+<% if @breakdown[:additional_donation] %>
+Additional Donation: <%= number_to_currency @breakdown[:additional_donation] %>
+------------------------------
+<% end %>
+<%= "#{@brand} #{"*"*12}#{@last_four}" %> Total: <%= number_to_currency @breakdown[:total] %>
+==============================
+
+If your registration needs to be updated, or you would like to include any comments, please email annie.huang@tacl.org.
+
+A final email will be sent out at the end of May as Camp approaches. Additionally, you will be receiving a Camper Welcome Packet which contains a packing list, camp schedule, camp rules, and Parent's Program information.
+
+==============================
+
+SAVE THE DATE!
+
+Winter Reunion - January 7th, 2017
+2:00pm - 5:00pm @ TECO Center Milpitas
+100 S. Milpitas Blvd. Milpitas, CA 95035
+
+Parent Orientation - June 10th, 2017
+2:00pm - 4:00pm @ TECO Center Milpitas
+100 S. Milpitas Blvd. Milpitas, CA 95035
+
+Parent's Program - June 24th, 2017
+1:00pm - 4:00pm @ TECO Center Milpitas
+100 S. Milpitas Blvd. Milpitas, CA 95035
+
+Summer Reunion, 35th Anniversary - August 19th, 2017
+11:00am - 4:00pm @ Newark Community Center
+35501 Cedar Blvd. Newark, CA 94560

@@ -9,7 +9,7 @@
     <table class="table table-condensed">
       <% @breakdown[:campers].each do |camper| %>
         <tr>
-          <th colspan=2>Registration Fee - <%= camper[:name] %></th>
+          <th colspan=2>Camper Registration - <%= camper[:name] %> (Shirt Size: <%= camper[:shirt_size] %>)</th>
           <th class="text-right"><%= number_to_currency @breakdown[:registration_fee] %></th>
         </tr>
         <% if @breakdown.key?(:discount) %>

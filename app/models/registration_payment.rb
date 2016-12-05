@@ -5,13 +5,16 @@ class RegistrationPayment < ApplicationRecord
 
   before_create :process_payment
 
-  validates :total, :stripe_charge_id, presence: true,
-            if: Proc.new { |r| r.required_for_step?(:payment) }
+  validate :same_camp_registrations
   validates :donation_amount, allow_nil: true,
             numericality: { greater_than_or_equal_to: 0 },
             format: { with: /\A\d+(?:\.\d{0,2})?\z/ },
             if: Proc.new { |r| r.required_for_step?(:donation) }
-  validate :same_camp_registrations
+  with_options if: Proc.new { |r| r.required_for_step?(:payment) } do
+    validates :total, :stripe_charge_id, :stripe_brand, presence: true
+    validates :stripe_last_four, presence: true, length: { is: 4 },
+              numericality: { only_integer: true }
+  end
 
   serialize :breakdown, Hash
 
@@ -51,6 +54,7 @@ class RegistrationPayment < ApplicationRecord
       running_total += extra_shirts_total
       c = {
         name: r.camper.full_name,
+        shirt_size: r.shirt_size.titlecase,
         extra_shirts: r.list_additional_shirts,
         extra_shirts_total: extra_shirts_total
       }
@@ -95,5 +99,7 @@ class RegistrationPayment < ApplicationRecord
       charge_obj = Stripe::Charge.create(source: stripe_token, amount: amount,
                                          description: desc, currency: 'usd')
       self.stripe_charge_id = charge_obj.id
+      self.stripe_brand = charge_obj.source.brand
+      self.stripe_last_four = charge_obj.source.last4
     end
 end

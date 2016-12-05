@@ -18,3 +18,4 @@ camp = Camp.create!(year: 2017, name: "To Be Determined",
 # make some discounts
 camp.registration_discounts.create!(code: "ANNIE", discount_percent: 20)
 camp.registration_discounts.create!(code: "BRIAN", discount_percent: 10)
+camp.registration_discounts.create!(code: "EMILY", discount_percent: 15)
