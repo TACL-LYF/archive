@@ -19,6 +19,10 @@ ul.padding-smaller {
   padding-left: 1.6rem;
 }
 
+ul.padding-smaller < li {
+  margin-bottom: 0.5rem;
+}
+
 input.auto-width {
   display: inline-block;
   width: auto;

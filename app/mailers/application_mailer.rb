@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "lyf@tacl.org"
+  default from: "LYF Camp <lyf@tacl.org>"
   layout 'mailer'
 end
