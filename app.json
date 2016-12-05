@@ -14,7 +14,9 @@
   "formation": {
   },
   "addons": [
-
+    {
+      "plan": "sendgrid:starter"
+    }
   ],
   "buildpacks": [
 
