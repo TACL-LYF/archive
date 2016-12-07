@@ -1,0 +1,17 @@
+<%= image_tag "logo.png", size: "136", alt: "TACL-LYF Logo" %>
+<h2>LYF Camp 2017 Registration</h2>
+<ol class="registration_outline space-above-massive">
+  <% @outline.each do |outline_step, steps| %>
+    <li<%= " class=accent" if steps.include? @current_step %>><%= outline_step.to_s.titlecase%></li>
+  <% end %>
+</ol>
+<% unless @current_step == "confirmation" %>
+  <p class="space-above-massive vag">
+    <!-- <%= link_to "Cancel Registration", wizard_path(:landing), data: { title: 'Are you sure?', confirm: "Are you sure you want to cancel this registration? No information will be saved." }, class: "btn btn-white" %> -->
+    Do not use your browser's back/forward buttons to navigate this form!
+  </p>
+  <p>Please use the buttons at the bottom of the form to navigate between pages.</p>
+<% end %>
+<p class="space-above-med">
+  <%= link_to "View Registration Policy", "#registration_policy", "data-toggle" => "modal" %>
+</p>

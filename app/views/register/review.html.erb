@@ -1,0 +1,95 @@
+<% provide(:title, 'Review Camper Details') %>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Review Camper Details</h2>
+  </div>
+</div>
+<div class="row space-above-wide">
+  <div class="col-md-12">
+    <p>Please make sure all of the following fields are correct. If you need to make changes, use the "Back" button at the bottom of the form to navigate to previous pages.</p>
+    <p><b>Once you proceed beyond this step, you will not be able to go back and edit your responses for this camper.</b></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h5>First Name:</h5>
+    <p><%= @camper.first_name %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Last Name:</h5>
+    <p><%= @camper.last_name %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Email (optional):</h5>
+    <p><%= @camper.email %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h5>Gender:</h5>
+    <p><%= @camper.gender.titlecase %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Birthdate:</h5>
+    <p><%= @camper.birthdate.strftime('%B %e, %Y') %></p>
+  </div>
+  <div class="col-md-4">
+    <h5>Grade:</h5>
+    <p><%= @reg.grade.ordinalize %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h5>Medical Condtions and Medication:</h5>
+    <p><%= @camper.medical_conditions_and_medication %></p>
+  </div>
+  <div class="col-md-6">
+    <h5>Diet Considerations and Food Allergies:</h5>
+    <p><%= @camper.diet_and_food_allergies %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h5>Shirt Size:</h5>
+    <p><%= @reg.shirt_size.titlecase %></p>
+  </div>
+  <div class="col-md-8">
+    <h5>Additional Shirts:</h5>
+    <p><%= @reg.list_additional_shirts %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h5>JTASA Chapter:</h5>
+    <p><%= @reg.jtasa_chapter || "None" %></p>
+  </div>
+  <% if @reg.camper_involvement? %>
+    <div class="col-md-8">
+      <h5>Interested in the following leadership roles at camp:</h5>
+      <p><%= @reg.list_camper_involvement %></p>
+    </div>
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h5>Transportation to Campsite:</h5>
+    <p><%= @reg.bus ? "Bus" : "I will provide my own transportation" %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h5>Additional Notes:</h5>
+    <p><%= @reg.additional_notes %></p>
+  </div>
+</div>
+<div class="row space-above-massive">
+  <%= form_for @camper, url: wizard_path, method: :put do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
+    </div>
+    <div class="col-md-2">
+      <%= f.submit "Continue", class: "btn btn-block" %>
+    </div>
+  <% end %>
+</div>

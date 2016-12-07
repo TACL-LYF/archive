@@ -1,0 +1,200 @@
+h1, h2, h3, h4, h5, h6, {
+  margin: 2.875rem 0 0;
+  @include vag_font;
+}
+
+.modal-body h3 {
+  line-height: 1.4;
+}
+
+.vag {
+  @include vag_font;
+}
+
+.container.left {
+  margin-left: 1rem;
+}
+
+ul.padding-smaller {
+  padding-left: 1.6rem;
+}
+
+ul.padding-smaller > li {
+  margin-bottom: 0.5rem;
+}
+
+input.auto-width {
+  display: inline-block;
+  width: auto;
+}
+
+.form-control.date {
+  display: inline-block;
+  width: auto;
+}
+
+.form-control, .form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-position: right 50%;
+  background-repeat: no-repeat;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=);
+  padding-right: 1.6rem;
+  padding-left: 0.7rem;
+}
+
+label {
+  @include vag_font;
+}
+
+label + .help-block {
+  margin-top: 0;
+}
+
+.checkbox label, .radio label, label.checkbox-inline, label.radio-inline {
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+}
+
+.btn {
+  color: #fff;
+  padding: 0.65rem 1.5rem 0.5rem;
+  border: 0;
+  @include vag_font;
+}
+
+.btn-big {
+  padding: 1.5rem 5rem 1.35rem;
+}
+
+.stripe_error {
+  color: $state-danger-text;
+  font-weight: strong;
+}
+
+@mixin accent($step, $color) {
+ .#{$step} {
+  .accent, a {
+    color: $color;
+  }
+  .btn {
+    background: $color;
+    color: #fff;
+    &:hover, &:focus {
+      color: #fff;
+      background: #000;
+    }
+  }
+  .btn-white {
+    color: #000;
+    background: #fff;
+    border: 1px solid #000;
+    &:hover {
+      color: #fff;
+      background: #000;
+    }
+  }
+  .btn-grey {
+    color: #fff;
+    background: $gray-light;
+    border-color: $gray-light;
+    &:hover {
+      border-color: #000;
+      background: #000;
+    }
+  }
+  .form-control:focus {
+    border-color: $color;
+  }
+ }
+}
+
+$steps: (
+  landing: $redmagenta,
+  parent: $teal,
+  referral: $teal,
+  camper: $lightblue,
+  details: $lightblue,
+  camper_involvement: $lightblue,
+  waiver: $lightblue,
+  coordinator: $lightblue,
+  review: $lightblue,
+  siblings: $redorange,
+  donation: $darkpurple,
+  payment: $darkgreen,
+  confirmation: $redmagenta
+) !default;
+
+@each $step, $color in $steps {
+  @include accent($step, $color);
+}
+
+.review h5 {
+  font-size: 1.6rem;
+}
+
+ol.registration_outline {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+  @include vag_font;
+}
+
+ol.registration_outline > li {
+  counter-increment: customlistcounter;
+}
+
+ol.registration_outline > li:before {
+  content: counter(customlistcounter) " ";
+  float: left;
+  width: 1.25em;
+}
+
+ol.registration_outline:first-child {
+  counter-reset: customlistcounter;
+}
+
+.form-outline a {
+  color: $gray;
+}
+
+/* spacing */
+.space-below-massive {
+  margin-bottom: 5rem;
+}
+.space-below-chasm {
+  margin-bottom: 3rem;
+}
+.space-below-wide {
+  margin-bottom: 2rem;
+}
+.space-below-med {
+  margin-bottom: 1.5rem;
+}
+.space-below-narrow {
+  margin-bottom: 1rem;
+}
+.space-below-none {
+  margin-bottom: 0;
+}
+.space-above-massive {
+  margin-top: 5rem;
+}
+.space-above-chasm {
+  margin-top: 3rem;
+}
+.space-above-wide {
+  margin-top: 2rem;
+}
+.space-above-med {
+  margin-top: 1.5rem;
+}
+.space-above-narrow {
+  margin-top: 1rem;
+}

@@ -1,0 +1,105 @@
+<% provide(:title, 'Payment') %>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Payment Summary</h2>
+  </div>
+</div>
+<div class="row space-above-wide">
+  <div class="col-md-12">
+    <table class="table table-condensed">
+      <% @breakdown[:campers].each do |camper| %>
+        <tr>
+          <th colspan=2>Camper Registration - <%= camper[:name] %> (Shirt Size: <%= camper[:shirt_size] %>)</th>
+          <th class="text-right"><%= number_to_currency @breakdown[:registration_fee] %></th>
+        </tr>
+        <% if @breakdown.key?(:discount) %>
+        <tr>
+          <td colspan=2><%= "Discount from code #{@breakdown[:discount][:code]} (#{@breakdown[:discount][:percent]}%)" %></td>
+          <td class="text-right">- <%= number_to_currency @breakdown[:discount][:amount] %></td>
+        </tr>
+        <% elsif camper.key?(:sibling_discount) %>
+        <tr>
+          <td colspan=2>Sibling Discount</td>
+          <td class="text-right">- <%= number_to_currency camper[:sibling_discount] %></td>
+        </tr>
+        <% end %>
+        <% if camper[:extra_shirts_total] > 0 %>
+        <tr>
+          <td colspan=2><%= "Extra Shirts (#{number_to_currency @breakdown[:shirt_price]} each) - #{camper[:extra_shirts]}" %></td>
+          <td class="text-right"><%= number_to_currency camper[:extra_shirts_total] %></td>
+        </tr>
+        <% end %>
+      <% end %>
+      <% if @breakdown[:additional_donation] %>
+        <tr>
+          <th colspan=2>Additional Donation</th>
+          <th class="text-right"><%= number_to_currency @breakdown[:additional_donation] %></th>
+        </tr>
+      <% end %>
+      <tr>
+        <th colspan=2 class="text-right">Total:</th>
+        <th class="text-right"><%= number_to_currency @breakdown[:total] %></th>
+      </tr>
+    </table>
+  </div>
+</div>
+<%= form_for @payment, url: wizard_path, method: :put do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= f.label :discount_code, "Financial Aid Discount Code:" %>
+      <%= f.text_field :discount_code, disabled: !@payment.discount_code.blank?, class: "form-control" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= f.submit "Apply Code", name: :apply_code, disabled: !@payment.discount_code.blank?, class: "btn auto-width" %>
+    </div>
+  </div>
+<% end %>
+<%= form_for :wizard, url: wizard_path, html: {id: "registration_form"}, method: :put do |f| %>
+  <%= f.hidden_field :stripe_card_token %>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Payment Details</h2>
+    </div>
+  </div>
+  <div class="row space-above-wide">
+    <div class="col-md-3 form-group">
+      <%= label_tag :card_number, "Credit Card Number " %>
+      <%= text_field_tag :card_number, nil, name: nil, class: "form-control", "data-stripe" => "number" %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= label_tag :card_exp_month, "Card Expiration" %>
+      <div class="row">
+        <div class="col-md-12">
+          <%= select_month nil, {use_two_digit_numbers: true, prompt: "MM"}, {name: nil, id: "card_exp_month", class: "date form-control", "data-stripe" => "exp_month"} %>
+          <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15, prompt: "YYYY"}, {name: nil, id: "card_exp_year", class: "date form-control", "data-stripe" => "exp_year"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-group">
+      <%= label_tag :card_verificaion, "CVC" %>
+      <%= text_field_tag :card_verificaion, nil, name: nil, class: "form-control", "data-stripe" => "cvc" %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= label_tag :card_billing_zip, "Billing Zip" %>
+      <%= text_field_tag :card_billing_zip, nil, name: nil, class: "form-control", "data-stripe" => "address_zip" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 stripe_error">
+       <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+    </div>
+  </div>
+  <div class="row space-above-chasm">
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.submit "Submit Payment & Complete Registration", class: "btn btn-block" %>
+    </div>
+  </div>
+<% end %>

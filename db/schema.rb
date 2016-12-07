@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115235556) do
+ActiveRecord::Schema.define(version: 20161205002125) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -30,8 +30,11 @@ ActiveRecord::Schema.define(version: 20161115235556) do
   create_table "camps", force: :cascade do |t|
     t.string   "name"
     t.integer  "year"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.decimal  "registration_fee", precision: 10, scale: 2
+    t.decimal  "shirt_price",      precision: 6,  scale: 2
+    t.decimal  "sibling_discount", precision: 6,  scale: 2
     t.index ["year"], name: "index_camps_on_year", unique: true
   end
 
@@ -71,6 +74,30 @@ ActiveRecord::Schema.define(version: 20161115235556) do
     t.index ["referral_method_id"], name: "index_referrals_on_referral_method_id"
   end
 
+  create_table "registration_discounts", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "discount_percent"
+    t.boolean  "redeemed",                default: false, null: false
+    t.integer  "camp_id"
+    t.integer  "registration_payment_id"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.index ["camp_id"], name: "index_registration_discounts_on_camp_id"
+    t.index ["registration_payment_id"], name: "index_registration_discounts_on_registration_payment_id"
+  end
+
+  create_table "registration_payments", force: :cascade do |t|
+    t.decimal  "total",               precision: 10, scale: 2
+    t.decimal  "additional_donation", precision: 10, scale: 2
+    t.string   "discount_code"
+    t.string   "stripe_charge_id"
+    t.text     "breakdown"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.string   "stripe_brand"
+    t.integer  "stripe_last_four"
+  end
+
   create_table "registrations", force: :cascade do |t|
     t.integer  "grade"
     t.integer  "shirt_size"
@@ -85,11 +112,16 @@ ActiveRecord::Schema.define(version: 20161115235556) do
     t.string   "state"
     t.integer  "camp_id"
     t.integer  "camper_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.text     "additional_shirts"
+    t.integer  "registration_payment_id"
+    t.text     "camper_involvement"
+    t.string   "jtasa_chapter"
     t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
     t.index ["camp_id"], name: "index_registrations_on_camp_id"
     t.index ["camper_id"], name: "index_registrations_on_camper_id"
+    t.index ["registration_payment_id"], name: "index_registrations_on_registration_payment_id"
   end
 
 end
