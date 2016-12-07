@@ -7,11 +7,11 @@ $border-radius-small: 0;
 /* VAG font */
 @font-face {
   font-family: 'VAGRundschriftD';
-  src: font-url('VAGRundschriftD.eot');
-  src: font-url('VAGRundschriftD.eot#iefix') format('embedded-opentype'),
-       font-url('VAGRundschriftD.woff') format('woff'),
-       font-url('VAGRundschriftD.ttf') format('truetype'),
-       font-url('VAGRundschriftD.svg#VAGRundschriftD') format('svg');
+  src: font-url('https://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/fonts/VAGRundschriftD/VAGRundschriftD.eot');
+  src: font-url('https://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/fonts/VAGRundschriftD/VAGRundschriftD.eot#iefix') format('embedded-opentype'),
+       font-url('https://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/fonts/VAGRundschriftD/VAGRundschriftD.woff') format('woff'),
+       font-url('https://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/fonts/VAGRundschriftD/VAGRundschriftD.ttf') format('truetype'),
+       font-url('https://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/fonts/VAGRundschriftD/VAGRundschriftD.svg#VAGRundschriftD') format('svg');
   font-weight: normal;
   font-style: normal;
 }
