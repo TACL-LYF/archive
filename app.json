@@ -1,7 +1,7 @@
 {
   "name": "archives",
   "scripts": {
-    "postdeploy": "rails db:schema:load; rails db:seed"
+    "postdeploy": "rails db:seed"
   },
   "env": {
     "STRIPE_PUBLISHABLE_KEY": {
@@ -19,6 +19,8 @@
     }
   ],
   "buildpacks": [
-
+    {
+      "url": "heroku/ruby"
+    }
   ]
 }
