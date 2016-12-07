@@ -1,2 +1,2 @@
-release: rails db:migrate; rails db:seed
+release: rails db:migrate
 web: bundle exec puma -C config/puma.rb
