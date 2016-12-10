@@ -31,7 +31,7 @@
   </div>
   <div class="col-md-4">
     <h5>Birthdate:</h5>
-    <p><%= @camper.birthdate.strftime('%B %e, %Y') %></p>
+    <p><%= "#{@camper.birth_month} #{@camper.birth_day}, #{@camper.birth_year}" %></p>
   </div>
   <div class="col-md-4">
     <h5>Grade:</h5>

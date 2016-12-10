@@ -5,7 +5,7 @@ class Registration < ApplicationRecord
   belongs_to :registration_payment, inverse_of: :registrations, optional: true
 
   cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
-  attr_accessor :reg_step
+  attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day
 
   validates :camp, :camper, :city, :state, presence: true
   validates :grade, inclusion: 3..12,
@@ -17,8 +17,11 @@ class Registration < ApplicationRecord
                            message: "information required"
   end
   with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
-    validates :waiver_signature, :waiver_date, presence: true
+    validates :waiver_signature, :waiver_year, :waiver_month, :waiver_day,
+              presence: true
     validate :waiver_signature_matches_name, on: :create, unless: "waiver_signature.nil?"
+    validate :waiver_date_matches_date,
+             unless: "waiver_year.nil? || waiver_month.nil? || waiver_day.nil?"
   end
 
   enum shirt_size: Hash[SHIRT_SIZES.zip (0..SHIRT_SIZES.size)]
@@ -44,10 +47,22 @@ class Registration < ApplicationRecord
     list.blank? ? "None" : list
   end
 
-  def waiver_signature_matches_name
-    parent_name = camper.family.primary_parent.gsub(/\s+/, "").downcase
-    unless parent_name == waiver_signature.gsub(/\s+/, "").downcase
-      errors.add(:waiver_signature, "doesn't seem to match the primary parent name")
+  private
+    def waiver_signature_matches_name
+      parent_name = camper.family.primary_parent.gsub(/\s+/, "").downcase
+      unless parent_name == waiver_signature.gsub(/\s+/, "").downcase
+        errors.add(:waiver_signature, "doesn't seem to match the primary parent name")
+      end
     end
-  end
+
+    def waiver_date_matches_date
+      begin
+        self.waiver_date = Date.parse(waiver_day+" "+waiver_month+" "+waiver_year)
+        unless waiver_date <= Date.today && waiver_date >= Date.today-1
+          errors.add(:waiver_date, "doesn't seem to be the current date")
+        end
+      rescue
+        errors.add(:waiver_date, "is not a valid date")
+      end
+    end
 end

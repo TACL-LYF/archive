@@ -25,10 +25,12 @@
       <p class="help-block">Enter your full name to accept the above waiver.</p>
       <%= f.text_field :waiver_signature, class: 'form-control' %>
     </div>
-    <div class="col-md-6 form-group">
+    <div class="col-md-6 form-group date-fields-wrapper">
       <%= f.label :waiver_date, "Today's Date" %>
       <p class="help-block">Enter today's date to accept the above waiver.</p>
-      <%= f.date_select :waiver_date, { order: [:day, :month, :year], prompt: { day: 'Day', month: 'Month', year: 'Year' }}, { class: 'date form-control' } %>
+      <%= f.select :waiver_day, Registration::DATES_FOR_SELECT, {}, { class: 'form-control' } %>
+      <%= f.select :waiver_month, Registration::MONTHS_FOR_SELECT,{}, { class: 'date form-control' } %>
+      <%= f.select :waiver_year, Registration::CURRENT_YEARS_FOR_SELECT, {}, { class: 'form-control' } %>
     </div>
   </div>
   <div class="row space-above-chasm">

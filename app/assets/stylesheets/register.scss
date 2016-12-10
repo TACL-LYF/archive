@@ -28,9 +28,11 @@ input.auto-width {
   width: auto;
 }
 
-.form-control.date {
-  display: inline-block;
-  width: auto;
+.date-fields-wrapper {
+  .form-control, .field_with_errors {
+    display: inline-block;
+    width: auto;
+  }
 }
 
 .form-control, .form-control:focus {

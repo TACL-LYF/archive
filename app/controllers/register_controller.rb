@@ -84,8 +84,8 @@ class RegisterController < ApplicationController
       end
     when "camper"
       session[:camper] ||= {}
-      camparams = camper_params(step).delete_if {|k,v| v.blank?}
-      session[:camper] = session[:camper].merge(camparams.to_h)
+      camparams = camper_params(step)
+      session[:camper] = session[:camper].merge(camparams.to_h).delete_if {|k,v| v.blank?}
       @camper = build_camper(session[:camper])
       if @camper.valid?
         redirect_to wizard_path(next_step)
@@ -256,8 +256,9 @@ class RegisterController < ApplicationController
     def camper_params(step)
       permitted_attrs = case step
         when "camper"
-          [:first_name, :last_name, :gender, :birthdate, :email, :returning,
-            :medical_conditions_and_medication, :diet_and_food_allergies]
+          [:first_name, :last_name, :gender, :birth_year, :birth_month,
+            :birth_day, :email, :returning, :medical_conditions_and_medication,
+            :diet_and_food_allergies]
         end
       params.require(:camper).permit(permitted_attrs).merge(reg_step: step)
     end
@@ -267,7 +268,7 @@ class RegisterController < ApplicationController
         when "details"
           [:grade, :shirt_size, :jtasa_chapter, :bus].push(*Registration.stored_attributes[:additional_shirts])
         when "waiver"
-          [:additional_notes, :waiver_signature, :waiver_date]
+          [:additional_notes, :waiver_signature, :waiver_year, :waiver_month, :waiver_day]
         when "camper_involvement"
           Registration.stored_attributes[:camper_involvement]
         end

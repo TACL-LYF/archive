@@ -26,8 +26,10 @@
     <div class="col-md-4 form-group">
       <%= f.label :birthdate, 'Camper Date of Birth' %>
       <div class="row">
-        <div class="col-md-12">
-          <%= f.date_select :birthdate, { start_year: Date.today.year - 20, end_year: Date.today.year - 5, order: [:day, :month, :year], prompt: { day: 'Day', month: 'Month', year: 'Year' }}, { class: 'date form-control' } %>
+        <div class="col-md-12 date-fields-wrapper">
+          <%= f.select :birth_day, Camper::DATES_FOR_SELECT, {}, { class: 'form-control' } %>
+          <%= f.select :birth_month, Camper::MONTHS_FOR_SELECT,{}, { class: 'date form-control' } %>
+          <%= f.select :birth_year, Camper::CAMPER_BIRTH_YEARS_FOR_SELECT, {}, { class: 'form-control' } %>
         </div>
       </div>
     </div>
