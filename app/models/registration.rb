@@ -58,7 +58,7 @@ class Registration < ApplicationRecord
     def waiver_date_matches_date
       begin
         self.waiver_date = Date.parse(waiver_day+" "+waiver_month+" "+waiver_year)
-        unless waiver_date <= Date.today && waiver_date >= Date.today-1
+        unless waiver_date <= Date.today+1 && waiver_date >= Date.today-1
           errors.add(:waiver_date, "doesn't seem to be the current date")
         end
       rescue
