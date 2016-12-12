@@ -1,4 +1,4 @@
-class RegisterController < ApplicationController
+class RegistrationController < ApplicationController
   include Wicked::Wizard
   layout :registration_layout
 
