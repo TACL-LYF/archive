@@ -229,8 +229,8 @@ class RegistrationController < ApplicationController
           flash[:danger] = "There was a problem processing your payment."
           redirect_to wizard_path
         rescue => e
-          logger.debug "Error submitting registration form"
-          logger.debug e
+          logger.warn "Error submitting registration form"
+          logger.warn e
           flash[:danger] = "Something went wrong."
           redirect_to wizard_path
         end
@@ -367,11 +367,11 @@ class RegistrationController < ApplicationController
 
     def log_error_to_debugger_and_return_msg(e)
       err = e.json_body[:error]
-      logger.debug "Status is: #{e.http_status}"
-      logger.debug "Type is: #{err[:type]}"
-      logger.debug "Code is: #{err[:code]}"
-      logger.debug "Param is: #{err[:param]}"
-      logger.debug "Message is: #{err[:message]}"
+      logger.warn "Status is: #{e.http_status}"
+      logger.warn "Type is: #{err[:type]}"
+      logger.warn "Code is: #{err[:code]}"
+      logger.warn "Param is: #{err[:param]}"
+      logger.warn "Message is: #{err[:message]}"
       return err[:message]
     end
 
