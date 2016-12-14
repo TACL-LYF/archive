@@ -5,7 +5,7 @@ class Camper < ApplicationRecord
   accepts_nested_attributes_for :registrations
 
   cattr_accessor :reg_steps do %w[camper] end
-  attr_accessor :reg_step, :returning, :birth_year, :birth_month, :birth_day
+  attr_accessor :reg_step, :birth_year, :birth_month, :birth_day
 
   before_save { self.email = email.downcase unless email.nil? }
   before_validation :normalize_name
@@ -15,14 +15,13 @@ class Camper < ApplicationRecord
     validates :gender, :birth_year, :birth_month, :birth_day, presence: true
     validates :email, length: { maximum: 255 }, format: VALID_EMAIL_REGEX,
               allow_blank: true
+    validates :returning, inclusion: { in: [true, false] }
     validate :birthdate_is_valid,
              unless: "birth_year.nil? || birth_month.nil? || birth_day.nil?"
   end
   validates :medical_conditions_and_medication, :diet_and_food_allergies,
             presence: { message: "required. If none, please write \"N/A\"" },
             if: Proc.new { |c| c.required_for_step?(:camper) }
-  validates :returning, presence: true,
-            if: Proc.new { |c| c.reg_step == "camper" }
 
   enum gender: { male: 0, female: 1 }
   enum status: { active: 0, graduated: 1 }

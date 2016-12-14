@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205002125) do
+ActiveRecord::Schema.define(version: 20161214010624) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20161205002125) do
     t.integer  "family_id"
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
+    t.boolean  "returning"
     t.index ["family_id"], name: "index_campers_on_family_id"
   end
 

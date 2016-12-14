@@ -13,8 +13,8 @@ class Registration < ApplicationRecord
   validates :shirt_size, presence: true,
             if: Proc.new { |r| r.required_for_step?(:details) }
   with_options if: Proc.new { |r| r.required_for_step?(:details) } do
-    validates_inclusion_of :bus, in: [true, false],
-                           message: "information required"
+    validates :bus, inclusion: { in: [true, false],
+                                 message: "information required" }
   end
   with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
     validates :waiver_signature, :waiver_year, :waiver_month, :waiver_day,
