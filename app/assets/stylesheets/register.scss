@@ -40,6 +40,10 @@ input.auto-width {
   box-shadow: none;
 }
 
+.form-inline input[type="text"] {
+  margin-top: 1px;
+}
+
 select.form-control {
   -webkit-appearance: none;
   -moz-appearance: none;
