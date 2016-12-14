@@ -36,7 +36,7 @@ class Registration < ApplicationRecord
 
   def list_additional_shirts
     list = additional_shirts.reject{ |size, n| n == "" }.
-           reduce(""){|str, (size,n)| "#{str}#{size.titlecase} (#{n}), "}.
+           reduce(""){|str, (size,n)| "#{str}#{size.titlecase.gsub(/^(.+?)\s/){|x| x.upcase}} (#{n}), "}.
            chomp(", ")
     list.blank? ? "None" : list
   end

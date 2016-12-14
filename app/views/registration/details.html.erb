@@ -20,7 +20,7 @@
       <%= f.label :shirt_size, "T-shirt Size" %>
       <div class="row">
         <div class="col-md-8">
-          <%= f.select "shirt_size", @shirt_sizes.map {|s| [s.to_s.titlecase, s]}, {include_blank: true}, {class: "form-control"} %>
+          <%= f.select "shirt_size", @shirt_sizes.map {|s| [s.to_s.titlecase.gsub(/^(.+?)\s/){|x| x.upcase}, s]}, {include_blank: true}, {class: "form-control"} %>
         </div>
       </div>
       <p class="help-block">One t-shirt is included in the camp fee. All fits are based on Unisex sizes. Please refer to the size chart <%= link_to 'here', "https://www.bellacanvas.com/bella/images/UNISEX_XS-2XL.jpg", target: '_blank' %>.</p>
@@ -35,7 +35,7 @@
   <div class="row">
     <% @shirt_sizes.each do |size| %>
       <div class="col-md-2">
-        <%= f.label size, size.to_s.titlecase %>
+        <%= f.label size, size.to_s.titlecase.gsub(/^(.+?)\s/){|x| x.upcase} %>
         <%= f.number_field size, min: 0, class: "form-control" %>
       </div>
     <% end %>

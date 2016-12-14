@@ -54,7 +54,7 @@ class RegistrationPayment < ApplicationRecord
       running_total += extra_shirts_total
       c = {
         name: r.camper.full_name,
-        shirt_size: r.shirt_size.titlecase,
+        shirt_size: r.shirt_size.titlecase.gsub(/^(.+?)\s/){|x| x.upcase},
         extra_shirts: r.list_additional_shirts,
         extra_shirts_total: extra_shirts_total
       }
