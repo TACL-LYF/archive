@@ -15,9 +15,9 @@ class CampDashboard < Administrate::BaseDashboard
     year: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    registration_fee: Field::String.with_options(searchable: false, prefix: "$"),
-    shirt_price: Field::String.with_options(searchable: false),
-    sibling_discount: Field::String.with_options(searchable: false),
+    registration_fee: Field::Number.with_options(searchable: false, prefix: "$", decimals: 2),
+    shirt_price: Field::Number.with_options(searchable: false, prefix: "$", decimals: 2),
+    sibling_discount: Field::Number.with_options(searchable: false, prefix: "$", decimals: 2),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -52,10 +52,8 @@ class CampDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :registrations,
-    :registration_discounts,
-    :name,
     :year,
+    :name,
     :registration_fee,
     :shirt_price,
     :sibling_discount,

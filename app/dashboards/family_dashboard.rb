@@ -35,32 +35,32 @@ class FamilyDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :campers,
-    :referrals,
-    :referral_methods,
     :id,
+    :primary_parent_first_name,
+    :primary_parent_last_name,
+    :primary_parent_email,
+    :primary_parent_phone_number,
+    :city,
+    :campers,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :campers,
-    :referrals,
-    :referral_methods,
     :id,
-    :primary_parent_first_name,
-    :primary_parent_last_name,
     :primary_parent_email,
     :primary_parent_phone_number,
     :secondary_parent_first_name,
     :secondary_parent_last_name,
     :secondary_parent_email,
     :secondary_parent_phone_number,
-    :suite,
     :street,
+    :suite,
     :city,
     :state,
     :zip,
+    :campers,
+    :referrals,
     :created_at,
     :updated_at,
   ].freeze
@@ -69,9 +69,6 @@ class FamilyDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :campers,
-    :referrals,
-    :referral_methods,
     :primary_parent_first_name,
     :primary_parent_last_name,
     :primary_parent_email,
@@ -80,11 +77,12 @@ class FamilyDashboard < Administrate::BaseDashboard
     :secondary_parent_last_name,
     :secondary_parent_email,
     :secondary_parent_phone_number,
-    :suite,
     :street,
+    :suite,
     :city,
     :state,
     :zip,
+    :campers,
   ].freeze
 
   # Overwrite this method to customize how families are displayed

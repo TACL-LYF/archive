@@ -94,7 +94,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how registrations are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(registration)
-  #   "Registration ##{registration.id}"
-  # end
+  def display_resource(registration)
+    "#{registration.camp.year} Registration - #{registration.camper.full_name}"
+  end
 end
