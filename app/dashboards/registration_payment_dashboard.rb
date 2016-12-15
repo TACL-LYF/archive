@@ -46,7 +46,6 @@ class RegistrationPaymentDashboard < Administrate::BaseDashboard
     :stripe_charge_id,
     :stripe_brand,
     :stripe_last_four,
-    :breakdown,
     :created_at,
     :updated_at,
   ].freeze
@@ -61,7 +60,6 @@ class RegistrationPaymentDashboard < Administrate::BaseDashboard
     :additional_donation,
     :discount_code,
     :stripe_charge_id,
-    :breakdown,
     :stripe_brand,
     :stripe_last_four,
   ].freeze
