@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
+
   namespace :admin do
     resources :camps
     resources :families
@@ -12,5 +14,6 @@ Rails.application.routes.draw do
     root to: "registrations#index"
   end
 
+  root to: "admin/registrations#index"
   resources :registration
 end

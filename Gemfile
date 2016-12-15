@@ -17,6 +17,7 @@ gem 'envyable'
 gem 'data-confirm-modal'
 gem 'bourbon'
 gem 'administrate', '~> 0.3.0'
+gem 'devise'
 # gem 'will_paginate',           '3.1.0'
 # gem 'bootstrap-will_paginate', '0.0.10'
 

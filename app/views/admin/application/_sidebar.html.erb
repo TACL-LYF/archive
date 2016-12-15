@@ -19,4 +19,7 @@ as defined by the routes in the `admin/` namespace
       </li>
     <% end %>
   <% end %>
+  <li>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "sidebar__link" %>
+  </li>
 </ul>
