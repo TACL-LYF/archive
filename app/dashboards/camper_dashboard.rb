@@ -61,7 +61,6 @@ class CamperDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :family,
-    :registrations,
     :first_name,
     :last_name,
     :birthdate,
@@ -69,8 +68,9 @@ class CamperDashboard < Administrate::BaseDashboard
     :email,
     :medical_conditions_and_medication,
     :diet_and_food_allergies,
-    :status,
     :returning,
+    :status,
+    :registrations,
   ].freeze
 
   # Overwrite this method to customize how campers are displayed

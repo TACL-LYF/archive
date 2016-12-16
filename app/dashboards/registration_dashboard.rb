@@ -74,7 +74,6 @@ class RegistrationDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :camp,
     :camper,
-    :registration_payment,
     :grade,
     :shirt_size,
     :bus,
@@ -89,6 +88,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
     :additional_shirts,
     :camper_involvement,
     :jtasa_chapter,
+    :registration_payment,
   ].freeze
 
   # Overwrite this method to customize how registrations are displayed
