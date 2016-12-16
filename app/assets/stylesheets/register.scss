@@ -13,8 +13,18 @@ h1, h2, h3, h4, h5, h6, {
   @include vag_font;
 }
 
+@media (max-width: $screen-sm-max) {
+  body {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+
 .container.left {
   margin-left: 1rem;
+  @media (max-width: $screen-sm-max) {
+    margin-left: auto;
+  }
 }
 
 ul.padding-smaller {
@@ -126,7 +136,7 @@ label + .help-block {
 $steps: (
   landing: $redmagenta,
   parent: $teal,
-  referral: $teal,
+  referral: $darkblue,
   camper: $lightblue,
   details: $lightblue,
   camper_involvement: $lightblue,
@@ -170,6 +180,13 @@ ol.registration_outline:first-child {
 
 .form-outline a {
   color: $gray;
+  text-decoration: underline;
+}
+.form-outline-sm {
+  border-bottom: 1px solid $gray;
+  .registration_outline li {
+    padding: 0;
+  }
 }
 
 /* spacing */
@@ -205,4 +222,7 @@ ol.registration_outline:first-child {
 }
 .space-above-narrow {
   margin-top: 1rem;
+}
+.space-above-xs {
+  margin-top: 0.5rem;
 }

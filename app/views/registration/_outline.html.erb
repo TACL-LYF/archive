@@ -1,17 +1,36 @@
-<%= link_to image_tag("logo.png", size: "136", alt: "TACL-LYF Logo"), "https://lyf.tacl.org", target: "_blank" %>
-<h2>LYF Camp 2017 Registration</h2>
-<ol class="registration_outline space-above-massive">
-  <% @outline.each do |outline_step, steps| %>
-    <li<%= " class=accent" if steps.include? @current_step %>><%= outline_step.to_s.titlecase%></li>
+<div class="col-md-2 hidden-xs hidden-sm affix form-outline">
+  <%= link_to image_tag("logo.png", size: "136", alt: "TACL-LYF Logo", class: "logo"), "https://lyf.tacl.org", target: "_blank" %>
+  <h2>LYF Camp 2017 Registration</h2>
+  <ol class="registration_outline space-above-massive">
+    <% @outline.each do |outline_step, steps| %>
+      <li<%= " class=accent" if steps.include? @current_step %>><%= outline_step.to_s.titlecase%></li>
+    <% end %>
+  </ol>
+  <% unless @current_step == "confirmation" %>
+    <p class="space-above-massive vag">
+      Do not use your browser's back/forward buttons to navigate this form!
+    </p>
+    <p>Please use the buttons at the bottom of the form to navigate between pages.</p>
   <% end %>
-</ol>
-<% unless @current_step == "confirmation" %>
-  <p class="space-above-massive vag">
-    <!-- <%= link_to "Cancel Registration", wizard_path(:landing), data: { title: 'Are you sure?', confirm: "Are you sure you want to cancel this registration? No information will be saved." }, class: "btn btn-white" %> -->
-    Do not use your browser's back/forward buttons to navigate this form!
+  <p class="space-above-med">
+    <%= link_to "View Registration Policy", "#registration_policy", "data-toggle" => "modal" %>
   </p>
-  <p>Please use the buttons at the bottom of the form to navigate between pages.</p>
-<% end %>
-<p class="space-above-med">
-  <%= link_to "View Registration Policy", "#registration_policy", "data-toggle" => "modal" %>
-</p>
+</div>
+
+<div class="col-md-2 hidden-md hidden-lg form-outline form-outline-sm">
+  <div class="row">
+    <div class="col-xs-4">
+      <h5 class="space-above-xs">LYF Camp 2017 Registration</h5>
+    </div>
+    <div class="col-xs-4 text-center">
+      <ol class="list-inline registration_outline">
+        <% @outline.each do |outline_step, steps| %>
+          <li<%= " class=accent" if steps.include? @current_step %>></li>
+        <% end %>
+      </ol>
+    </div>
+    <div class="col-xs-4 text-right">
+      <%= link_to "View Registration Policy", "#registration_policy", "data-toggle" => "modal" %>
+    </div>
+  </div>
+</div>

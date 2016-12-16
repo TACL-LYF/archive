@@ -15,9 +15,7 @@
   <body>
     <div class="container left <%= @current_step %>">
       <div class="row">
-        <div class="col-md-2 affix form-outline">
-          <%= render 'outline' %>
-        </div>
+        <%= render 'outline' %>
         <div class="col-md-9 col-md-offset-3">
           <% flash.each do |message_type, message| %>
             <% unless message_type == 'form_has_errors' %>

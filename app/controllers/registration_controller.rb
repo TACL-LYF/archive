@@ -355,8 +355,9 @@ class RegistrationController < ApplicationController
 
     def get_outline
       outline = {
-        parent_info: [ "parent", "referral" ],
-        camper_info: [ "camper", "details", "waiver", "coordinator", "review" ],
+        parent_information: [ "parent" ],
+        referral: [ "referral" ],
+        camper_information: [ "camper", "details", "waiver", "coordinator", "review" ],
         register_a_sibling: [ "siblings" ],
         add_a_donation: [ "donation" ],
         payment: [ "payment" ],
