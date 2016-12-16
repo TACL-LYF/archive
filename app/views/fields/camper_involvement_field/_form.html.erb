@@ -2,5 +2,10 @@
   <%= f.label field.attribute %>
 </div>
 <div class="field-unit__field">
-  <%= f.text_field field.attribute %>
+  <% f.object.class.stored_attributes[field.attribute].each do |role| %>
+    <%= f.label role do %>
+      <%= f.check_box role, {}, '1', '' %>
+      <%= role.to_s.titlecase %>
+    <% end %>
+  <% end %>
 </div>

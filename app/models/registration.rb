@@ -17,8 +17,9 @@ class Registration < ApplicationRecord
                                  message: "information required" }
   end
   with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
-    validates :waiver_signature, :waiver_year, :waiver_month, :waiver_day,
-              presence: true
+    validates :waiver_signature, presence: true
+    validates :waiver_year, :waiver_month, :waiver_day, presence: true,
+              if: "waiver_date.nil?"
     validate :waiver_signature_matches_name, on: :create, unless: "waiver_signature.nil?"
     validate :waiver_date_matches_date,
              unless: "waiver_year.nil? || waiver_month.nil? || waiver_day.nil?"

@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215005327) do
+ActiveRecord::Schema.define(version: 20161215234036) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "birthdate"
+    t.date     "birthdate"
     t.integer  "gender"
     t.string   "email"
     t.text     "medical_conditions_and_medication"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20161215005327) do
     t.boolean  "bus"
     t.text     "additional_notes"
     t.string   "waiver_signature"
-    t.datetime "waiver_date"
+    t.date     "waiver_date"
     t.integer  "group"
     t.string   "camp_family"
     t.string   "cabin"

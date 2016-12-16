@@ -15,5 +15,12 @@ module Admin
 
     # See https://administrate-docs.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def resource_params
+      params.require(:registration).permit(
+        permitted_attributes
+          .push(*Registration.stored_attributes[:additional_shirts])
+          .push(*Registration.stored_attributes[:camper_involvement]))
+    end
   end
 end
