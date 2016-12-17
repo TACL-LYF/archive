@@ -16,13 +16,19 @@ jQuery(function ($) {
       $form.find("input[type=submit]").prop("disabled", false);
     } else {
       token = response.id;
-      $("#wizard_stripe_card_token").val(token);
-      $("[data-stripe=number]").val('');
-      $("[data-stripe=cvc]").val('');
-      $("[data-stripe=exp_year]").val('');
-      $("[data-stripe=exp_month]").val('');
-      $("[data-stripe=address_zip]").val('');
-      $form.get(0).submit();
+      card = response.card;
+      if (card.brand == "American Express") {
+        $(".stripe_error").text("Sorry, we do not accept American Express");
+        $form.find("input[type=submit]").prop("disabled", false);
+      } else {
+        $("#wizard_stripe_card_token").val(token);
+        $("[data-stripe=number]").val('');
+        $("[data-stripe=cvc]").val('');
+        $("[data-stripe=exp_year]").val('');
+        $("[data-stripe=exp_month]").val('');
+        $("[data-stripe=address_zip]").val('');
+        $form.get(0).submit();
+      }
     }
     return false;
   };

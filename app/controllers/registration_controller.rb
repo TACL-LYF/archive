@@ -228,6 +228,10 @@ class RegistrationController < ApplicationController
           msg = log_error_to_debugger_and_return_msg(e)
           flash[:danger] = "There was a problem processing your payment."
           redirect_to wizard_path
+        rescue Exceptions::AmexError => e
+          logger.warn "Amex card submitted"
+          flash[:danger] = "Sorry, we do not accept American Express"
+          redirect_to wizard_path
         rescue => e
           logger.warn "Error submitting registration form"
           logger.warn e

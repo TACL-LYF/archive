@@ -91,7 +91,15 @@ class RegistrationPayment < ApplicationRecord
       end
     end
 
+    def reject_if_amex
+      token = Stripe::Token.retrieve(stripe_token)
+      if token.card.brand == "American Express"
+        raise Exceptions::AmexError
+      end
+    end
+
     def process_payment
+      reject_if_amex
       calculate_total if total.blank?
       amount = (total*100).to_i
       r = self.registrations.first
