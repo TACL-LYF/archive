@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215234036) do
+ActiveRecord::Schema.define(version: 20161217002045) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -60,8 +60,9 @@ ActiveRecord::Schema.define(version: 20161215234036) do
   create_table "referral_methods", force: :cascade do |t|
     t.string   "name"
     t.boolean  "allow_details"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "details_field_label", default: "Please specify:"
   end
 
   create_table "referrals", force: :cascade do |t|

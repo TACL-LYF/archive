@@ -18,7 +18,7 @@
           <% end %>
           <% if rf.object.referral_method.allow_details %>
             <div class="form-group">
-              <%= rf.label :details, 'Please specify: ' %>
+              <%= rf.label :details, rf.object.referral_method.details_field_label %>
               <%= rf.text_field :details, class: "auto-width form-control" %>
             </div>
           <% end %>

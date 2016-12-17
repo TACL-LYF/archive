@@ -13,6 +13,7 @@ class ReferralMethodDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     allow_details: Field::Boolean,
+    details_field_label: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -34,6 +35,7 @@ class ReferralMethodDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :allow_details,
+    :details_field_label,
     :referrals,
     :created_at,
     :updated_at,
@@ -43,10 +45,9 @@ class ReferralMethodDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :referrals,
-    :families,
     :name,
     :allow_details,
+    :details_field_label,
   ].freeze
 
   # Overwrite this method to customize how referral methods are displayed
