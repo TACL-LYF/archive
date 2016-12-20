@@ -8,7 +8,7 @@ class FamilyDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    campers: Field::HasMany,
+    campers: Field::NestedHasMany.with_options(skip: :family),
     referrals: Field::HasMany,
     referral_methods: Field::HasMany,
     id: Field::Number,

@@ -88,7 +88,6 @@ class RegistrationDashboard < Administrate::BaseDashboard
     :additional_shirts,
     :camper_involvement,
     :jtasa_chapter,
-    :registration_payment,
   ].freeze
 
   # Overwrite this method to customize how registrations are displayed

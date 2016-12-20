@@ -4,7 +4,7 @@ class Registration < ApplicationRecord
   belongs_to :camper, inverse_of: :registrations
   belongs_to :registration_payment, inverse_of: :registrations, optional: true
 
-  before_create :copy_city_state_from_family
+  before_validation :copy_city_state_from_family
 
   cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
   attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day
@@ -20,7 +20,7 @@ class Registration < ApplicationRecord
   end
   with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
     validates :waiver_signature, :waiver_year, :waiver_month, :waiver_day,
-              presence: true
+              presence: true, if: "waiver_date.nil?"
     validate :waiver_signature_matches_name, on: :create, unless: "waiver_signature.nil?"
     validate :waiver_date_matches_date,
              unless: "waiver_year.nil? || waiver_month.nil? || waiver_day.nil?"

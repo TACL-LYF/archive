@@ -3,6 +3,8 @@ class Family < ApplicationRecord
   has_many :campers, inverse_of: :family
   has_many :referrals, inverse_of: :family
   has_many :referral_methods, through: :referrals
+
+  accepts_nested_attributes_for :campers
   accepts_nested_attributes_for :referrals, allow_destroy: true
 
   cattr_accessor :reg_steps do %w[parent referral] end

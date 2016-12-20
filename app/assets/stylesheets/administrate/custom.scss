@@ -1,8 +1,12 @@
 .inline-wrapper {
   display: inline-block;
-  width: 15%;
-  margin-right: 0.9%;
+  width: 15.7%;
   .attribute-label {
     width: auto;
   }
+}
+
+.nested-fields {
+  width: 100%!important;
+  margin-left: 5%!important;
 }
