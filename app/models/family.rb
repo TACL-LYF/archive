@@ -1,7 +1,7 @@
 class Family < ApplicationRecord
   include RegFormHelper
-  has_many :campers, inverse_of: :family
-  has_many :referrals, inverse_of: :family
+  has_many :campers, inverse_of: :family, dependent: :destroy
+  has_many :referrals, inverse_of: :family, dependent: :destroy
   has_many :referral_methods, through: :referrals
 
   accepts_nested_attributes_for :campers

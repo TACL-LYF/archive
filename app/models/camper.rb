@@ -1,7 +1,7 @@
 class Camper < ApplicationRecord
   include RegFormHelper
   belongs_to :family, inverse_of: :campers
-  has_many :registrations, inverse_of: :camper
+  has_many :registrations, inverse_of: :camper, dependent: :destroy
   accepts_nested_attributes_for :registrations
 
   cattr_accessor :reg_steps do %w[camper] end
