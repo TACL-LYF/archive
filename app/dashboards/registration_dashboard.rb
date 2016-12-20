@@ -28,6 +28,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
     additional_shirts: Field::AdditionalShirtsField,
     camper_involvement: Field::CamperInvolvementField,
     jtasa_chapter: Field::String,
+    preregistration: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -62,6 +63,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
     :registration_payment,
     :city,
     :state,
+    :preregistration,
     :waiver_signature,
     :waiver_date,
     :created_at,
@@ -78,6 +80,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
     :shirt_size,
     :bus,
     :additional_notes,
+    :preregistration,
     :waiver_signature,
     :waiver_date,
     :group,

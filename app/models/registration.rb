@@ -20,10 +20,9 @@ class Registration < ApplicationRecord
   end
   with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
     validates :waiver_signature, :waiver_year, :waiver_month, :waiver_day,
-              presence: true, if: "waiver_date.nil?"
-    validate :waiver_signature_matches_name, on: :create, unless: "waiver_signature.nil?"
-    validate :waiver_date_matches_date,
-             unless: "waiver_year.nil? || waiver_month.nil? || waiver_day.nil?"
+              presence: true, unless: :preregistration
+    validate :waiver_signature_matches_name, on: :create, unless: :preregistration
+    validate :waiver_date_matches_date, unless: :preregistration
   end
 
   enum shirt_size: Hash[SHIRT_SIZES.zip (0..SHIRT_SIZES.size)]
