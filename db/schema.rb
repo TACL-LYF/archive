@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161220014446) do
+ActiveRecord::Schema.define(version: 20170103230704) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -37,6 +37,23 @@ ActiveRecord::Schema.define(version: 20161220014446) do
     t.decimal  "shirt_price",      precision: 6,  scale: 2
     t.decimal  "sibling_discount", precision: 6,  scale: 2
     t.index ["year"], name: "index_camps_on_year", unique: true
+  end
+
+  create_table "donations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "street"
+    t.string   "suite"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.decimal  "amount",           precision: 10, scale: 2
+    t.string   "stripe_charge_id"
+    t.string   "stripe_brand"
+    t.integer  "stripe_last_four"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "families", force: :cascade do |t|
