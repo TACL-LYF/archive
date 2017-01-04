@@ -23,6 +23,10 @@ en:
   helpers:
     label:
       registration:
-        created_at: Registered At
+        created_at: Registered
+        medical_conditions_and_medication: Medical
+        diet_and_food_allergies: Diet/Allergies
+        primary_parent_email: Parent Email
+        primary_parent_phone_number: Parent Phone
       registration_discount:
         discount_percent: Discount %

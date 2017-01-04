@@ -10,6 +10,14 @@ class RegistrationDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     camp: Field::BelongsTo,
     camper: Field::BelongsTo,
+    family: Field::BelongsTo,
+    primary_parent_email: Field::String,
+    primary_parent_phone_number: Field::String,
+    birthdate: Field::DateTime,
+    gender: EnumField.with_options(searchable: false),
+    medical_conditions_and_medication: Field::Text,
+    diet_and_food_allergies: Field::Text,
+    returning: Field::Boolean,
     registration_payment: Field::BelongsTo,
     id: Field::Number,
     grade: Field::Number,
@@ -39,9 +47,17 @@ class RegistrationDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :created_at,
     :camper,
+    :family,
+    :primary_parent_email,
+    :primary_parent_phone_number,
+    :birthdate,
     :grade,
+    :gender,
+    :returning,
     :bus,
     :shirt_size,
+    :medical_conditions_and_medication,
+    :diet_and_food_allergies,
     :additional_notes,
   ].freeze
 

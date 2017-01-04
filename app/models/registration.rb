@@ -3,6 +3,9 @@ class Registration < ApplicationRecord
   belongs_to :camp, inverse_of: :registrations
   belongs_to :camper, inverse_of: :registrations
   belongs_to :registration_payment, inverse_of: :registrations, optional: true
+  delegate :family, :birthdate, :gender, :medical_conditions_and_medication,
+           :diet_and_food_allergies, :returning, :primary_parent_email,
+           :primary_parent_phone_number, to: :camper, allow_nil: true
 
   before_validation :copy_city_state_from_family
 
