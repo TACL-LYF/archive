@@ -54,6 +54,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
     :birthdate,
     :grade,
     :gender,
+    :returning,
     :bus,
     :shirt_size,
     :additional_shirts,

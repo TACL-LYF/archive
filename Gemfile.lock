@@ -183,6 +183,7 @@ GEM
       shellany (~> 0.0)
     orm_adapter (0.5.0)
     pg (0.18.4)
+    phonelib (0.6.8)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -323,6 +324,7 @@ DEPENDENCIES
   minitest-reporters (= 1.1.9)
   newrelic_rpm
   pg (= 0.18.4)
+  phonelib
   puma (= 3.4.0)
   rails (= 5.0.0.1)
   rails-controller-testing (= 0.1.1)

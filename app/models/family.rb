@@ -13,6 +13,7 @@ class Family < ApplicationRecord
   before_validation :normalize_names
   before_save { self.primary_parent_email = primary_parent_email.downcase }
   before_save { self.secondary_parent_email = secondary_parent_email.downcase if !secondary_parent_email.nil?}
+  before_save :normalize_phone_numbers
 
   with_options :if => Proc.new { |p| p.required_for_step?(:parent) } do
     validates :primary_parent_first_name, :primary_parent_last_name,
@@ -24,6 +25,8 @@ class Family < ApplicationRecord
               format: VALID_EMAIL_REGEX
     validates :secondary_parent_email, length: { maximum: 255 },
               format: VALID_EMAIL_REGEX, allow_blank: true
+    validates :primary_parent_phone_number, phone: true
+    validates :secondary_parent_phone_number, phone: { allow_blank: true }
     validates :state, length: { is: 2 }
     validates :zip, length: { minimum: 5 }
   end
@@ -36,11 +39,25 @@ class Family < ApplicationRecord
     "#{secondary_parent_first_name} #{secondary_parent_last_name}"
   end
 
-  protected
+  private
     def normalize_names
-      self.primary_parent_first_name.strip! unless primary_parent_first_name.nil?
-      self.primary_parent_last_name.strip! unless primary_parent_last_name.nil?
-      self.secondary_parent_first_name.strip! unless secondary_parent_first_name.nil?
-      self.secondary_parent_last_name.strip! unless secondary_parent_last_name.nil?
+      fields = %w[primary_parent_first_name primary_parent_last_name
+        secondary_parent_first_name secondary_parent_last_name suite street city
+      ]
+      fields.each do |field|
+        unless self.send("#{field}").nil?
+          self.send("#{field}=", self.send("#{field}").strip.gsub(/\b\w/, &:upcase))
+        end
+      end
+    end
+
+    def normalize_phone_numbers
+      fields = %w[primary_parent_phone_number secondary_parent_phone_number]
+      fields.each do |field|
+        unless self.send("#{field}").nil?
+          phone = Phonelib.parse(self.send("#{field}")).full_national
+          self.send("#{field}=", phone)
+        end
+      end
     end
 end

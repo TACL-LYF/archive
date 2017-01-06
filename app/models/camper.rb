@@ -10,7 +10,7 @@ class Camper < ApplicationRecord
   attr_accessor :reg_step, :birth_year, :birth_month, :birth_day
 
   before_save { self.email = email.downcase unless email.nil? }
-  before_validation :normalize_name
+  before_validation :normalize_names
 
   with_options :if => Proc.new { |c| c.required_for_step?(:camper) } do
     validates :first_name, :last_name, presence: true, length: { maximum: 50 }
@@ -43,13 +43,16 @@ class Camper < ApplicationRecord
     self[:gender][0].upcase
   end
 
-  protected
-    def normalize_name
-      self.first_name.strip! unless first_name.nil?
-      self.last_name.strip! unless last_name.nil?
+  private
+    def normalize_names
+      fields = %w[first_name last_name]
+      fields.each do |field|
+        unless self.send("#{field}").nil?
+          self.send("#{field}=", self.send("#{field}").strip.gsub(/\b\w/, &:upcase))
+        end
+      end
     end
 
-  private
     def birthdate_is_valid
       begin
         self.birthdate = Date.parse(birth_day + " " + birth_month + " " + birth_year)
