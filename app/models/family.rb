@@ -49,6 +49,7 @@ class Family < ApplicationRecord
           self.send("#{field}=", self.send("#{field}").strip.gsub(/\b\w/, &:upcase))
         end
       end
+      self.state = state.strip.upcase
     end
 
     def normalize_phone_numbers
