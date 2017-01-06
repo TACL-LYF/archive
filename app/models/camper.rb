@@ -16,7 +16,7 @@ class Camper < ApplicationRecord
     validates :first_name, :last_name, presence: true, length: { maximum: 50 }
     validates :gender, presence: true
     validates :birth_year, :birth_month, :birth_day, presence: true,
-              if: "birthdate.nil?"
+              unless: "!birthdate.nil?"
     validates :email, length: { maximum: 255 }, format: VALID_EMAIL_REGEX,
               allow_blank: true
     validates :returning, inclusion: { in: [true, false],

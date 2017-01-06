@@ -55,7 +55,8 @@ class Family < ApplicationRecord
       fields = %w[primary_parent_phone_number secondary_parent_phone_number]
       fields.each do |field|
         unless self.send("#{field}").nil?
-          phone = Phonelib.parse(self.send("#{field}")).full_national
+          phone = Phonelib.parse(self.send("#{field}"))
+          phone = phone.countries.include?("US") ? phone.full_national : phone.full_international
           self.send("#{field}=", phone)
         end
       end
