@@ -1,17 +1,17 @@
 class Donation < ApplicationRecord
-  validates :first_name, :last_name, :email, :phone, :address, :city, :state,
-            :zip, :stripe_charge_id, :stripe_brand, presence: true
+  validates :first_name, :last_name, :email, :address, :city, :state,
+            :zip, presence: true
   validates :email, length: { maximum: 255 }, format: VALID_EMAIL_REGEX
   validates :state, length: { is: 2 }
   validates :zip, length: { minimum: 5 }
   validates :amount, presence: true, numericality: { greater_than: 0 },
             format: { with: /\A\d+(?:\.\d{0,2})?\z/ }
-  validates :stripe_last_four, presence: true, length: { is: 4 },
-            numericality: { only_integer: true }
+  validates :stripe_last_four, length: { is: 4 },
+            numericality: { only_integer: true }, allow_blank: true
 
   before_create :process_payment
 
-  attr_accessor :stripe_card_token
+  attr_accessor :other_amount, :stripe_token
 
   private
     def reject_if_amex
