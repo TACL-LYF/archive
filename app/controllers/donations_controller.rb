@@ -7,6 +7,7 @@ class DonationsController < ApplicationController
     @donation = Donation.new(donation_params)
     begin
       if @donation.save
+        render 'confirm'
       else
         render 'new'
       end
@@ -51,6 +52,9 @@ class DonationsController < ApplicationController
       flash[:danger] = "Something went wrong."
       render 'new'
     end
+  end
+
+  def confirm
   end
 
   private
