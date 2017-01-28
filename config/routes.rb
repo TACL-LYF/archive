@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :donations, only: [:new, :create]
+  resources :donations, only: [:new, :create, :confirm]
 
   devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
 
