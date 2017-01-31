@@ -25,6 +25,8 @@ en:
       blank: "required"
   helpers:
     label:
+      donation:
+        created_at: Date
       registration:
         created_at: Registered At
       registration_discount:
