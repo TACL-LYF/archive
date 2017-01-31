@@ -6,50 +6,50 @@ class DonationsController < ApplicationController
   def create
     @donation = Donation.new(donation_params)
     begin
-      if @donation.save
-        render 'confirm'
+      if @donation.save!
+        redirect_to donation_confirmation_path
       else
         render 'new'
       end
     rescue Stripe::CardError => e
       msg = log_error_to_debugger_and_return_msg(e)
-      flash[:danger] = "There was a problem processing your payment: #{msg}"
+      flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::RateLimitError => e
       # Too many requests made to the API too quickly
       msg = log_error_to_debugger_and_return_msg(e)
-      flash[:danger] = "There was a problem processing your payment: #{msg} Please try again in a bit."
+      flash.now[:danger] = "There was a problem processing your payment: #{msg} Please try again in a bit."
       render 'new'
     rescue Stripe::InvalidRequestError => e
       # Invalid parameters were supplied to Stripe's API
       msg = log_error_to_debugger_and_return_msg(e)
-      flash[:danger] = "There was a problem processing your payment: #{msg}"
+      flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::AuthenticationError => e
       # Authentication with Stripe's API failed
       # (maybe you changed API keys recently)
       msg = log_error_to_debugger_and_return_msg(e)
-      flash[:danger] = "There was a problem processing your payment: #{msg}"
+      flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::APIConnectionError => e
       # Network communication with Stripe failed
       msg = log_error_to_debugger_and_return_msg(e)
-      flash[:danger] = "There was a problem processing your payment: #{msg}"
+      flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::StripeError => e
       # Display a very generic error to the user, and maybe send
       # yourself an email
       msg = log_error_to_debugger_and_return_msg(e)
-      flash[:danger] = "There was a problem processing your payment."
+      flash.now[:danger] = "There was a problem processing your payment."
       render 'new'
     rescue Exceptions::AmexError => e
       logger.warn "Amex card submitted"
-      flash[:danger] = "Sorry, we do not accept American Express"
+      flash.now[:danger] = "Sorry, we do not accept American Express"
       render 'new'
     rescue => e
       logger.warn "Error submitting registration form"
       logger.warn e
-      flash[:danger] = "Something went wrong."
+      flash.now[:danger] = "Something went wrong."
       render 'new'
     end
   end
@@ -65,7 +65,6 @@ class DonationsController < ApplicationController
     end
 
     def log_error_to_debugger_and_return_msg(e)
-      debugger
       err = e.json_body[:error]
       logger.warn "Status is: #{e.http_status}"
       logger.warn "Type is: #{err[:type]}"
