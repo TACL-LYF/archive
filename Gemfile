@@ -20,7 +20,7 @@ gem 'administrate', '~> 0.3.0'
 gem 'administrate-field-nested_has_many', :git => 'https://github.com/anellis/administrate-field-nested_has_many'
 gem 'devise'
 gem 'phonelib'
-gem 'client_side_validations', git: 'https://github.com/DavyJonesLocker/client_side_validations', branch: 'rails5'
+gem 'client_side_validations', :git => 'https://github.com/DavyJonesLocker/client_side_validations', :branch => 'rails5'
 # gem 'will_paginate',           '3.1.0'
 # gem 'bootstrap-will_paginate', '0.0.10'
 

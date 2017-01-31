@@ -10,11 +10,33 @@ class Donation < ApplicationRecord
   validates :stripe_last_four, length: { is: 4 },
             numericality: { only_integer: true }, allow_blank: true
 
+  before_validation :normalize_names
+  before_save { self.email = email.downcase }
+  before_save :normalize_phone
+
   before_create :process_payment
 
   attr_accessor :other_amount, :stripe_token
 
   private
+    def normalize_names
+      fields = %w[first_name last_name address city]
+      fields.each do |field|
+        unless self.send("#{field}").nil?
+          self.send("#{field}=", self.send("#{field}").strip.gsub(/\b\w/, &:upcase))
+        end
+      end
+      self.state = state.strip.upcase
+    end
+
+    def normalize_phone
+      unless self.phone.nil?
+        phone = Phonelib.parse(self.phone)
+        phone = phone.countries.include?("US") ? phone.full_national : phone.full_international
+        self.phone = phone
+      end
+    end
+
     def reject_if_amex
       token = Stripe::Token.retrieve(stripe_token)
       if token.card.brand == "American Express"
