@@ -7,7 +7,6 @@
 </div>
 <%= form_for @family, url: wizard_path, method: :put do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <%= f.hidden_field :stripe_card_token %>
   <div class="row space-above-wide">
     <div class="col-md-4 form-group">
       <%= f.label :primary_parent_first_name, "Parent First Name" %>
