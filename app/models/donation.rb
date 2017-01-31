@@ -2,6 +2,7 @@ class Donation < ApplicationRecord
   validates :first_name, :last_name, :email, :address, :city, :state,
             :zip, presence: true
   validates :email, length: { maximum: 255 }, format: VALID_EMAIL_REGEX
+  validates :phone, phone: { allow_blank: true }
   validates :state, length: { is: 2 }
   validates :zip, length: { minimum: 5 }
   validates :amount, presence: true, numericality: { greater_than: 0 },
