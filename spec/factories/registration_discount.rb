@@ -1,9 +1,8 @@
 FactoryGirl.define do
   factory :registration_discount do
-    code "MyString"
-    discount_percent 1
+    camp
+    code { Faker::Lorem.word.upcase }
+    discount_percent { rand(1..100) }
     redeemed false
-    camp nil
-    registration_payment nil
   end
 end

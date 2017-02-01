@@ -7,6 +7,7 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     gender { [:male, :female].sample }
     birthdate { Faker::Date.between(18.years.ago, 9.years.ago) }
+    returning { [true, false].sample }
     email { Faker::Internet.safe_email }
     medical_conditions_and_medication "N/A"
     diet_and_food_allergies "N/A"

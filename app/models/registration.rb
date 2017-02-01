@@ -22,8 +22,9 @@ class Registration < ApplicationRecord
                                  message: "information required" }
   end
   with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
-    validates :waiver_signature, :waiver_year, :waiver_month, :waiver_day,
-              presence: true, unless: "!waiver_date.nil? || preregistration"
+    validates :waiver_signature, presence: true, unless: :preregistration
+    validates :waiver_year, :waiver_month, :waiver_day, presence: true,
+              unless: "!waiver_date.nil? || preregistration"
     validate :waiver_signature_matches_name, on: :create, unless: :preregistration
     validate :waiver_date_matches_date, on: :create, unless: :preregistration
   end
@@ -53,11 +54,13 @@ class Registration < ApplicationRecord
 
   private
     def copy_city_state_from_family
+      return if camper.nil?
       self.city = camper.family.city
       self.state = camper.family.state
     end
 
     def waiver_signature_matches_name
+      return if waiver_signature.nil? || camper.nil?
       parent_name = camper.family.primary_parent.gsub(/\s+/, "").downcase
       unless parent_name == waiver_signature.gsub(/\s+/, "").downcase
         errors.add(:waiver_signature, "doesn't seem to match the primary parent name")
@@ -66,7 +69,7 @@ class Registration < ApplicationRecord
 
     def waiver_date_matches_date
       begin
-        self.waiver_date = Date.parse(waiver_day+" "+waiver_month+" "+waiver_year)
+        self.waiver_date ||= Date.parse(waiver_day+" "+waiver_month+" "+waiver_year)
         unless waiver_date <= Date.today+1 && waiver_date >= Date.today-1
           errors.add(:waiver_date, "doesn't seem to be the current date")
         end

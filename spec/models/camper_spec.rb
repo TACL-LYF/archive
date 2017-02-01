@@ -25,7 +25,7 @@ describe Camper do
   it "is invalid without dietary and allergy information" do
     expect(build(:camper, diet_and_food_allergies: nil)).to_not be_valid
   end
-  it "has a valid email if any" do
+  it "has a valid email address if any" do
     invalid_addresses = %w[user@example,com user_at_foo.org
                            user.name@example.foo@bar_baz.com foo@bar+baz.com]
     invalid_addresses.each do |address|

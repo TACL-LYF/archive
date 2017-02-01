@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RegistrationPaymentMailerMailer, type: :mailer do
+RSpec.describe RegistrationPaymentMailer, type: :mailer do
   describe "registration_confirmation" do
     let(:mail) { RegistrationPaymentMailerMailer.registration_confirmation }
 
