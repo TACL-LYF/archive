@@ -19,7 +19,16 @@
           <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
         <% end %>
       <% end %>
-      <%= yield %>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="row">
+            <div class="col-md-12">
+              <h1><%= link_to image_tag("logo.png", size: "100", alt: "TACL-LYF Logo", class: "logo"), "https://lyf.tacl.org", target: "_blank" %> Thank you for your support!</h1>
+            </div>
+          </div>
+          <%= yield %>
+        </div>
+      </div>
       <%= debug(params) if Rails.env.development? %>
     </div>
   </body>
