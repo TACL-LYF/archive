@@ -1,33 +1,12 @@
 <div class="row">
-  <div class="col-md-12">
-    <h1><%= link_to image_tag("logo.png", size: "125", alt: "TACL-LYF Logo", class: "logo"), "https://lyf.tacl.org", target: "_blank" %> Thank you for supporting LYF!</h1>
-  </div>
-</div>
-<%= form_for @donation, validate: true, html: {id: "donation_form"} do |f| %>
-<%= render 'shared/error_messages', object: f.object %>
-<div class="row">
-  <div class="col-md-6">
-    <h2>Enter Your Information</h2>
+  <div class="col-md-6 col-md-offset-3">
     <div class="row">
-      <div class="col-md-6 form-group">
-        <%= f.label :first_name %>
-        <%= f.text_field :first_name, class: 'form-control' %>
-      </div>
-      <div class="col-md-6 form-group">
-        <%= f.label :last_name %>
-        <%= f.text_field :last_name, class: 'form-control' %>
+      <div class="col-md-12">
+        <h1><%= link_to image_tag("logo.png", size: "100", alt: "TACL-LYF Logo", class: "logo"), "https://lyf.tacl.org", target: "_blank" %> Thank you for your support!</h1>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 form-group">
-        <%= f.label :email %>
-        <%= f.text_field :email, class: 'form-control' %>
-      </div>
-      <div class="col-md-6 form-group">
-        <%= f.label :phone, 'Phone (optional)' %>
-        <%= f.text_field :phone, class: 'form-control' %>
-      </div>
-    </div>
+    <%= form_for @donation, validate: true, html: {id: "donation_form"} do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
     <div class="row">
       <div class="col-md-12">
         <h2>Choose Your Donation Amount</h2>
@@ -59,8 +38,31 @@
         <% end %>
       </div>
     </div>
-  </div>
-  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Enter Your Information</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name, class: 'form-control' %>
+      </div>
+      <div class="col-md-6 form-group">
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <%= f.label :email %>
+        <%= f.text_field :email, class: 'form-control' %>
+      </div>
+      <div class="col-md-6 form-group">
+        <%= f.label :phone, 'Phone (optional)' %>
+        <%= f.text_field :phone, class: 'form-control' %>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <h2>Complete Your Donation</h2>
@@ -119,11 +121,11 @@
          <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-4">
+        <%= f.submit "Submit Donation", class: "btn btn-block btn-success" %>
+      </div>
+    </div>
+    <% end %>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-2 col-md-offset-10">
-    <%= f.submit "Submit Donation", class: "btn btn-block btn-success" %>
-  </div>
-</div>
-<% end %>
