@@ -68,12 +68,17 @@ class DonationsController < ApplicationController
     end
 
     def log_error_and_return(e)
-      err = e.json_body[:error]
       logger.warn "Status is: #{e.http_status}"
-      logger.warn "Type is: #{err[:type]}"
-      logger.warn "Code is: #{err[:code]}"
-      logger.warn "Param is: #{err[:param]}"
-      logger.warn "Message is: #{err[:message]}"
-      return err[:message]
+      if e.json_body
+        err = e.json_body[:error]
+        logger.warn "Type is: #{err[:type]}"
+        logger.warn "Code is: #{err[:code]}"
+        logger.warn "Param is: #{err[:param]}"
+        logger.warn "Message is: #{err[:message]}"
+        return err[:message]
+      else
+        logger.warn e.message
+        return e.message
+      end
     end
 end
