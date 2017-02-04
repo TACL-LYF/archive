@@ -20,8 +20,13 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  errors:
+    messages:
+      blank: "required"
   helpers:
     label:
+      donation:
+        created_at: Date
       registration:
         created_at: Registered
         family: Parent

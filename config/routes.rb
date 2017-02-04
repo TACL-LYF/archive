@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :donations, only: [:new, :create]
+  get '/donations/confirm', to: 'donations#confirm', as: :donation_confirmation
+
   devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
 
   namespace :admin do
@@ -10,6 +13,7 @@ Rails.application.routes.draw do
     resources :referrals
     resources :referral_methods
     resources :registration_discounts
+    resources :donations
 
     root to: "registrations#index"
   end

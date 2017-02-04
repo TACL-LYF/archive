@@ -1,0 +1,8 @@
+TACL-LYF Donation Confirmation
+
+Thank you for your donation to TACL-LYF!
+
+We have received your donation of <%= number_to_currency @donation.amount %> via <%= "#{@donation.stripe_brand} #{"*"*12}#{@donation.stripe_last_four}" %>.
+<% if @donation.amount >= 100 %>
+Please look out for an email with a donation receipt for charitable tax deductions from us shortly.<% end %>
+If you have any questions, please contact christopher.lee@tacl.org.
