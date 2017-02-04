@@ -7,39 +7,40 @@ class DonationsController < ApplicationController
     @donation = Donation.new(donation_params)
     begin
       if @donation.save!
+        session[:donation_id] = @donation.id
         redirect_to donation_confirmation_path
       else
         render 'new'
       end
     rescue Stripe::CardError => e
-      msg = log_error_to_debugger_and_return_msg(e)
+      msg = log_error_and_return(e)
       flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::RateLimitError => e
       # Too many requests made to the API too quickly
-      msg = log_error_to_debugger_and_return_msg(e)
+      msg = log_error_and_return(e)
       flash.now[:danger] = "There was a problem processing your payment: #{msg} Please try again in a bit."
       render 'new'
     rescue Stripe::InvalidRequestError => e
       # Invalid parameters were supplied to Stripe's API
-      msg = log_error_to_debugger_and_return_msg(e)
+      msg = log_error_and_return(e)
       flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::AuthenticationError => e
       # Authentication with Stripe's API failed
       # (maybe you changed API keys recently)
-      msg = log_error_to_debugger_and_return_msg(e)
+      msg = log_error_and_return(e)
       flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::APIConnectionError => e
       # Network communication with Stripe failed
-      msg = log_error_to_debugger_and_return_msg(e)
+      msg = log_error_and_return(e)
       flash.now[:danger] = "There was a problem processing your payment: #{msg}"
       render 'new'
     rescue Stripe::StripeError => e
       # Display a very generic error to the user, and maybe send
       # yourself an email
-      msg = log_error_to_debugger_and_return_msg(e)
+      msg = log_error_and_return(e)
       flash.now[:danger] = "There was a problem processing your payment."
       render 'new'
     rescue Exceptions::AmexError => e
@@ -55,6 +56,7 @@ class DonationsController < ApplicationController
   end
 
   def confirm
+    @donation = Donation.find(session[:donation_id])
   end
 
   private
@@ -64,7 +66,8 @@ class DonationsController < ApplicationController
         :company, :stripe_token)
     end
 
-    def log_error_to_debugger_and_return_msg(e)
+    def log_error_and_return(e)
+      debugger
       err = e.json_body[:error]
       logger.warn "Status is: #{e.http_status}"
       logger.warn "Type is: #{err[:type]}"
