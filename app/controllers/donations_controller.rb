@@ -6,7 +6,7 @@ class DonationsController < ApplicationController
   def create
     @donation = Donation.new(donation_params)
     begin
-      if @donation.save!
+      if @donation.save
         session[:donation_id] = @donation.id
         DonationMailer.donation_confirmation(@donation).deliver_now
         redirect_to donation_confirmation_path
