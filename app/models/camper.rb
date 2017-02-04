@@ -14,7 +14,7 @@ class Camper < ApplicationRecord
 
   with_options :if => Proc.new { |c| c.required_for_step?(:camper) } do
     validates :first_name, :last_name, presence: true, length: { maximum: 50 }
-    validates :gender, presence: true
+    validates :family, :gender, presence: true
     validates :birth_year, :birth_month, :birth_day, presence: true,
               unless: "!birthdate.nil?"
     validates :email, length: { maximum: 255 }, format: VALID_EMAIL_REGEX,
