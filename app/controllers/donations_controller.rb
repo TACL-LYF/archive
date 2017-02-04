@@ -8,6 +8,7 @@ class DonationsController < ApplicationController
     begin
       if @donation.save!
         session[:donation_id] = @donation.id
+        DonationMailer.donation_confirmation(@donation).deliver_now
         redirect_to donation_confirmation_path
       else
         render 'new'
@@ -48,7 +49,7 @@ class DonationsController < ApplicationController
       flash.now[:danger] = "Sorry, we do not accept American Express"
       render 'new'
     rescue => e
-      logger.warn "Error submitting registration form"
+      logger.warn "Error submitting donation form"
       logger.warn e
       flash.now[:danger] = "Something went wrong."
       render 'new'
@@ -67,7 +68,6 @@ class DonationsController < ApplicationController
     end
 
     def log_error_and_return(e)
-      debugger
       err = e.json_body[:error]
       logger.warn "Status is: #{e.http_status}"
       logger.warn "Type is: #{err[:type]}"
