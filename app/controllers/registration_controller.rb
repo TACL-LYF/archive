@@ -1,5 +1,6 @@
 class RegistrationController < ApplicationController
   include Wicked::Wizard
+  # before_filter :prepare_exception_notifier
   layout :registration_layout
 
   all_steps = ["landing"] | Family.reg_steps | Camper.reg_steps | Registration.reg_steps |
@@ -378,6 +379,18 @@ class RegistrationController < ApplicationController
       logger.warn "Param is: #{err[:param]}"
       logger.warn "Message is: #{err[:message]}"
       return err[:message]
+    end
+
+    # store session contents for exception notifier
+    def prepare_exception_notifier
+      request.env["exception_notifier.session_data"] = {
+        family: session[:family],
+        campers: session[:campers],
+        regs: session[:regs],
+        current_camper: session[:camper],
+        current_reg: session[:reg],
+        payment: session[:payment]
+      }
     end
 
     # TODO: handle session overflow

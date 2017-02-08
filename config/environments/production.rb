@@ -95,4 +95,12 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Configure Exception Notification gem
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[LYF-ARCHIVE ERROR] ",
+      :sender_address => %{<su.rosette@gmail.com>},
+      :exception_recipients => %w{su.rosette@gmail.com}
+    }
 end

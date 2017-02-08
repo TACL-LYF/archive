@@ -21,6 +21,7 @@ gem 'administrate-field-nested_has_many', :git => 'https://github.com/anellis/ad
 gem 'devise'
 gem 'phonelib'
 gem 'client_side_validations', '~> 8.0', '>= 8.0.1'
+gem 'exception_notification'
 # gem 'will_paginate',           '3.1.0'
 # gem 'bootstrap-will_paginate', '0.0.10'
 
