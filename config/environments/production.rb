@@ -98,9 +98,8 @@ Rails.application.configure do
 
   # Configure Exception Notification gem
   Rails.application.config.middleware.use ExceptionNotification::Rack,
-    :email => {
-      :email_prefix => "[LYF-ARCHIVE ERROR] ",
-      :sender_address => %{<su.rosette@gmail.com>},
-      :exception_recipients => %w{su.rosette@gmail.com}
+    :slack => {
+      :webhook_url => ENV['SLACK_WEBHOOK_URL'],
+      :backtrace_lines => 5
     }
 end
