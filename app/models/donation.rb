@@ -26,14 +26,13 @@ class Donation < ApplicationRecord
           self.send("#{field}=", self.send("#{field}").strip.gsub(/\b\w/, &:upcase))
         end
       end
-      self.state = state.strip.upcase
+      self.state = state.strip.upcase unless self.state.nil?
     end
 
     def normalize_phone
       unless self.phone.nil?
-        phone = Phonelib.parse(self.phone)
-        phone = phone.countries.include?("US") ? phone.full_national : phone.full_international
-        self.phone = phone
+        p = Phonelib.parse(self.phone)
+        self.phone = p.countries.include?("US") ? p.full_national : p.full_international
       end
     end
 

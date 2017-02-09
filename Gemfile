@@ -47,6 +47,7 @@ group :test do
   gem 'guard-minitest',           '2.4.4'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'stripe-ruby-mock', '~> 2.4.0', :require => 'stripe_mock'
 # gem 'guard-rspec'
 # gem 'launchy'
 end
