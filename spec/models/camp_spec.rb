@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Camp do
+RSpec.describe Camp, type: :model do
   it "has a valid factory" do
     expect(build(:camp)).to be_valid
   end

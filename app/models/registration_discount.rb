@@ -16,7 +16,7 @@ class RegistrationDiscount < ApplicationRecord
     where(code: normalize_code(code), redeemed: false).take
   end
 
-  protected
+  private
     def toggle_redeem_if_payment_exists
       if self.registration_payment
         self.redeemed = true
@@ -25,7 +25,6 @@ class RegistrationDiscount < ApplicationRecord
       end
     end
 
-  private
     def self.normalize_code(code)
       code ||= ""
       code.gsub(/\s+/, '').upcase
