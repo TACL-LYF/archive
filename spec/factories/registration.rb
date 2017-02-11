@@ -2,8 +2,8 @@ require 'faker'
 
 FactoryGirl.define do
   factory :registration do
+    association :camp, strategy: :build
     camper
-    camp
     grade { rand(3..10) }
     shirt_size { %w[x_small small medium large x_large xx_large].sample }
     bus { [true, false].sample }

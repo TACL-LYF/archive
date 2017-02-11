@@ -72,7 +72,7 @@ class RegistrationPayment < ApplicationRecord
   end
 
   def calculate_total
-    calculate_payment_breakdown if breakdown.blank?
+    calculate_payment_breakdown
     self.total = breakdown[:total]
     return total
   end

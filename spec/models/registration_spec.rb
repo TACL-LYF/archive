@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Registration do
-  let(:camp) { build(:camp) }
   it "has a valid factory" do
     expect(build(:registration)).to be_valid
   end
@@ -13,7 +12,7 @@ describe Registration do
   end
   it "is invalid without a grade in the accepted range" do
     [nil, 2, 13].each do |g|
-      expect(build(:registration, camp: camp, grade: g)).to_not be_valid
+      expect(build(:registration, grade: g)).to_not be_valid
     end
   end
   it "is invalid without a shirt size" do
