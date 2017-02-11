@@ -22,6 +22,10 @@ RSpec.describe DonationMailer, type: :mailer do
       expect(mail.body.encoded).to match(donation.amount.to_s)
     end
 
+    it "renders the last 4 digits of the charged card" do
+      expect(mail.body.encoded).to match("#{donation.stripe_last_four}")
+    end
+
     it "does not include text about a donation receipt" do
       expect(mail.body.encoded)
         .to_not match("donation receipt for charitable tax deductions")
