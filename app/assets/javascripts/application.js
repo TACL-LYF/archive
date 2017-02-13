@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-//= require bootstrap/modal
 //= require data-confirm-modal
 //= require rails.validations
 //= require_tree .
