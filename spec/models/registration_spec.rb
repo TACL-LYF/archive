@@ -31,27 +31,49 @@ RSpec.describe Registration, type: :model do
   end
 
   describe "#total_additional_shirts" do
-    it "adds up the total number of additional shirts across all sizes" do
-      expect(build(:registration).total_additional_shirts).to eq(0)
-      reg = build(:registration, x_small: 1, small: 2, medium: 3, large: 4,
-                  x_large: 5, xx_large: 6)
-      expect(reg.total_additional_shirts).to eq(21)
+    context "without additional shirts" do
+      it "returns 0" do
+        expect(build(:registration).total_additional_shirts).to eq(0)
+      end
+    end
+    context "with additional shirts" do
+      it "adds up the total number of additional shirts across all sizes" do
+        reg = build(:registration, x_small: 1, small: 2, medium: 3, large: 4,
+                    x_large: 5, xx_large: 6)
+        expect(reg.total_additional_shirts).to eq(21)
+      end
     end
   end
 
   describe "#list_additional_shirts" do
-    it "gets all additional shirts as a string" do
-      expect(build(:registration).list_additional_shirts).to eq("None")
-      reg = build(:registration, x_small: 1, xx_large: 6)
-      expect(reg.list_additional_shirts).to eq("X Small (1), XX Large (6)")
+    context "without additional shirts" do
+      it "prints \"None\"" do
+        expect(build(:registration).list_additional_shirts).to eq("None")
+      end
+    end
+    context "with additional shirts" do
+      it "gets a list of all additional shirts and quantities" do
+        reg = build(:registration, x_small: 1, small: 2, medium: 3, large: 4,
+                    x_large: 5, xx_large: 6)
+        expect(reg.list_additional_shirts).to include("X Small (1)", "Small (2)",
+          "Medium (3)", "Large (4)", "X Large (5)", "XX Large (6)", ", ")
+      end
     end
   end
 
   describe "#list_camper_involvement" do
-    it "gets a comma-separated list of the roles the camper is interested in" do
-      expect(build(:registration).list_camper_involvement).to eq("None")
-      reg = build(:registration, clinic: true, night_market_booth: true)
-      expect(reg.list_camper_involvement).to eq("Clinic, Night Market Booth")
+    context "without any roles" do
+      it "prints \"None\"" do
+        expect(build(:registration).list_camper_involvement).to eq("None")
+      end
+    end
+    context "with one or more roles" do
+      it "gets a comma-separated list of the roles the camper is interested in" do
+        reg = build(:registration, clinic: true, night_market_booth: true,
+          large_group_icebreaker: true, family_activity: true, bus_monitor: true)
+        expect(reg.list_camper_involvement).to include("Large Group Icebreaker",
+          "Clinic", "Bus Monitor", "Night Market Booth", "Family Activity", ", ")
+      end
     end
   end
 end
