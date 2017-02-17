@@ -27,7 +27,7 @@
 <div class="row">
   <div class="col-md-4">
     <h5>Gender:</h5>
-    <p><%= @camper.gender.titlecase %></p>
+    <p><%= @camper.gender_abbr unless @camper.gender.nil? %></p>
   </div>
   <div class="col-md-4">
     <h5>Birthdate:</h5>
@@ -35,7 +35,7 @@
   </div>
   <div class="col-md-4">
     <h5>Grade:</h5>
-    <p><%= @reg.grade.ordinalize %></p>
+    <p><%= @reg.grade.ordinalize unless @reg.grade.nil? %></p>
   </div>
 </div>
 <div class="row">
@@ -51,7 +51,7 @@
 <div class="row">
   <div class="col-md-4">
     <h5>Shirt Size:</h5>
-    <p><%= @reg.shirt_size.titlecase.gsub(/^(.+?)\s/){|x| x.upcase} %></p>
+    <p><%= @reg.shirt_size.titlecase.gsub(/^(.+?)\s/){|x| x.upcase} unless @reg.shirt_size.nil? %></p>
   </div>
   <div class="col-md-8">
     <h5>Additional Shirts:</h5>

@@ -153,6 +153,11 @@ $steps: (
   @include accent($step, $color);
 }
 
+.alert-danger a{
+  color: $state-danger-text;
+  text-decoration: underline;
+}
+
 .review h5 {
   font-size: 1.6rem;
 }

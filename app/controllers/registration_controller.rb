@@ -1,6 +1,6 @@
 class RegistrationController < ApplicationController
   include Wicked::Wizard
-  # before_filter :prepare_exception_notifier
+  before_action :get_reg_session_and_prepare_exception_notifier
   layout :registration_layout
 
   all_steps = ["landing"] | Family.reg_steps | Camper.reg_steps | Registration.reg_steps |
@@ -10,7 +10,6 @@ class RegistrationController < ApplicationController
   def show
     @current_step = step
     @outline = get_outline
-    @reg_session = get_reg_session
     case step
     when "landing"
       delete_reg_session
@@ -52,7 +51,7 @@ class RegistrationController < ApplicationController
       @payment.valid? if flash[:form_has_errors]
     when "payment"
       @payment = build_payment
-      @payment.calculate_total
+      @payment.calculate_total unless @reg_session.payment.blank?
       @breakdown = @payment.breakdown
       @payment.valid? if flash[:form_has_errors]
     end
@@ -60,7 +59,6 @@ class RegistrationController < ApplicationController
   end
 
   def update
-    @reg_session = get_reg_session
     case step
     when "parent"
       famparams = family_params(step)
@@ -299,13 +297,35 @@ class RegistrationController < ApplicationController
       params.require(:wizard).permit(permitted_attrs).merge(reg_step: step)
     end
 
-    def get_reg_session
+    def get_reg_session(step)
       if session[:reg_session_id].nil?
+        set_interrupted_session_flash unless ["landing", "parent"].include?(step)
         RegSession.new(family: {}, campers: [], regs: [], camper: {}, reg: {},
           payment: {})
       else
-        RegSession.find(session[:reg_session_id])
+        reg_session = RegSession.find(session[:reg_session_id])
+        unless %w[landing parent].include?(step)
+          if reg_session.family.blank?
+            set_interrupted_session_flash
+          elsif reg_session.camper.blank? && %w[details camper_involvement waiver review].include?(step)
+            set_interrupted_session_flash
+          elsif reg_session.reg.blank? && %w[camper_involvement waiver review].include?(step)
+            set_interrupted_session_flash
+          elsif (reg_session.regs.blank? || reg_session.campers.blank?) && %w[siblings donation payment].include?(step)
+            set_interrupted_session_flash
+          end
+        end
+        return reg_session
       end
+    end
+
+    def set_interrupted_session_flash
+      msg = %Q[Oops! You're in the middle of the form, but we seem to have lost]
+      msg += %Q[ some of your previously entered information.<br />]
+      msg += %Q[Please <a href="/registration/landing">start again from the beginning</a>]
+      msg += %Q[, or email <a href="mailto:annie.huang@tacl.org">annie.huang@tacl.org</a>]
+      msg += %Q[ if the problem persists.]
+      flash.now[:danger] = msg.html_safe
     end
 
     def delete_reg_session
@@ -359,7 +379,7 @@ class RegistrationController < ApplicationController
       outline = {
         parent_information: [ "parent" ],
         referral: [ "referral" ],
-        camper_information: [ "camper", "details", "waiver", "coordinator", "review" ],
+        camper_information: [ "camper", "details", "waiver", "camper_involvement", "review" ],
         register_a_sibling: [ "siblings" ],
         add_a_donation: [ "donation" ],
         payment: [ "payment" ],
@@ -379,7 +399,8 @@ class RegistrationController < ApplicationController
     end
 
     # store relevant session contents for exception notifier
-    def prepare_exception_notifier
+    def get_reg_session_and_prepare_exception_notifier
+      @reg_session = get_reg_session(step)
       request.env['exception_notifier.exception_data'] = {
         "FAMILY" => @reg_session.family,
         "CAMPERS" => @reg_session.campers,

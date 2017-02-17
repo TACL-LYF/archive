@@ -12,6 +12,7 @@
 </div>
 <div class="row space-above-wide">
   <div class="col-md-12">
+    <% unless @breakdown.blank? %>
     <table class="table table-condensed">
       <% @breakdown[:campers].each do |camper| %>
         <tr>
@@ -47,6 +48,7 @@
         <th class="text-right"><%= number_to_currency @breakdown[:total] %></th>
       </tr>
     </table>
+    <% end %>
   </div>
 </div>
 <%= form_for :wizard, url: wizard_path, html: {id: "registration_form"}, method: :put do |f| %>
