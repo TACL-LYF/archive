@@ -1,6 +1,6 @@
 class RegistrationController < ApplicationController
   include Wicked::Wizard
-  before_filter :prepare_exception_notifier
+  # before_filter :prepare_exception_notifier
   layout :registration_layout
 
   all_steps = ["landing"] | Family.reg_steps | Camper.reg_steps | Registration.reg_steps |
@@ -10,43 +10,43 @@ class RegistrationController < ApplicationController
   def show
     @current_step = step
     @outline = get_outline
+    @reg_session = get_reg_session
     case step
     when "landing"
-      clear_session
+      delete_reg_session
     when "parent"
-      @family = Family.new(session[:family])
+      @family = Family.new(@reg_session.family)
       @family.valid? if flash[:form_has_errors]
     when "referral"
-      @family = Family.new(session[:family])
+      @family = Family.new(@reg_session.family)
       @rm_ids = @family.referrals.collect{|r| r.referral_method_id}
       @referrals = initialize_referrals(@family)
       @family.valid? if flash[:form_has_errors]
     when "camper"
-      @new_sibling = !session[:campers].nil?
-      @camper = build_camper(session[:camper])
+      @new_sibling = !@reg_session.campers.blank?
+      @camper = build_camper(@reg_session.camper)
       @camper.valid? if flash[:form_has_errors]
     when "details"
       @shirt_sizes = Registration.stored_attributes[:additional_shirts]
-      @reg = build_reg(session[:camper], session[:reg])
+      @reg = build_reg(@reg_session.camper, @reg_session.reg)
       @reg.valid? if flash[:form_has_errors]
     when "camper_involvement"
       if eligible_for_camper_involvement
         @camper_roles = Registration.stored_attributes[:camper_involvement]
-        @reg = build_reg(session[:camper], session[:reg])
+        @reg = build_reg(@reg_session.camper, @reg_session.reg)
         @reg.valid? if flash[:form_has_errors]
       else
         skip_step
       end
     when "waiver"
       @camper_involvement = eligible_for_camper_involvement
-      @reg = build_reg(session[:camper], session[:reg])
+      @reg = build_reg(@reg_session.camper, @reg_session.reg)
       @reg.valid? if flash[:form_has_errors]
     when "review"
-      @camper = build_camper(session[:camper])
-      @reg = build_reg(session[:camper], session[:reg])
+      @camper = build_camper(@reg_session.camper)
+      @reg = build_reg(@reg_session.camper, @reg_session.reg)
     when "siblings"
-      clear_current_registration
-      @regs = session[:campers].collect{ |c| c["first_name"]+" "+c["last_name"]}
+      @regs = @reg_session.campers.collect{ |c| c["first_name"]+" "+c["last_name"]}
     when "donation"
       @payment = build_payment
       @payment.valid? if flash[:form_has_errors]
@@ -60,13 +60,14 @@ class RegistrationController < ApplicationController
   end
 
   def update
+    @reg_session = get_reg_session
     case step
     when "parent"
       famparams = family_params(step)
-      session[:family] ||= {}
-      session[:family] = session[:family].merge(famparams.to_h).delete_if {|k,v| v.blank?}
-      @family = Family.new(session[:family])
-      if @family.valid?
+      @reg_session.family.merge!(famparams.to_h).delete_if {|k,v| v.blank?}
+      @reg_session.save
+      session[:reg_session_id] = @reg_session.id
+      if Family.new(@reg_session.family).valid?
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
@@ -75,56 +76,58 @@ class RegistrationController < ApplicationController
     when "referral"
       famparams = family_params(step)
       famparams[:referrals_attributes].delete_if {|k,v| v[:_destroy] == "1"}
-      session[:family] = session[:family].merge(famparams.to_h)
-      @family = Family.new(session[:family])
-      if @family.valid?
+      @reg_session.family.merge!(famparams.to_h)
+      @reg_session.save
+      if Family.new(@reg_session.family).valid?
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
         redirect_to wizard_path
       end
     when "camper"
-      session[:camper] ||= {}
       camparams = camper_params(step)
-      session[:camper] = session[:camper].merge(camparams.to_h).delete_if {|k,v| v.blank?}
-      @camper = build_camper(session[:camper])
-      if @camper.valid?
+      @reg_session.camper.merge!(camparams.to_h).delete_if {|k,v| v.blank?}
+      @reg_session.save
+      if build_camper(@reg_session.camper).valid?
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
         redirect_to wizard_path
       end
     when "details"
-      session[:reg] ||= {}
       regparams = reg_params(step)
-      session[:reg] = session[:reg].merge(regparams.to_h).delete_if {|k,v| v.blank? || v == "0"}
-      @reg = build_reg(session[:camper], session[:reg])
-      if @reg.valid?
+      @reg_session.reg.merge!(regparams.to_h).delete_if {|k,v| v.blank? || v == "0"}
+      @reg_session.save
+      if build_reg(@reg_session.camper, @reg_session.reg).valid?
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
         redirect_to wizard_path
       end
     when "camper_involvement"
-      session[:reg] = session[:reg].merge(reg_params(step).to_h).delete_if {|k,v| v.blank?}
-      @reg = build_reg(session[:camper], session[:reg])
-      if @reg.valid?
+      @reg_session.reg = @reg_session.reg.merge(reg_params(step).to_h).delete_if {|k,v| v.blank?}
+      @reg_session.save
+      if build_reg(@reg_session.camper, @reg_session.reg).valid?
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
         redirect_to wizard_path
       end
     when "waiver"
-      session[:reg] = session[:reg].merge(reg_params(step).delete_if {|k,v| v.blank?}.to_h)
-      @reg = build_reg(session[:camper], session[:reg])
-      if @reg.valid?
+      @reg_session.reg.merge!(reg_params(step).to_h.delete_if {|k,v| v.blank?}.to_h)
+      @reg_session.save
+      if build_reg(@reg_session.camper, @reg_session.reg).valid?
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
         redirect_to wizard_path
       end
     when "review"
-      store_reg_in_session
+      @reg_session.campers << @reg_session.camper
+      @reg_session.regs << @reg_session.reg
+      @reg_session.camper = {}
+      @reg_session.reg = {}
+      @reg_session.save
       redirect_to wizard_path(next_step)
     when "siblings"
       if params[:wizard].nil?
@@ -147,10 +150,9 @@ class RegistrationController < ApplicationController
         amount = params[:registration_payment][:donation_amount]
         params[:registration_payment][:additional_donation] = amount
       end
-      session[:payment] ||= {}
-      session[:payment] = session[:payment].merge(payment_params(step).to_h).delete_if {|k,v| v.blank? || v == "0"}
-      @payment = build_payment
-      if @payment.valid?
+      @reg_session.payment.merge!(payment_params(step).to_h).delete_if {|k,v| v.blank? || v == "0"}
+      @reg_session.save
+      if build_payment.valid?
         redirect_to wizard_path(next_step)
       else
         flash[:form_has_errors] = true
@@ -164,21 +166,22 @@ class RegistrationController < ApplicationController
           flash[:danger] = "Error: #{code} is not a valid code"
           redirect_to wizard_path
         else
-          session[:payment][:discount_code] = code
+          @reg_session.payment[:discount_code] = code
+          @reg_session.save
           flash[:info] = "Code #{code} successfully applied"
           redirect_to wizard_path
         end
       else
         begin
-          @family = Family.new(session[:family])
+          @family = Family.new(@reg_session.family)
           city = @family.city
           state = @family.state
           stripe_token = stripe_params(step)[:stripe_card_token]
           @family.transaction do
-            @payment = RegistrationPayment.new(session[:payment].merge(stripe_token: stripe_token))
-            campers = session[:campers]
+            @payment = RegistrationPayment.new(@reg_session.payment.merge(stripe_token: stripe_token))
+            campers = @reg_session.campers
             campers.each_with_index do |camper, i|
-              reg_fields = session[:regs][i].merge(camp: Camp.first, city: city,
+              reg_fields = @reg_session.regs[i].merge(camp: Camp.first, city: city,
                 state: state)
               c = @family.campers.build(camper)
               r = c.registrations.build(reg_fields)
@@ -187,7 +190,7 @@ class RegistrationController < ApplicationController
             if @family.save!
               if @payment.save!
                 RegistrationPaymentMailer.registration_confirmation(@payment).deliver_now
-                clear_session
+                delete_reg_session
                 redirect_to wizard_path(:confirmation)
               else
                 flash[:danger] = "Something went wrong."
@@ -296,6 +299,21 @@ class RegistrationController < ApplicationController
       params.require(:wizard).permit(permitted_attrs).merge(reg_step: step)
     end
 
+    def get_reg_session
+      if session[:reg_session_id].nil?
+        RegSession.new(family: {}, campers: [], regs: [], camper: {}, reg: {},
+          payment: {})
+      else
+        RegSession.find(session[:reg_session_id])
+      end
+    end
+
+    def delete_reg_session
+      reg_session_id = session[:reg_session_id]
+      RegSession.find(reg_session_id).destroy unless reg_session_id.nil?
+      session.delete(:reg_session_id)
+    end
+
     def initialize_referrals(family)
       rm_ids = family.referrals.collect{|r| r.referral_method_id}
       ReferralMethod.all.each do |rm|
@@ -308,7 +326,7 @@ class RegistrationController < ApplicationController
 
     def build_camper(camper_attrs)
       camper = Camper.new(camper_attrs)
-      camper.build_family(session[:family])
+      camper.build_family(@reg_session.family)
       return camper
     end
 
@@ -316,42 +334,21 @@ class RegistrationController < ApplicationController
       camper = build_camper(camper_attrs)
       reg_attrs ||= {}
       reg = camper.registrations.build(reg_attrs.merge(camp: Camp.first,
-        city: session[:family]["city"], state: session[:family]["state"]))
+        city: @reg_session.family["city"], state: @reg_session.family["state"]))
       return reg
     end
 
     def build_payment
-      payment = RegistrationPayment.new(session[:payment])
-      session[:regs].each_with_index do |reg_attrs, i|
-        r = build_reg(session[:campers][i], reg_attrs)
+      payment = RegistrationPayment.new(@reg_session.payment)
+      @reg_session.regs.each_with_index do |reg_attrs, i|
+        r = build_reg(@reg_session.campers[i], reg_attrs)
         payment.registrations << r
       end
       return payment
     end
 
     def eligible_for_camper_involvement
-      session[:camper]["returning"] == "true" && session[:reg]["grade"].to_i >= 10
-    end
-
-    def store_reg_in_session
-      session[:campers] ||= []
-      session[:regs] ||= []
-      session[:campers] << session[:camper]
-      session[:regs] << session[:reg]
-    end
-
-    def clear_current_registration
-      session[:camper] = nil
-      session[:reg] = nil
-    end
-
-    def clear_session
-      session[:family] = nil
-      session[:campers] = nil
-      session[:regs] = nil
-      session[:camper] = nil
-      session[:reg] = nil
-      session[:payment] = nil
+      @reg_session.camper["returning"]=="true" && @reg_session.reg["grade"].to_i>=10
     end
 
     def registration_layout
@@ -384,12 +381,12 @@ class RegistrationController < ApplicationController
     # store relevant session contents for exception notifier
     def prepare_exception_notifier
       request.env['exception_notifier.exception_data'] = {
-        "FAMILY" => session[:family],
-        "CAMPERS" => session[:campers],
-        "REGS" => session[:regs],
-        "CURRENT CAMPER" => session[:camper],
-        "CURRENT REG" => session[:reg],
-        "PAYMENT" => session[:payment]
+        "FAMILY" => @reg_session.family,
+        "CAMPERS" => @reg_session.campers,
+        "REGS" => @reg_session.regs,
+        "CURRENT CAMPER" => @reg_session.camper,
+        "CURRENT REG" => @reg_session.reg,
+        "PAYMENT" => @reg_session.payment
       }
     end
 
