@@ -9,7 +9,7 @@ as defined by the routes in the `admin/` namespace
 
 <ul class="sidebar__list">
   <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-    <% unless [:referrals, :referral_methods].include? resource %>
+    <% unless [:referrals].include? resource %>
       <li>
         <%= link_to(
           display_resource_name(resource),

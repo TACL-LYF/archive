@@ -341,7 +341,7 @@ class RegistrationController < ApplicationController
           family.referrals.build(referral_method_id: rm.id)
         end
       end
-      return family.referrals.sort_by(&:referral_method_id)
+      return family.referrals.sort_by{|r| r.referral_method.name == "Other" ? 100 : r.referral_method_id }
     end
 
     def build_camper(camper_attrs)

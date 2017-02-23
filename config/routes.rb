@@ -13,8 +13,8 @@ Rails.application.routes.draw do
     resources :registrations
     resources :registration_payments
     resources :referrals
-    resources :referral_methods
     resources :registration_discounts
+    resources :referral_methods
     resources :donations
 
     root to: "registrations#index"
