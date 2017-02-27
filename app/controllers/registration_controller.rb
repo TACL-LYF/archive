@@ -299,12 +299,12 @@ class RegistrationController < ApplicationController
 
     def get_reg_session(step)
       if session[:reg_session_id].nil?
-        set_interrupted_session_flash unless ["landing", "parent"].include?(step)
+        set_interrupted_session_flash unless %w[landing parent confirmation].include?(step)
         RegSession.new(family: {}, campers: [], regs: [], camper: {}, reg: {},
           payment: {})
       else
         reg_session = RegSession.find(session[:reg_session_id])
-        unless %w[landing parent].include?(step)
+        unless %w[landing parent confirmation].include?(step)
           if reg_session.family.blank?
             set_interrupted_session_flash
           elsif reg_session.camper.blank? && %w[details camper_involvement waiver review].include?(step)
