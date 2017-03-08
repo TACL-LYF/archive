@@ -30,6 +30,7 @@ class RegistrationPaymentDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :registrations,
     :registration_discount,
+    :additional_donation,
     :total,
   ].freeze
 
