@@ -210,13 +210,13 @@ class RegistrationController < ApplicationController
           redirect_to wizard_path
         rescue Stripe::InvalidRequestError => e
           # Invalid parameters were supplied to Stripe's API
-          msg = log_error_to_debugger_and_return_msg(e)
-          flash[:danger] = "There was a problem processing your payment: #{msg}"
+          logger.warn e.to_s
+          flash[:danger] = "There was a problem processing your payment. Please try again in a bit."
           redirect_to wizard_path
         rescue Stripe::AuthenticationError => e
           # Authentication with Stripe's API failed
           # (maybe you changed API keys recently)
-          msg = log_error_to_debugger_and_return_msg(e)
+          logger.warn e.to_s
           flash[:danger] = "There was a problem processing your payment: #{msg}"
           redirect_to wizard_path
         rescue Stripe::APIConnectionError => e
