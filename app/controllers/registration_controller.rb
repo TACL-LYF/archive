@@ -10,6 +10,7 @@ class RegistrationController < ApplicationController
   def show
     @current_step = step
     @outline = get_outline
+    @camp = Camp.first
     case step
     when "landing"
       delete_reg_session

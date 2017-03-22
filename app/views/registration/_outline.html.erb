@@ -1,6 +1,6 @@
 <div class="col-md-2 hidden-xs hidden-sm affix form-outline">
   <%= link_to image_tag("logo.png", size: "136", alt: "TACL-LYF Logo", class: "logo"), "https://lyf.tacl.org", target: "_blank" %>
-  <h2>LYF Camp 2017 Registration</h2>
+  <h2>LYF Camp <%= @camp.year %> Registration</h2>
   <ol class="registration_outline space-above-massive">
     <% @outline.each do |outline_step, steps| %>
       <li<%= " class=accent" if steps.include? @current_step %>><%= outline_step.to_s.titlecase%></li>

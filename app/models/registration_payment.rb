@@ -23,7 +23,8 @@ class RegistrationPayment < ApplicationRecord
 
   def calculate_payment_breakdown # also sets it in the field
     camp = registrations.first.camp
-    fee = camp.registration_fee
+    late_reg = Date.today >= camp.registration_late_date
+    fee = camp.registration_fee + (late_reg ? camp.registration_late_fee : 0)
     sibling_discount = camp.sibling_discount
     shirt_price = camp.shirt_price
     discount = RegistrationDiscount.get(self.discount_code) unless self.discount_code.blank?
@@ -58,7 +59,7 @@ class RegistrationPayment < ApplicationRecord
         extra_shirts: r.list_additional_shirts,
         extra_shirts_total: extra_shirts_total
       }
-      if discount.blank? && i != 0
+      if discount.blank? && i != 0 && !late_reg
         c[:sibling_discount] = sibling_discount
         running_total -= sibling_discount
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170216234350) do
+ActiveRecord::Schema.define(version: 20170321224330) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -31,11 +31,15 @@ ActiveRecord::Schema.define(version: 20170216234350) do
   create_table "camps", force: :cascade do |t|
     t.string   "name"
     t.integer  "year"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-    t.decimal  "registration_fee", precision: 10, scale: 2
-    t.decimal  "shirt_price",      precision: 6,  scale: 2
-    t.decimal  "sibling_discount", precision: 6,  scale: 2
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.decimal  "registration_fee",        precision: 10, scale: 2
+    t.decimal  "shirt_price",             precision: 6,  scale: 2
+    t.decimal  "sibling_discount",        precision: 6,  scale: 2
+    t.decimal  "registration_late_fee",   precision: 6,  scale: 2
+    t.date     "registration_open_date"
+    t.date     "registration_late_date"
+    t.date     "registration_close_date"
     t.index ["year"], name: "index_camps_on_year", unique: true
   end
 

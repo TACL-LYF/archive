@@ -15,7 +15,11 @@ class CampDashboard < Administrate::BaseDashboard
     year: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    registration_open_date: Field::DateTime,
+    registration_late_date: Field::DateTime,
+    registration_close_date: Field::DateTime,
     registration_fee: Field::Number.with_options(searchable: false, prefix: "$", decimals: 2),
+    registration_late_fee: Field::Number.with_options(searchable: false, prefix: "$", decimals: 2),
     shirt_price: Field::Number.with_options(searchable: false, prefix: "$", decimals: 2),
     sibling_discount: Field::Number.with_options(searchable: false, prefix: "$", decimals: 2),
   }.freeze
@@ -38,9 +42,13 @@ class CampDashboard < Administrate::BaseDashboard
     :id,
     :year,
     :name,
+    :registration_open_date,
+    :registration_late_date,
+    :registration_close_date,
     :registration_fee,
-    :shirt_price,
+    :registration_late_fee,
     :sibling_discount,
+    :shirt_price,
     :registrations,
     :registration_discounts,
     :created_at,
@@ -53,9 +61,13 @@ class CampDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :year,
     :name,
+    :registration_open_date,
+    :registration_late_date,
+    :registration_close_date,
     :registration_fee,
-    :shirt_price,
+    :registration_late_fee,
     :sibling_discount,
+    :shirt_price,
   ].freeze
 
   # Overwrite this method to customize how camps are displayed

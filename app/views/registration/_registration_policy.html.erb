@@ -4,7 +4,7 @@
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h1 class="modal-title">Registration Policy</h1>
-        <p class="space-above-med">Registration closes on May 1st. <b>Please note there is a $40 Late Registration fee starting April 1st.</b></p>
+        <p class="space-above-med">Registration closes on <%= @camp.registration_close_date.to_s(:short_ordinal) %>. <b>Please note there is a <%= number_to_currency(@camp.registration_late_fee, precision: 0) %> Late Registration fee starting <%= @camp.registration_late_date.to_s(:short_ordinal) %>.</b></p>
         <p>If your child has a conflict due to other extra-curricular activities (graduation, recitals, etc.), you can pull him/her out of camp for the conflict. Simply note on our registration form when you are picking up and dropping off your child. If your child is not attending the entirety of LYF Camp, the camp fee will not be prorated. Because we would love all campers the opportunity to join us at Camp, they are welcome to leave early if need be. Unfortunately, we do not prorate for this time, and the excess fee goes towards supporting our camp for the upcoming years.</p>
 
         <h3>Cancellation</h3>
@@ -21,7 +21,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h1 class="modal-title">Discounts and Financial Aid</h1>
         <h3>Sibling Discount</h3>
-        <p>For families with multiple campers, we will be granting an additional $40 discount per sibling. This amount will be deducted from the total camp fee. In order to receive this sibling discount, campers must be direct family, and registered at the same time. The sibling discount only applies to general registration and is not applicable to late registration.</p>
+        <p>For families with multiple campers, we will be granting an additional <%= number_to_currency(@camp.sibling_discount, precision: 0) %> discount per sibling. This amount will be deducted from the total camp fee. In order to receive this sibling discount, campers must be direct family, and registered at the same time. The sibling discount only applies to general registration and is not applicable to late registration.</p>
 
         <h3>Financial Aid</h3>
         <p>We do not want camp fees to prevent you from attending camp. Every year, we have options for families that may need financial assistance. Please email <%= mail_to "lyf@tacl.org", "lyf@tacl.org" %> to find out if you qualify.</p>
