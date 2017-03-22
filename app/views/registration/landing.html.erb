@@ -10,7 +10,7 @@
     </p>
     <p class="vag space-above-chasm">
       <%= number_to_currency(@camp.registration_fee, precision: 0) %><br>
-      General Registration<% if Date.today >= @camp.registration_late_date %> &mdash; CLOSED<% end %><br>
+      General Registration<% if Time.zone.today >= @camp.registration_late_date %> &mdash; CLOSED<% end %><br>
       (<%= @camp.registration_open_date.strftime("%b %-d, %Y") %> &ndash; <%= @camp.registration_late_date.yesterday.strftime("%b %-d, %Y") %>)
     </p>
     <p class="vag space-above-med">

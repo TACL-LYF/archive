@@ -27,7 +27,7 @@ RSpec.describe Registration, type: :model do
   end
   it "is invalid without a waiver date within 1 day of the current date" do
     expect(build(:registration, waiver_date: nil)).to_not be_valid
-    expect(build(:registration, waiver_date: Date.today-2)).to_not be_valid
+    expect(build(:registration, waiver_date: Time.zone.today-2)).to_not be_valid
   end
 
   describe "#total_additional_shirts" do
