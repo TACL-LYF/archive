@@ -3,12 +3,12 @@
   <div class="col-md-6">
     <h2>Payment Summary</h2>
   </div>
-  <%= form_for @payment, url: wizard_path, method: :put, html: { class: 'form-inline'} do |f| %>
-    <div class="col-md-6 form-group text-right space-above-chasm">
-      <%= f.text_field :discount_code, disabled: !@payment.discount_code.blank?, placeholder: "Enter Discount Code", class: "form-control input-sm" %>
-      <%= f.submit "Apply Discount", name: :apply_code, disabled: !@payment.discount_code.blank?, class: "btn btn-sm auto-width" %>
-    </div>
-  <% end %>
+  <div class="col-md-6 form-group text-right space-above-chasm">
+    <%= form_for @payment, url: wizard_path, method: :put, html: { class: 'form-inline'} do |f| %>
+      <%= f.text_field :discount_code, disabled: !@payment.discount_code.blank?, placeholder: "Enter Financial Aid Code", class: "form-control input-sm half-width" %>
+      <%= f.submit "Apply Code", name: :apply_code, disabled: !@payment.discount_code.blank?, class: "btn btn-sm auto-width" %>
+    <% end %>
+  </div>
 </div>
 <div class="row space-above-wide">
   <div class="col-md-12">
