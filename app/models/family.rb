@@ -39,6 +39,12 @@ class Family < ApplicationRecord
     "#{secondary_parent_first_name} #{secondary_parent_last_name}"
   end
 
+  def list_referral_methods
+    self.referrals.reduce("") { |memo, r|
+      memo + r.referral_method.name + (r.details.blank? ? "" : " (#{r.details})") + ", "
+    }.chomp(", ")
+  end
+
   private
     def normalize_names
       fields = %w[primary_parent_first_name primary_parent_last_name

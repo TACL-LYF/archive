@@ -34,6 +34,10 @@ class Registration < ApplicationRecord
   store :additional_shirts, accessors: SHIRT_SIZES
   store :camper_involvement, accessors: CAMPER_ROLES
 
+  def pretty_shirt_size
+    prettify_shirt_size(self.shirt_size)
+  end
+
   def total_additional_shirts
     num_shirts = additional_shirts.values.map(&:to_i).reduce(:+)
     return num_shirts || 0
@@ -41,7 +45,7 @@ class Registration < ApplicationRecord
 
   def list_additional_shirts
     list = additional_shirts.reject{ |size, n| n == "" }.
-           reduce(""){|str, (size,n)| "#{str}#{size.titlecase.gsub(/^(.+?)\s/){|x| x.upcase}} (#{n}), "}.
+           reduce(""){|str, (size,n)| "#{str}#{prettify_shirt_size(size)} (#{n}), "}.
            chomp(", ")
     list.blank? ? "None" : list
   end
@@ -53,6 +57,10 @@ class Registration < ApplicationRecord
   end
 
   private
+    def prettify_shirt_size(size)
+      size.titlecase.gsub(/^(.+?)\s/){|x| x.upcase}
+    end
+
     def copy_city_state_from_family
       return if camper.nil?
       self.city = camper.family.city
