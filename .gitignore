@@ -23,6 +23,7 @@
 # Don't check in credentials
 config/env.yml
 
-# Ignore spec example files
+# Ignore spec example/log files
 spec/examples.txt
 spec/.DS_Store
+stripe-mock-server.log
