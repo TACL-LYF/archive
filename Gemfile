@@ -46,8 +46,10 @@ group :test do
   gem 'minitest-reporters',       '1.1.9'
   gem 'guard',                    '2.13.0'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'stripe-ruby-mock', '~> 2.4.0', :require => 'stripe_mock'
+  gem 'thin', '~> 1.7'
 # gem 'guard-rspec'
 # gem 'launchy'
 end

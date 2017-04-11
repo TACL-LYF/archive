@@ -8,6 +8,11 @@ require 'rspec/rails'
 require 'capybara/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# setup mock server for stripe-ruby-mock
+require 'thin'
+require 'stripe_mock'
+StripeMock.spawn_server
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -78,3 +83,8 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+Capybara.register_driver :selenium_chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+Capybara.javascript_driver = :selenium_chrome

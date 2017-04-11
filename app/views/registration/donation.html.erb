@@ -14,37 +14,37 @@
 
         <div class="radio">
           <%= f.label :additional_donation do %>
-            <%= f.radio_button :additional_donation, 25 %> $25
+            <%= f.radio_button :additional_donation, 25, checked: @payment.additional_donation == 25 %> $25
           <% end %>
         </div>
         <div class="radio">
           <%= f.label :additional_donation do %>
-            <%= f.radio_button :additional_donation, 50 %> $50
+            <%= f.radio_button :additional_donation, 50, checked: @payment.additional_donation==50 %> $50
           <% end %>
         </div>
         <div class="radio">
           <%= f.label :additional_donation do %>
-            <%= f.radio_button :additional_donation, 100 %> $100
+            <%= f.radio_button :additional_donation, 100, checked: @payment.additional_donation==100 %> $100
           <% end %>
         </div>
         <div class="radio">
           <%= f.label :additional_donation do %>
-            <%= f.radio_button :additional_donation, 200 %> $200
+            <%= f.radio_button :additional_donation, 200, checked: @payment.additional_donation==200 %> $200
           <% end %>
         </div>
         <div class="radio">
           <%= f.label :additional_donation do %>
-            <%= f.radio_button :additional_donation, 500 %> $500
+            <%= f.radio_button :additional_donation, 500, checked: @payment.additional_donation==500 %> $500
           <% end %>
         </div>
         <div class="radio">
           <%= f.label :additional_donation do %>
-            <%= f.radio_button :additional_donation, 1000 %> $1,000
+            <%= f.radio_button :additional_donation, 1000, checked: @payment.additional_donation==1000 %> $1,000
           <% end %>
         </div>
         <div class="radio">
           <%= f.label :additional_donation do %>
-            <%= f.radio_button :additional_donation, "other" %> Other: $
+            <%= f.radio_button :additional_donation, "other", checked: ![nil,25,50,100,200,500,1000].include?(@payment.additional_donation) %> Other: $
             <%= f.number_field :donation_amount, min: 0, class: "auto-width form-control" %>
           <% end %>
         </div>

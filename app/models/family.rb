@@ -17,18 +17,20 @@ class Family < ApplicationRecord
 
   with_options :if => Proc.new { |p| p.required_for_step?(:parent) } do
     validates :primary_parent_first_name, :primary_parent_last_name,
-              :primary_parent_phone_number, :street, :city, presence: true
+              :primary_parent_email, :primary_parent_phone_number, :street,
+              :city, :state, :zip, presence: true
     validates :primary_parent_first_name, :primary_parent_last_name,
               :secondary_parent_first_name, :secondary_parent_last_name,
               length: { maximum: 50 }
     validates :primary_parent_email, length: { maximum: 255 },
-              format: VALID_EMAIL_REGEX
+              format: VALID_EMAIL_REGEX, unless: "primary_parent_email.blank?"
     validates :secondary_parent_email, length: { maximum: 255 },
               format: VALID_EMAIL_REGEX, allow_blank: true
-    validates :primary_parent_phone_number, phone: true
+    validates :primary_parent_phone_number, phone: true,
+              unless: "primary_parent_phone_number.blank?"
     validates :secondary_parent_phone_number, phone: { allow_blank: true }
-    validates :state, length: { is: 2 }
-    validates :zip, length: { minimum: 5 }
+    validates :state, length: { is: 2 }, unless: "state.blank?"
+    validates :zip, length: { minimum: 5 }, unless: "zip.blank?"
   end
 
   def primary_parent
