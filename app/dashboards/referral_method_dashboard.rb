@@ -8,7 +8,7 @@ class ReferralMethodDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    referrals: Field::HasMany,
+    referrals: Field::HasMany.with_options(limit: 100),
     families: Field::HasMany,
     id: Field::Number,
     name: Field::String,
@@ -36,9 +36,9 @@ class ReferralMethodDashboard < Administrate::BaseDashboard
     :name,
     :allow_details,
     :details_field_label,
-    :referrals,
     :created_at,
     :updated_at,
+    :referrals,
   ].freeze
 
   # FORM_ATTRIBUTES
