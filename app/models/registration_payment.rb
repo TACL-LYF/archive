@@ -3,8 +3,6 @@ class RegistrationPayment < ApplicationRecord
   has_many :registrations, inverse_of: :registration_payment
   has_one :registration_discount, inverse_of: :registration_payment
 
-  before_create :process_payment
-
   validate :same_camp_registrations
   validates :donation_amount, allow_nil: true,
             numericality: { greater_than_or_equal_to: 0 },
@@ -15,6 +13,8 @@ class RegistrationPayment < ApplicationRecord
     validates :stripe_last_four, presence: true, length: { is: 4 },
               numericality: { only_integer: true }
   end
+
+  before_create :process_payment
 
   serialize :breakdown, Hash
 
@@ -100,15 +100,24 @@ class RegistrationPayment < ApplicationRecord
     end
 
     def process_payment
-      reject_if_amex
       calculate_total if total.blank?
-      amount = (total*100).to_i
       r = self.registrations.first
       desc = "LYF Camp #{r.camp.year} Registration Payment for #{r.camper.family.primary_parent_email}"
-      charge_obj = Stripe::Charge.create(source: stripe_token, amount: amount,
-                                         description: desc, currency: 'usd')
-      self.stripe_charge_id = charge_obj.id
-      self.stripe_brand = charge_obj.source.brand
-      self.stripe_last_four = charge_obj.source.last4
+      charge_result = CreditCardService.new({
+        token: stripe_token,
+        amount: total,
+        desc: desc
+      }).charge
+      if charge_result.charge_succeeded?
+        charge_obj = charge_result.charge_obj
+        self.stripe_charge_id = charge_obj.id
+        self.stripe_brand = charge_obj.source.brand
+        self.stripe_last_four = charge_obj.source.last4
+        return true
+      else
+        errors.add(:base, :payment_failed,
+                   message: charge_result.error_messages)
+        throw(:abort)
+      end
     end
 end

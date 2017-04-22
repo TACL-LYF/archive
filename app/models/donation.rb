@@ -5,8 +5,9 @@ class Donation < ApplicationRecord
   validates :phone, phone: { allow_blank: true }
   validates :state, length: { is: 2 }
   validates :zip, length: { minimum: 5 }
-  validates :amount, presence: true, numericality: { greater_than: 0 },
-            format: { with: /\A\d+(?:\.\d{0,2})?\z/ }
+  validates :amount, presence: true
+  validates :amount, numericality: { greater_than: 0 },
+            format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, unless: 'amount.nil?'
   validates :stripe_last_four, length: { is: 4 },
             numericality: { only_integer: true }, allow_blank: true
 
@@ -36,21 +37,22 @@ class Donation < ApplicationRecord
       end
     end
 
-    def reject_if_amex
-      token = Stripe::Token.retrieve(stripe_token)
-      if token.card.brand == "American Express"
-        raise Exceptions::AmexError
-      end
-    end
-
     def process_payment
-      reject_if_amex
-      total = (amount*100).to_i
-      desc = "Donation Payment from #{first_name} #{last_name} (#{email})"
-      charge_obj = Stripe::Charge.create(source: stripe_token, amount: total,
-                                         description: desc, currency: 'usd')
-      self.stripe_charge_id = charge_obj.id
-      self.stripe_brand = charge_obj.source.brand
-      self.stripe_last_four = charge_obj.source.last4
+      charge_result = CreditCardService.new({
+        token: stripe_token,
+        amount: amount,
+        desc: "Donation Payment from #{first_name} #{last_name} (#{email})"
+      }).charge
+      if charge_result.charge_succeeded?
+        charge_obj = charge_result.charge_obj
+        self.stripe_charge_id = charge_obj.id
+        self.stripe_brand = charge_obj.source.brand
+        self.stripe_last_four = charge_obj.source.last4
+        return true
+      else
+        errors.add(:base, :payment_failed,
+                   message: charge_result.error_messages)
+        throw(:abort)
+      end
     end
 end

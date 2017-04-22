@@ -24,6 +24,7 @@ gem 'client_side_validations', '~> 8.0', '>= 8.0.1'
 gem 'exception_notification'
 gem 'slack-notifier'
 gem 'axlsx_rails'
+gem 'immutable-struct'
 # gem 'will_paginate',           '3.1.0'
 # gem 'bootstrap-will_paginate', '0.0.10'
 

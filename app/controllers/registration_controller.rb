@@ -54,7 +54,6 @@ class RegistrationController < ApplicationController
       @payment = build_payment
       @payment.calculate_total unless @reg_session.payment.blank?
       @breakdown = @payment.breakdown
-      @payment.valid? if flash[:form_has_errors]
     end
     render_wizard
   end
@@ -192,7 +191,7 @@ class RegistrationController < ApplicationController
                 delete_reg_session
                 redirect_to wizard_path(:confirmation)
               else
-                flash[:danger] = "Something went wrong."
+                flash[:form_has_errors] = true
                 redirect_to wizard_path
               end
             else
@@ -200,42 +199,11 @@ class RegistrationController < ApplicationController
               redirect_to wizard_path
             end
           end
-        rescue Stripe::CardError => e
-          msg = log_error_to_debugger_and_return_msg(e)
-          flash[:danger] = "There was a problem processing your payment: #{msg}"
-          redirect_to wizard_path
-        rescue Stripe::RateLimitError => e
-          # Too many requests made to the API too quickly
-          msg = log_error_to_debugger_and_return_msg(e)
-          flash[:danger] = "There was a problem processing your payment: #{msg} Please try again in a bit."
-          redirect_to wizard_path
-        rescue Stripe::InvalidRequestError => e
-          # Invalid parameters were supplied to Stripe's API
-          logger.warn e.to_s
-          flash[:danger] = "There was a problem processing your payment. Please try again in a bit."
-          redirect_to wizard_path
-        rescue Stripe::AuthenticationError => e
-          # Authentication with Stripe's API failed
-          # (maybe you changed API keys recently)
-          logger.warn e.to_s
-          flash[:danger] = "There was a problem processing your payment: #{msg}"
-          redirect_to wizard_path
-        rescue Stripe::APIConnectionError => e
-          # Network communication with Stripe failed
-          msg = log_error_to_debugger_and_return_msg(e)
-          flash[:danger] = "There was a problem processing your payment: #{msg}"
-          redirect_to wizard_path
-        rescue Stripe::StripeError => e
-          # Display a very generic error to the user, and maybe send
-          # yourself an email
-          msg = log_error_to_debugger_and_return_msg(e)
-          flash[:danger] = "There was a problem processing your payment."
-          redirect_to wizard_path
-        rescue Exceptions::AmexError => e
-          logger.warn "Amex card submitted"
-          flash[:danger] = "Sorry, we do not accept American Express"
+        rescue ActiveRecord::RecordNotSaved => e
+          flash[:danger] = @payment.errors.full_messages.join(" ").chomp(" ")
           redirect_to wizard_path
         rescue => e
+          debugger
           logger.warn "Error submitting registration form"
           logger.warn e
           flash[:danger] = "Something went wrong."
@@ -389,16 +357,6 @@ class RegistrationController < ApplicationController
       return outline
     end
 
-    def log_error_to_debugger_and_return_msg(e)
-      err = e.json_body[:error]
-      logger.warn "Status is: #{e.http_status}"
-      logger.warn "Type is: #{err[:type]}"
-      logger.warn "Code is: #{err[:code]}"
-      logger.warn "Param is: #{err[:param]}"
-      logger.warn "Message is: #{err[:message]}"
-      return err[:message]
-    end
-
     # store relevant session contents for exception notifier
     def get_reg_session_and_prepare_exception_notifier
       @reg_session = get_reg_session(step)
@@ -411,6 +369,4 @@ class RegistrationController < ApplicationController
         "PAYMENT" => @reg_session.payment
       }
     end
-
-    # TODO: handle session overflow
 end

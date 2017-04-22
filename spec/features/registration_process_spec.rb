@@ -71,7 +71,7 @@ RSpec.feature "RegistrationProcess", type: :feature, js: true do
 
           it "re-renders Parent page wth error messages" do
             expect(page).to have_text "Parent/Guardian Information"
-            expect(page).to have_text "The form contains 8 errors"
+            expect(page).to have_text "8 errors occurred"
           end
         end
 
@@ -163,7 +163,7 @@ RSpec.feature "RegistrationProcess", type: :feature, js: true do
 
                 it "re-renders Camper page with error messages" do
                   expect(page).to have_text "Camper First Name"
-                  expect(page).to have_text "The form contains 9 errors"
+                  expect(page).to have_text "9 errors occurred"
                 end
               end
 
@@ -212,7 +212,7 @@ RSpec.feature "RegistrationProcess", type: :feature, js: true do
 
                     it "re-renders the page with error messages" do
                       expect(page).to have_text "Registration Details"
-                      expect(page).to have_text "The form contains 3 errors"
+                      expect(page).to have_text "3 errors occurred"
                     end
                   end
 
@@ -287,7 +287,7 @@ RSpec.feature "RegistrationProcess", type: :feature, js: true do
 
                           it "re-renders the page with an error message" do
                             expect(page).to have_text "Waiver"
-                            expect(page).to have_text "The form contains 5 errors"
+                            expect(page).to have_text "5 errors occurred"
                             # TODO: fix error messages on this page
                           end
                         end
