@@ -6,9 +6,9 @@ class Camp < ApplicationRecord
   default_scope -> { order(year: :desc) }
 
   def get_summary
-    shirt_totals = Hash.new(0)
+    shirt_totals = SHIRT_SIZES.map { |size| [size.to_s, 0] }.to_h
     gender_breakdown = Hash.new(0)
-    grade_breakdown = Hash.new(0)
+    grade_breakdown = (3..12).to_a.map { |grade| [grade, 0] }.to_h
     bus_total = 0
 
     registrations.all.each do |r|
