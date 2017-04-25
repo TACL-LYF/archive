@@ -33,7 +33,8 @@ as well as a link to its edit page.
   <table>
     <thead>
       <tr>
-        <th>Total Registrations</th>
+        <th>Active Registrations</th>
+        <th>Cancelled Registrations</th>
         <th>Bus Total</th>
         <th>Gender Breakdown</th>
         <th>Grade Breakdown</th>
@@ -41,7 +42,8 @@ as well as a link to its edit page.
       </tr>
     </thead>
       <tr>
-        <td><%= breakdown[:total_registrations] %></td>
+        <td><%= breakdown[:active_registrations] %></td>
+        <td><%= breakdown[:cancelled_registrations] %></td>
         <td><%= breakdown[:bus_total] %></td>
         <td>
           <dl>

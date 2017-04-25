@@ -11,7 +11,7 @@ class Camp < ApplicationRecord
     grade_breakdown = (3..12).to_a.map { |grade| [grade, 0] }.to_h
     bus_total = 0
 
-    registrations.all.each do |r|
+    registrations.where(cancelled: false).each do |r|
       shirt_totals[r.shirt_size] += 1
       r.additional_shirts.each do |size, count|
         shirt_totals[size] += count.to_i
@@ -22,7 +22,8 @@ class Camp < ApplicationRecord
     end
 
     return {
-      total_registrations: registrations.count,
+      active_registrations: registrations.where(cancelled: false).size,
+      cancelled_registrations: registrations.where(cancelled: true).size,
       bus_total: bus_total,
       gender_breakdown: gender_breakdown,
       grade_breakdown: grade_breakdown,
