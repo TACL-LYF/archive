@@ -14,3 +14,24 @@
   width: 100%!important;
   margin-left: 5%!important;
 }
+
+.summary {
+  padding: 1.5em;
+  table td {
+    vertical-align: top;
+  }
+  dl {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .attribute-label {
+    width: auto;
+    margin-right: 5%;
+    line-height: 1.75;
+  }
+  .attribute-data {
+    width: auto;
+    margin-right: 5%;
+    margin-bottom: 0.5em;
+  }
+}

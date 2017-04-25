@@ -15,5 +15,13 @@ module Admin
 
     # See https://administrate-docs.herokuapp.com/customizing_controller_actions
     # for more information
+
+    # override default show method
+    def show
+      render locals: {
+        page: Administrate::Page::Show.new(dashboard, requested_resource),
+        breakdown: requested_resource.get_summary
+      }
+    end
   end
 end
