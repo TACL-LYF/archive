@@ -16,7 +16,7 @@ class Registration < ApplicationRecord
   validates :grade, inclusion: 3..12,
             if: Proc.new { |r| r.required_for_step?(:details) }
   validates :shirt_size, presence: true,
-            if: Proc.new { |r| r.required_for_step?(:details) }
+            if: Proc.new { |r| r.required_for_step?(:details) && !preregistration }
   with_options if: Proc.new { |r| r.required_for_step?(:details) } do
     validates :bus, inclusion: { in: [true, false],
                                  message: "information required" }
