@@ -203,7 +203,6 @@ class RegistrationController < ApplicationController
           flash[:danger] = @payment.errors.full_messages.join(" ").chomp(" ")
           redirect_to wizard_path
         rescue => e
-          debugger
           logger.warn "Error submitting registration form"
           logger.warn e
           flash[:danger] = "Something went wrong."
