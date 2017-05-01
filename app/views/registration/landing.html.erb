@@ -8,11 +8,11 @@
       1700 Marshall Petaluma Rd, Petaluma, CA 94952<br>
       <%= link_to "Registration Policy", "#registration_policy", "data-toggle" => "modal" %> | <%= link_to "Discounts & Financial Aid", "#financial_aid", "data-toggle" => "modal" %>
     </p>
-    <p class="vag space-above-chasm">
+    <!--<p class="vag space-above-chasm">
       <%= number_to_currency(@camp.registration_fee, precision: 0) %><br>
       General Registration<% if Time.zone.today >= @camp.registration_late_date %> &mdash; CLOSED<% end %><br>
       (<%= @camp.registration_open_date.strftime("%b %-d, %Y") %> &ndash; <%= @camp.registration_late_date.yesterday.strftime("%b %-d, %Y") %>)
-    </p>
+    </p>-->
     <p class="vag space-above-med">
       <%= number_to_currency(@camp.registration_fee + @camp.registration_late_fee, precision: 0) %><br>
       Late Registration<br>
