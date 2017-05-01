@@ -9,7 +9,8 @@ class FamilyDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     campers: Field::NestedHasMany.with_options(skip: :family),
-    referrals: ReferrerField.with_options(searchable: false),
+    referrals: Field::NestedHasMany.with_options(skip: :family),
+    # referrals: ReferrerField.with_options(searchable: false),
     referral_methods: Field::HasMany,
     id: Field::Number,
     primary_parent_first_name: Field::String,
@@ -82,6 +83,7 @@ class FamilyDashboard < Administrate::BaseDashboard
     :city,
     :state,
     :zip,
+    :referrals,
     :campers,
   ].freeze
 
