@@ -266,12 +266,12 @@ class RegistrationController < ApplicationController
     end
 
     def get_reg_session(step)
-      if session[:reg_session_id].nil?
+      reg_session = RegSession.find_by(id: session[:reg_session_id])
+      if session[:reg_session_id].nil? || reg_session.nil?
         set_interrupted_session_flash unless %w[landing parent confirmation].include?(step)
         RegSession.new(family: {}, campers: [], regs: [], camper: {}, reg: {},
           payment: {})
       else
-        reg_session = RegSession.find(session[:reg_session_id])
         unless %w[landing parent confirmation].include?(step)
           if reg_session.family.blank?
             set_interrupted_session_flash
@@ -298,7 +298,8 @@ class RegistrationController < ApplicationController
 
     def delete_reg_session
       reg_session_id = session[:reg_session_id]
-      RegSession.find(reg_session_id).destroy unless reg_session_id.nil?
+      reg_session = RegSession.find_by(id: reg_session_id)
+      reg_session.destroy unless reg_session_id.nil? || reg_session.nil?
       session.delete(:reg_session_id)
     end
 

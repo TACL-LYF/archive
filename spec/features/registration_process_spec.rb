@@ -43,16 +43,22 @@ RSpec.feature "RegistrationProcess", type: :feature, js: true do
       visit "/registration"
     end
 
-    it "displays registration information" do
-      expect(page).to have_content "Register for LYF Camp"
-      expect(page).to have_content "General Registration"
-      expect(page).to have_content "Late Registration"
-      expect(page).to have_content "$"
-      expect(page).to have_link "Registration Policy"
-      expect(page).to have_link "Discounts & Financial Aid"
-      expect(page).to have_link "Get Started"
-      expect_no_error_messages
+    context "during general registration period" do
+      it "displays all registration information" do
+        travel_to Date.new(2017,03,01)
+        expect(page).to have_content "Register for LYF Camp"
+        expect(page).to have_content "General Registration"
+        expect(page).to have_content "Late Registration"
+        expect(page).to have_content "$"
+        expect(page).to have_link "Registration Policy"
+        expect(page).to have_link "Discounts & Financial Aid"
+        expect(page).to have_link "Get Started"
+        expect_no_error_messages
+        travel_back
+      end
     end
+
+    # TODO: test landing page view for late registration/registration close info
 
     describe "User clicks \"Get Started \" button" do
       background { click_link "Get Started" }
