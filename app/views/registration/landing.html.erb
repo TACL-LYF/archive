@@ -8,33 +8,30 @@
       1700 Marshall Petaluma Rd, Petaluma, CA 94952<br>
       <%= link_to "Registration Policy", "#registration_policy", "data-toggle" => "modal" %> | <%= link_to "Discounts & Financial Aid", "#financial_aid", "data-toggle" => "modal" %>
     </p>
-    <% unless Time.zone.today > @camp.registration_late_date %>
+    <% unless @camp.is_late_registration? %>
       <p class="vag space-above-chasm">
         <%= number_to_currency(@camp.registration_fee, precision: 0) %><br>
         General Registration<br>
         (<%= @camp.registration_open_date.strftime("%b %-d, %Y") %> &ndash; <%= @camp.registration_late_date.yesterday.strftime("%b %-d, %Y") %>)
       </p>
     <% end %>
-    <% unless Time.zone.today > @camp.registration_close_date %>
-      <p class="vag space-above-med">
-        <%= number_to_currency(@camp.registration_fee + @camp.registration_late_fee, precision: 0) %><br>
-        Late Registration<br>
-        (<%= @camp.registration_late_date.strftime("%b %-d") %> &ndash; <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
-      </p>
-      <p class="vag space-above-med">
-        Waitlist begins <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>
-      </p>
-      <p class="space-above-med">
+    <p class="vag space-above-med">
+      <%= number_to_currency(@camp.registration_fee + @camp.registration_late_fee, precision: 0) %><br>
+      Late Registration<br>
+      (<%= @camp.registration_late_date.strftime("%b %-d") %> &ndash; <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
+    </p>
+    <p class="vag space-above-med">
+      Waitlist begins <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>
+    </p>
+    <p class="space-above-med">
+      <% if @camp.is_registration_closed? %>
+        <b>General registration for LYF Camp <%= @camp.year %> is currently closed</b>; however, you can still register to be on our waitlist. If space becomes available for your camper, we will contact you. If not, we will issue a refund of your registration fee.
+      <% else %>
         LYF Camp has a limited number of spots, so be sure to register early!<br>You'll be placed on a waitlist once maximum capacity is reached.
-      </p>
-      <p class="space-above-massive">
-        <%= link_to "Get Started", wizard_path(:parent), class: "btn btn-big btn-lg btn-redmagenta" %>
-      </p>
-    <% end %>
-    <% if Time.zone.today > @camp.registration_close_date %>
-      <p class="space-above-chasm">
-        Thank you for your interest in LYF! The registration period for this year's camp is now closed. If you are on the waitlist, we will contact you if space becomes available.
-      </p>
-    <% end %>
+      <% end %>
+    </p>
+    <p class="space-above-massive">
+      <%= link_to "Get Started", wizard_path(:parent), class: "btn btn-big btn-lg btn-redmagenta" %>
+    </p>
   </div>
 </div>

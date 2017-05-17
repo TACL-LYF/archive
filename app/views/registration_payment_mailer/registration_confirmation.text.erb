@@ -24,8 +24,13 @@ Additional Donation: <%= number_to_currency @breakdown[:additional_donation] %>
 
 If your registration needs to be updated, or you would like to include any comments, please email annie.huang@tacl.org.
 
+<% if @camp.is_registration_closed? %>
+Because we received your registration after the general registration period, you have been added to our waitlist. We will contact you if space becomes available; if not, we will issue a refund of your registration fee. Please look out for an email from us in the near future.
+
+<% else %>
 A final email will be sent out at the end of May as Camp approaches. Additionally, you will be receiving a Camper Welcome Packet which contains a packing list, camp schedule, camp rules, and Parent's Program information.
 
+<% end %>
 ==============================
 
 SAVE THE DATE!

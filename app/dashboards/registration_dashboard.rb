@@ -37,7 +37,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
     camper_involvement: Field::CamperInvolvementField,
     jtasa_chapter: Field::String,
     preregistration: Field::Boolean,
-    cancelled: Field::Boolean,
+    status: EnumField.with_options(searchable: false),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -68,7 +68,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :camp,
-    :cancelled,
+    :status,
     :camper,
     :grade,
     :shirt_size,
@@ -111,7 +111,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
     :additional_shirts,
     :camper_involvement,
     :jtasa_chapter,
-    :cancelled,
+    :status,
   ].freeze
 
   # Overwrite this method to customize how registrations are displayed

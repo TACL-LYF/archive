@@ -77,7 +77,7 @@
       <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
     </div>
     <div class="col-md-2">
-      <%= f.submit "Continue", disabled: Time.zone.today > @camp.registration_close_date, class: "btn btn-block" %>
+      <%= f.submit "Continue", class: "btn btn-block" %>
     </div>
   </div>
 <% end %>

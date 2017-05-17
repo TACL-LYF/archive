@@ -38,7 +38,7 @@
       <%= link_to "Back", @camper_involvement ? previous_wizard_path : wizard_path(:details), class: "btn btn-white btn-block" %>
     </div>
     <div class="col-md-2">
-      <%= f.submit "Continue", disabled: Time.zone.today > @camp.registration_close_date, class: "btn btn-block" %>
+      <%= f.submit "Continue", class: "btn btn-block" %>
     </div>
   </div>
 <% end %>

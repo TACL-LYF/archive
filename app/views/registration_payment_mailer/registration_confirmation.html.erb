@@ -3,10 +3,10 @@
     <%= link_to image_tag('http://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/images/logo@2x.png', size: '130', alt: 'TACL-LYF Logo'), 'http://lyf.tacl.org', target: '_blank' %>
   </p>
 
-  <h1 style="text-align: center;">LYF Camp 2017 Registration Confirmation</h1>
+  <h1 style="text-align: center;">LYF Camp <%= @camp.year %> Registration Confirmation</h1>
 
   <p>
-    Thank you for registering for LYF Camp 2017! We have received your payment and registration(s) for the following camper(s):
+    Thank you for registering for LYF Camp <%= @camp.year %>! We have received your payment and registration(s) for the following camper(s):
   </p>
 
   <table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none; margin-top: 1.5rem;">
@@ -76,9 +76,15 @@
     If your registration needs to be updated, or you would like to include any comments, please email annie.huang@tacl.org.
   </p>
 
-  <p>
-    A final email will be sent out at the end of May as Camp approaches. Additionally, you will be receiving a Camper Welcome Packet which contains a packing list, camp schedule, camp rules, and Parent's Program information.
-  </p>
+  <% if @camp.is_registration_closed? %>
+    <p>
+      Because we received your registration after the general registration period, you have been added to our waitlist. We will contact you if space becomes available; if not, we will issue a refund of your registration fee. Please look out for an email from us in the near future.
+    </p>
+  <% else %>
+    <p>
+      A final email will be sent out at the end of May as Camp approaches. Additionally, you will be receiving a Camper Welcome Packet which contains a packing list, camp schedule, camp rules, and Parent's Program information.
+    </p>
+  <% end %>
 
   <hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
 

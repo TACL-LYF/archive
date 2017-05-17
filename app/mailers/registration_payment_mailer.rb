@@ -6,6 +6,7 @@ class RegistrationPaymentMailer < ApplicationMailer
   #   en.registration_payment_mailer.registration_confirmation.subject
   #
   def registration_confirmation(reg_payment)
+    @camp = Camp.first
     @breakdown = reg_payment.breakdown
     @last_four = reg_payment.stripe_last_four
     @brand = reg_payment.stripe_brand

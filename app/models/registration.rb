@@ -8,6 +8,8 @@ class Registration < ApplicationRecord
            :primary_parent_phone_number, to: :camper, allow_nil: true
 
   before_validation :copy_city_state_from_family
+  before_create :set_waitlist,
+    if: Proc.new { |r| r.camp.is_registration_closed? }
 
   cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
   attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day
@@ -29,6 +31,7 @@ class Registration < ApplicationRecord
     validate :waiver_date_matches_date, on: :create, unless: :preregistration
   end
 
+  enum status: { active: 0, cancelled: 1, waitlist: 2 }
   enum shirt_size: Hash[SHIRT_SIZES.zip (0..SHIRT_SIZES.size)]
   enum group: ('A'..'Z').to_a.map!(&:to_sym)
   store :additional_shirts, accessors: SHIRT_SIZES
@@ -65,6 +68,10 @@ class Registration < ApplicationRecord
       return if camper.nil?
       self.city = camper.family.city
       self.state = camper.family.state
+    end
+
+    def set_waitlist
+      self.status = :waitlist
     end
 
     def waiver_signature_matches_name

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170425223827) do
+ActiveRecord::Schema.define(version: 20170516224957) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 20170425223827) do
     t.text     "camper_involvement"
     t.string   "jtasa_chapter"
     t.boolean  "preregistration",         default: false
-    t.boolean  "cancelled",               default: false, null: false
+    t.integer  "status",                  default: 0,     null: false
     t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
     t.index ["camp_id"], name: "index_registrations_on_camp_id"
     t.index ["camper_id"], name: "index_registrations_on_camper_id"

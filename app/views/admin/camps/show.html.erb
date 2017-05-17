@@ -33,8 +33,7 @@ as well as a link to its edit page.
   <table>
     <thead>
       <tr>
-        <th>Active Registrations</th>
-        <th>Cancelled Registrations</th>
+        <th>Registration Counts</th>
         <th>Bus Total</th>
         <th>Gender Breakdown</th>
         <th>Grade Breakdown</th>
@@ -42,8 +41,16 @@ as well as a link to its edit page.
       </tr>
     </thead>
       <tr>
-        <td><%= breakdown[:active_registrations] %></td>
-        <td><%= breakdown[:cancelled_registrations] %></td>
+        <td>
+          <dl>
+            <dt class="attribute-label">Active</dt>
+            <dd class="attribute-data"><%= breakdown[:active] %></dd>
+            <dt class="attribute-label">Cancelled</dt>
+            <dd class="attribute-data"><%= breakdown[:cancelled] %></dd>
+            <dt class="attribute-label">Waitlist</dt>
+            <dd class="attribute-data"><%= breakdown[:waitlist] %></dd>
+          </dl>
+        </td>
         <td><%= breakdown[:bus_total] %></td>
         <td>
           <dl>
