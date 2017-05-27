@@ -1,12 +1,13 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Registrations") do |sheet|
-  sheet.add_row ["Registered", "First Name", "Last Name", "Parent",
+  sheet.add_row ["Registered", "Status", "First Name", "Last Name", "Parent",
     "Parent Email", "Parent Phone", "Referred By", "City", "Birthdate", "Grade", "Gender",
     "Returning", "Bus", "Shirt Size", "Additional Shirts", "Camper Involvement",
     "Medical", "Diet and Allergies", "Additional Notes"]
   @resources.each do |r|
     sheet.add_row [
       r.created_at.to_s(:db),
+      r.status,
       r.camper.first_name,
       r.camper.last_name,
       r.family.primary_parent,

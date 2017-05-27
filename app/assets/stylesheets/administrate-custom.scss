@@ -1,5 +1,18 @@
-.sidebar, .main-content {
+.app-container {
+  max-width: none;
+}
+
+.navigation {
   font-size: 0.85rem;
+}
+
+.main-content {
+  font-size: 0.95rem;
+  overflow-x: scroll;
+}
+
+.cell-data {
+  white-space: nowrap;
 }
 
 .inline-wrapper {
@@ -28,6 +41,7 @@
     width: auto;
     margin-right: 5%;
     line-height: 1.75;
+    margin-bottom: 0.5em;
   }
   .attribute-data {
     width: auto;

@@ -10,7 +10,7 @@ class RegistrationDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     camp: Field::BelongsTo,
     camper: Field::BelongsTo,
-    family: Field::BelongsTo,
+    family: FamilyField,
     primary_parent_email: Field::String,
     primary_parent_phone_number: Field::String,
     birthdate: Field::DateTime,

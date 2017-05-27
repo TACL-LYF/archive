@@ -8,7 +8,7 @@ class CampDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    registrations: Field::HasMany,
+    registrations: Field::HasMany.with_options(limit: 50),
     registration_discounts: Field::HasMany,
     id: Field::Number,
     name: Field::String,

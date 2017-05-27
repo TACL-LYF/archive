@@ -18,7 +18,7 @@ module Admin
 
     def resource_params
       params.require(:registration).permit(
-        permitted_attributes
+        dashboard.permitted_attributes
           .push(*Registration.stored_attributes[:additional_shirts])
           .push(*Registration.stored_attributes[:camper_involvement]))
     end
@@ -31,6 +31,7 @@ module Admin
         format.html do
           search_term = params[:search].to_s.strip
           resources = Administrate::Search.new(resource_resolver, search_term).run
+          resources = resources.includes(*resource_includes) if resource_includes.any?
           resources = order.apply(resources)
           resources = resources.page(params[:page]).per(records_per_page)
           page = Administrate::Page::Collection.new(dashboard, order: order)
@@ -39,6 +40,7 @@ module Admin
             resources: resources,
             search_term: search_term,
             page: page,
+            show_search_bar: show_search_bar?
           }
         end
 
