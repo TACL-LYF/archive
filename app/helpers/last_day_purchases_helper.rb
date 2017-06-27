@@ -1,0 +1,2 @@
+module LastDayPurchasesHelper
+end

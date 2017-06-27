@@ -41,7 +41,7 @@ class LastDayPurchase < ApplicationRecord
       charge_result = CreditCardService.new({
         token: stripe_token,
         amount: amount,
-        desc: "Donation Payment from #{first_name} #{last_name} (#{email})"
+        desc: "Last Day Purchase Payment from #{first_name} #{last_name} (#{email})"
       }).charge
       if charge_result.charge_succeeded?
         charge_obj = charge_result.charge_obj

@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe LastdaypurchasesController, type: :controller do
+RSpec.describe LastDayPurchasesController, type: :controller do
 
 end

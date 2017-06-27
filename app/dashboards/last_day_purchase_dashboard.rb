@@ -81,7 +81,7 @@ class LastDayPurchaseDashboard < Administrate::BaseDashboard
     :stripe_last_four,
   ].freeze
 
-  # Overwrite this method to customize how lastdaypurchases are displayed
+  # Overwrite this method to customize how last_day_purchases are displayed
   # across all pages of the admin dashboard.
   #
   # def display_resource(lastdaypurchase)
