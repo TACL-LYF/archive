@@ -22,7 +22,7 @@ class CreditCardService
         log_msg += " | Type: #{err[:type]} | Code: #{err[:code]}"
         log_msg += " | Param: #{err[:param]} | Message: #{err[:message]}"
       else
-        log_msg += " | Message: e.message"
+        log_msg += " | Message: #{e.message}"
       end
       Rails.logger.warn log_msg
 

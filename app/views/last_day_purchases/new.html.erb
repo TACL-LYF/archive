@@ -1,0 +1,101 @@
+<%= form_for @last_day_purchase, url: create_last_day_purchases_path, validate: true, html: {id: "last_day_purchase_form"} do |f| %>
+<%= render 'shared/error_messages', object: f.object %>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Enter Transaction Amount</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 form-group">
+    $ <%= f.number_field :amount, min: 0, class: "auto-width form-control", id: "other_amount" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Enter Your Information</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+  <div class="col-md-6 form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 form-group">
+    <%= f.label :email %>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+  <div class="col-md-6 form-group">
+    <%= f.label :phone, 'Phone (optional)' %>
+    <%= f.text_field :phone, class: 'form-control' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Complete Your Transaction</h2>
+  </div>
+</div>
+<div class="row space-above-wide">
+  <div class="col-md-6 form-group">
+    <%= label_tag :card_number, "Credit/Debit Card Number " %>
+    <%= text_field_tag :card_number, nil, name: nil, class: "form-control", "data-stripe" => "number" %>
+  </div>
+  <div class="col-md-3 form-group">
+    <%= label_tag :card_exp_month, "Card Expiration" %>
+    <div class="row">
+      <div class="col-md-12 date-fields-wrapper">
+        <%= select_month nil, {use_two_digit_numbers: true, prompt: "MM"}, {name: nil, id: "card_exp_month", class: "date form-control", "data-stripe" => "exp_month"} %>
+        <%= select_year nil, {start_year: Time.zone.today.year, end_year: Time.zone.today.year+15, prompt: "YYYY"}, {name: nil, id: "card_exp_year", class: "date form-control", "data-stripe" => "exp_year"} %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 form-group">
+    <%= label_tag :card_verificaion, "CVC" %>
+    <%= text_field_tag :card_verificaion, nil, name: nil, class: "form-control", "data-stripe" => "cvc" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 form-group">
+    <%= f.label :address, 'Billing Address' %>
+    <%= f.text_field :address, class: 'form-control', "data-stripe" => "address_line1" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 form-group">
+    <%= f.label :city %>
+    <%= f.text_field :city, class: 'form-control', "data-stripe" => "address_city" %>
+  </div>
+  <div class="col-md-3 form-group">
+    <%= f.label :state %>
+    <%= f.text_field :state, class: 'form-control', "data-stripe" => "address_state" %>
+  </div>
+  <div class="col-md-3 form-group">
+    <%= f.label :zip %>
+    <%= f.text_field :zip, class: 'form-control', "data-stripe" => "address_zip" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 form-group">
+    <%= f.label :dollar_for_dollar, class: 'checkbox-inline' do %>
+      <%= f.check_box :dollar_for_dollar, {id: "dollar_for_dollar"}, true, false %> I have also pledged to donate for the LYF Dollar for Dollar Matching challenge, my company will also be matching my donation. Company name:
+      <%= f.text_field :company, id: "company", class: 'form-control auto-width' %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 stripe_error">
+    <%= f.hidden_field :stripe_token %>
+     <noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <%= f.submit "Submit Payment", class: "btn btn-block btn-success" %>
+  </div>
+</div>
+<% end %>

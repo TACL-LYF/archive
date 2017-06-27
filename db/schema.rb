@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516224957) do
+ActiveRecord::Schema.define(version: 20170627043900) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -78,6 +78,23 @@ ActiveRecord::Schema.define(version: 20170516224957) do
     t.string   "zip"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "last_day_purchases", force: :cascade do |t|
+    t.string  "first_name"
+    t.string  "last_name"
+    t.string  "email"
+    t.string  "phone"
+    t.string  "address"
+    t.string  "city"
+    t.string  "state"
+    t.string  "zip"
+    t.decimal "amount",            precision: 10, scale: 2
+    t.boolean "dollar_for_dollar"
+    t.string  "company"
+    t.string  "stripe_charge_id"
+    t.string  "stripe_brand"
+    t.string  "stripe_last_four"
   end
 
   create_table "referral_methods", force: :cascade do |t|
