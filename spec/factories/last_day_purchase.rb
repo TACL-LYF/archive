@@ -10,6 +10,7 @@ FactoryGirl.define do
     city { Faker::Address.city }
     state { Faker::Address.state_abbr }
     zip { Faker::Address.zip }
+    camper_names { Faker::Name.name }
     amount "680.00"
   end
 end

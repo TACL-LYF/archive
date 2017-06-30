@@ -18,6 +18,9 @@ RSpec.describe LastDayPurchase, type: :model do
       expect(build(:last_day_purchase, email: address)).to_not be_valid
     end
   end
+  it "is invalid without camper name(s)" do
+    expect(build(:last_day_purchase, camper_names: nil)).to_not be_valid
+  end
   it "is invalid without all required address fields" do
     expect(build(:last_day_purchase, address: nil)).to_not be_valid
     expect(build(:last_day_purchase, city: nil)).to_not be_valid

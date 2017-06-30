@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627043900) do
+ActiveRecord::Schema.define(version: 20170630030841) do
 
   create_table "campers", force: :cascade do |t|
     t.string   "first_name"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20170627043900) do
     t.string  "stripe_charge_id"
     t.string  "stripe_brand"
     t.string  "stripe_last_four"
+    t.string  "camper_names"
   end
 
   create_table "referral_methods", force: :cascade do |t|

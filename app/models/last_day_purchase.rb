@@ -1,6 +1,6 @@
 class LastDayPurchase < ApplicationRecord
-  validates :first_name, :last_name, :email, :address, :city, :state,
-            :zip, presence: true
+  validates :first_name, :last_name, :email, :camper_names, :address, :city,
+            :state, :zip, presence: true
   validates :email, length: { maximum: 255 }, format: VALID_EMAIL_REGEX
   validates :phone, phone: { allow_blank: true }
   validates :state, length: { is: 2 }
