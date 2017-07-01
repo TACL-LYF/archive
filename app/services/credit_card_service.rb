@@ -38,6 +38,10 @@ class CreditCardService
     end
   end
 
+  def self.get_link(token)
+    "https://dashboard.stripe.com/payments/#{token}"
+  end
+
   private
     attr_reader :token, :amount, :desc
 

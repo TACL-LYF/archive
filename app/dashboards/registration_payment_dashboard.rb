@@ -14,7 +14,7 @@ class RegistrationPaymentDashboard < Administrate::BaseDashboard
     total: Field::Number.with_options(searchable: false, prefix: '$', decimals: 2),
     additional_donation: Field::Number.with_options(searchable: false, prefix: '$', decimals: 2),
     discount_code: Field::String,
-    stripe_charge_id: Field::String,
+    stripe_charge_id: StripeTokenField.with_options(searchable: false),
     breakdown: Field::Text,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -32,6 +32,7 @@ class RegistrationPaymentDashboard < Administrate::BaseDashboard
     :registration_discount,
     :additional_donation,
     :total,
+    :stripe_charge_id,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -58,9 +59,6 @@ class RegistrationPaymentDashboard < Administrate::BaseDashboard
     :total,
     :additional_donation,
     :discount_code,
-    :stripe_charge_id,
-    :stripe_brand,
-    :stripe_last_four,
   ].freeze
 
   # Overwrite this method to customize how registration payments are displayed
