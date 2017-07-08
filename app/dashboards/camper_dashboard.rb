@@ -10,6 +10,7 @@ class CamperDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     family: Field::BelongsTo,
     registrations: Field::NestedHasMany.with_options(skip: :camper),
+    registration_payments: LatestRegistrationPaymentLinkField.with_options(searchable: false),
     id: Field::Number,
     first_name: Field::String,
     last_name: Field::String,
@@ -36,6 +37,7 @@ class CamperDashboard < Administrate::BaseDashboard
     :birthdate,
     :family,
     :registrations,
+    :registration_payments,
     :status,
   ].freeze
 

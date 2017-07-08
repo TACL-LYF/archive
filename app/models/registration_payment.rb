@@ -78,6 +78,10 @@ class RegistrationPayment < ApplicationRecord
     return total
   end
 
+  def to_s
+    CreditCardService.get_link(stripe_charge_id)
+  end
+
   private
     def set_discount(discount)
       self.registration_discount = discount
