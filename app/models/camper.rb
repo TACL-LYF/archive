@@ -1,9 +1,9 @@
 class Camper < ApplicationRecord
   include RegFormHelper
   belongs_to :family, inverse_of: :campers
-  delegate :primary_parent_email, :primary_parent_phone_number, :street, :suite,
-           :city, :state, :zip, to: :family,
-           allow_nil: true
+  delegate :primary_parent_email, :primary_parent_phone_number,
+           :secondary_parent_email, :secondary_parent_phone_number,
+           :street, :suite, :city, :state, :zip, to: :family, allow_nil: true
   has_many :registrations, inverse_of: :camper, dependent: :destroy
   has_many :registration_payments, through: :registrations
   accepts_nested_attributes_for :registrations

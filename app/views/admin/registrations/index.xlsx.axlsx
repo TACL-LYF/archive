@@ -1,7 +1,7 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Registrations") do |sheet|
   sheet.add_row ["Registered", "Status", "First Name", "Last Name", "Parent",
-    "Parent Email", "Parent Phone", "Referred By", "Street Address", "Suite", "City", "State", "Zip", "Birthdate", "Grade", "Gender",
+    "Parent Email", "Parent Phone", "Secondary Parent", "Secondary Parent Email", "Secondary Parent Phone", "Camper Email", "Referred By", "Street Address", "Suite", "City", "State", "Zip", "Birthdate", "Grade", "Gender",
     "Returning", "Bus", "Shirt Size", "Additional Shirts", "Camper Involvement",
     "Medical", "Diet and Allergies", "Additional Notes"]
   @resources.each do |r|
@@ -13,6 +13,10 @@ wb.add_worksheet(name: "Registrations") do |sheet|
       r.family.primary_parent,
       r.primary_parent_email,
       r.primary_parent_phone_number,
+      r.family.secondary_parent,
+      r.secondary_parent_email,
+      r.secondary_parent_phone_number,
+      r.camper_email,
       r.family.list_referral_methods,
       r.street,
       r.suite,

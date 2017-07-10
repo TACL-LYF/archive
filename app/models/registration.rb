@@ -5,8 +5,10 @@ class Registration < ApplicationRecord
   belongs_to :registration_payment, inverse_of: :registrations, optional: true
   delegate :family, :birthdate, :gender, :medical_conditions_and_medication,
            :diet_and_food_allergies, :returning, :primary_parent_email,
-           :primary_parent_phone_number, :suite, :street, :zip,
+           :primary_parent_phone_number, :secondary_parent_email,
+           :secondary_parent_phone_number, :suite, :street, :zip,
            to: :camper, allow_nil: true
+  delegate :email, to: :camper, prefix: true, allow_nil: true
 
   before_validation :copy_city_state_from_family
   before_create :set_waitlist,
