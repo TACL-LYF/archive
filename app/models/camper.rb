@@ -8,6 +8,8 @@ class Camper < ApplicationRecord
   has_many :registration_payments, through: :registrations
   accepts_nested_attributes_for :registrations
 
+  default_scope -> { order(first_name: :asc) }
+
   cattr_accessor :reg_steps do %w[camper] end
   attr_accessor :reg_step, :birth_year, :birth_month, :birth_day
 

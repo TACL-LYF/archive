@@ -7,6 +7,8 @@ class Family < ApplicationRecord
   accepts_nested_attributes_for :campers
   accepts_nested_attributes_for :referrals, allow_destroy: true
 
+  default_scope -> { order(primary_parent_first_name: :asc) }
+
   cattr_accessor :reg_steps do %w[parent referral] end
   attr_accessor :reg_step
 
