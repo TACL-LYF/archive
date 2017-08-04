@@ -4,6 +4,9 @@
     "postdeploy": "rails db:seed"
   },
   "env": {
+    "DATABASE_URL": {
+      "required": true
+    }
     "STRIPE_PUBLISHABLE_KEY": {
       "required": true
     },
