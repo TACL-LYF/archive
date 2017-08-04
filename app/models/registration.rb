@@ -10,10 +10,6 @@ class Registration < ApplicationRecord
            to: :camper, allow_nil: true
   delegate :email, to: :camper, prefix: true, allow_nil: true
 
-  scope :active, -> { where(status: 'active') }
-  scope :cancelled, -> { where(status: 'cancelled') }
-  scope :waitlist, -> { where(status: 'waitlist') }
-
   before_validation :copy_city_state_from_family
   before_create :set_waitlist,
     if: Proc.new { |r| r.camp.is_registration_closed? && !r.preregistration }
