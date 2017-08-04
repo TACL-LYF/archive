@@ -20,23 +20,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  date:
+    formats:
+      long: "%Y-%m-%d"
+  time:
+    formats:
+      long: "%Y-%m-%d %H:%M:%S"
   errors:
     messages:
       blank: "required"
-  helpers:
-    label:
-      donation:
-        created_at: Date
-      registration:
-        created_at: Registered
-        family: Parent
-        primary_parent_email: Parent Email
-        primary_parent_phone_number: Parent Phone
-        medical_conditions_and_medication: Medical
-        diet_and_food_allergies: Diet/Allergies
-      registration_payment:
-        stripe_charge_id: Stripe Link
-      registration_discount:
-        discount_percent: Discount %
-      camper:
-        registration_payments: Latest Reg Payment

@@ -39,6 +39,8 @@ class Family < ApplicationRecord
     "#{primary_parent_first_name} #{primary_parent_last_name}"
   end
 
+  alias_method :display_name, :primary_parent
+
   def secondary_parent
     "#{secondary_parent_first_name} #{secondary_parent_last_name}"
   end

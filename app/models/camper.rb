@@ -9,6 +9,8 @@ class Camper < ApplicationRecord
   accepts_nested_attributes_for :registrations
 
   default_scope -> { order(first_name: :asc) }
+  scope :active, -> { where(status: 'active') }
+  scope :graduated, -> { where(status: 'graduated') }
 
   cattr_accessor :reg_steps do %w[camper] end
   attr_accessor :reg_step, :birth_year, :birth_month, :birth_day
@@ -37,10 +39,6 @@ class Camper < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
-  end
-
-  def status
-    self[:status].titlecase
   end
 
   def gender_abbr

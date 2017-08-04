@@ -1,0 +1,23 @@
+columns do
+  column do
+    f.inputs do
+      f.input :first_name
+      f.input :last_name
+      f.input :birthdate, as: :datepicker,
+        datepicker_options: {
+          min_date: 18.years.ago.to_date,
+          max_date: 8.years.ago.to_date
+        }
+      f.input :gender
+      f.input :email
+      f.input :returning
+      f.input :status
+    end
+  end
+  column do
+    f.inputs do
+      f.input :medical_conditions_and_medication
+      f.input :diet_and_food_allergies
+    end
+  end
+end
