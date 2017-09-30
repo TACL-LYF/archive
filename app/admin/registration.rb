@@ -24,11 +24,12 @@ ActiveAdmin.register Registration do
     column "Parent", :family, sortable: :primary_parent
     column :grade
     column :gender
-    column :bus, sortable: false
     column :shirt_size do |r|
       r.pretty_shirt_size
     end
     list_column :additional_shirts, sortable: false
+    column :bus, sortable: false
+    column :jtasa_chapter
     column "Medical", :medical_conditions_and_medication
     column "Diet/Allergies", :diet_and_food_allergies
     column "Notes", :additional_notes, sortable: false
@@ -37,12 +38,13 @@ ActiveAdmin.register Registration do
   end
 
   filter :camp
+  filter :camper, as: :select, collection: Camper.all
   filter :created_at, label: "Registered"
   filter :status, as: :select, multiple: true, collection: Registration.statuses
   filter :preregistration
   filter :grade, as: :range_select
-  filter :bus
   filter :shirt_size, as: :select, multiple: true, collection: Registration.shirt_sizes
+  filter :bus
 
   show title: proc {|r| "#{r.camper.full_name} - #{r.camp.year} Registration"} do
     columns do

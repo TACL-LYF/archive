@@ -5,8 +5,8 @@ ActiveAdmin.register Camper do
 
   belongs_to :family, optional: true
 
-  scope :all, default: true
-  scope :active
+  scope :all
+  scope :active, default: true
   scope :graduated
 
   permit_params :first_name, :last_name, :birthdate, :gender, :email,
@@ -30,12 +30,12 @@ ActiveAdmin.register Camper do
       jtasa_chapter: old_reg.jtasa_chapter,
       camper_involvement: old_reg.camper_involvement,
       additional_notes: old_reg.additional_notes)
-    redirect_to admin_registration_path(new_registration),
-      notice: "#{resource.full_name} is now preregistered for #{new_camp.year}. View registration details below."
+    redirect_to edit_admin_registration_path(new_registration),
+      notice: "#{resource.full_name} is now preregistered for #{new_camp.year}. Edit registration details below and save."
   end
 
   action_item :preregister, only: :show, if: proc{
-      resource.registrations.where(camp: Camp.first).nil?
+      resource.registrations.where(camp: Camp.first).count == 0
     } do
     link_to 'Preregister', preregister_admin_camper_path(camper), method: :post
   end
@@ -91,6 +91,9 @@ ActiveAdmin.register Camper do
         column :shirt_size
         column :bus
         column :preregistration
+        column "View" do |r|
+          link_to "View Registration", admin_registration_path(r)
+        end
       end
     end
 
