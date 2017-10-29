@@ -11,6 +11,17 @@ ActiveAdmin.register Registration do
   permit_params :camp_id, :grade, :shirt_size, :bus, :additional_notes,
     :preregistration, :jtasa_chapter, :status
 
+  member_action :cancel, method: :put do
+    resource.update_attributes! status: :cancelled
+    redirect_to resource_path, notice: "This registration has been cancelled."
+  end
+
+  action_item :cancel, only: :show, if: proc{ !registration.cancelled? } do
+    link_to 'Cancel Registration',
+      cancel_admin_registration_path(registration),
+      method: :put
+  end
+
   controller do
     def scoped_collection
       super.includes :camper
