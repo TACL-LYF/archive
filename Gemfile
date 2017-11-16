@@ -32,7 +32,7 @@ group :development, :test do
   gem 'pg', '0.18.4'
   gem 'byebug',      '9.0.0', platform: :mri
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do

@@ -1,6 +1,6 @@
 require 'faker'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :camper do
     family
     first_name { Faker::Name.first_name }
