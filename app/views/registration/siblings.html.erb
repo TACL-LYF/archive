@@ -7,8 +7,7 @@
 <%= form_for :wizard, url: wizard_path, method: :put do |f| %>
   <div class="row space-above-wide">
     <div class="col-md-12">
-      <p>Would you like to register a sibling? <% if Time.zone.today < @camp.registration_late_date %>If registered at the same time, a discount of <%= number_to_currency(@camp.sibling_discount, precision: 0) %> per sibling is applied. <br><% end %>
-      Please note that siblings MUST have the same parent contact information, and a sibling may not count as a referral.<% if Time.zone.today < @camp.registration_late_date %> The sibling discount will be applied instead.<% end %></p>
+      <p>Would you like to register a sibling? <% if Time.zone.today < @camp.registration_late_date %>If registered at the same time, a discount of <%= number_to_currency(@camp.sibling_discount, precision: 0) %> per sibling is automatically applied. <% end %>Please note that siblings MUST have the same parent contact information, and a sibling may not count as a referral.<% if Time.zone.today < @camp.registration_late_date %> The sibling discount will be applied instead.<% end %></p>
       <h5>You are currently registering the following camper(s):</h5>
       <ul>
         <% @regs.each do |r| %>

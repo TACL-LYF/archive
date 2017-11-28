@@ -11,10 +11,10 @@
       <%= f.label :grade, "Camper Grade" %>
       <div class="row">
         <div class="col-md-4">
-          <%= f.select(:grade, (3..12).collect {|g| [g.ordinalize, g]}, {include_blank: true}, {class: "form-control"}) %>
+          <%= f.select(:grade, (4..12).collect {|g| [g.ordinalize, g]}, {include_blank: true}, {class: "form-control"}) %>
         </div>
       </div>
-      <p class="help-block">Please enter the grade that your child will <b>complete</b> in Spring 2017.</p>
+      <p class="help-block">Please enter the grade that your child will <b>complete</b> in Spring 2018.</p>
     </div>
     <div class="col-md-4 form-group">
       <%= f.label :shirt_size, "T-shirt Size" %>
@@ -55,11 +55,11 @@
   <div class="row space-above-wide">
     <div class="col-md-12">
       <h2>Bus and Parents Program</h2>
-      <p class="space-above-narrow">Due to the distance of the campsite, LYF Camp will provide complimentary buses both to and from the campsite. Buses will pick campers up on Monday morning from the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). On the return trip, all campers will be dropped off at TECO in Milpitas for the Parents Program, Closing Ceremony, and pick up.  </p>
-      <p>We highly encourage parents to attend the Parents Program on the last day of camp. The Parents Program is a celebration of song, dance, and performance to highlight the week’s achievements and memories. Parents will get the chance to experience camp for themselves and learn exactly what it is their campers learn at LYF Camp.</p>
-      <p>This year, Parents Program will be held on Saturday, June 24th, 1:00pm - 4:00pm at the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). LYF Camp and our programming will end at 4:00pm. If you are unable to pick up your camper(s), please make arrangements with another parent.</p>
+      <p class="space-above-narrow">LYF Camp will provide transportation to and from the campsite. Buses will pick campers up on Sunday morning from the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). On Friday, all campers will be dropped off at TECO in Milpitas for the Parents Program, Closing Ceremony, and pick up.</p>
+      <p>We highly encourage parents to attend the Parents Program on the last day of camp. The Parents Program is a celebration of song, dance, and performance to highlight the week's achievements and memories. Parents will get the chance to experience camp for themselves and see what their campers have learned at LYF Camp.</p>
+      <p>This year, Parents Program will be held on Friday, June 29th, 3:30pm - 5:00pm at the TECO Culture Center in Milpitas (100 S. Milpitas Blvd. Milpitas, CA 95035). LYF Camp will end at 5:00pm. If you are unable to pick up your camper(s), please make arrangements with another parent.</p>
       <p>To help us arrange the buses, please select the answer that best fits your plans.</p>
-      <p class="help-block">Note: This will only reserve one seat per camper, so make sure to answer this question each time you register a camper. All campers will be returning to Milpitas on Saturday via bus. If your camper needs to be picked up from the campsite early, please make a note in the "Additional Notes" box on the next page.</p>
+      <p class="help-block">Note: This will only reserve one seat per camper, so make sure to answer this question each time you register a camper. All campers will be returning to Milpitas on Friday via bus. If your camper needs to be picked up from the campsite early, please make a note in the "Additional Notes" box on the next page.</p>
       <div class="radio space-above-med">
         <%= f.label :bus_true do %>
           <%= f.radio_button :bus, true %> I am interested in taking the bus both TO AND FROM the campsite.
@@ -67,7 +67,7 @@
       </div>
       <div class="radio">
         <%= f.label :bus_false do %>
-          <%= f.radio_button :bus, false %> I will provide my own transportation TO Walker Creek Ranch on Monday.
+          <%= f.radio_button :bus, false %> I will provide my own transportation TO Zephyr Point on Sunday.
         <% end %>
       </div>
     </div>
