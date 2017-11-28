@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721003944) do
+ActiveRecord::Schema.define(version: 20171128010856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,10 @@ ActiveRecord::Schema.define(version: 20170721003944) do
     t.date     "registration_open_date"
     t.date     "registration_late_date"
     t.date     "registration_close_date"
+    t.date     "camp_start_date"
+    t.date     "camp_end_date"
+    t.string   "campsite"
+    t.string   "campsite_address"
     t.index ["year"], name: "index_camps_on_year", unique: true, using: :btree
   end
 

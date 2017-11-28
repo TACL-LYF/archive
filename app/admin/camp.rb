@@ -5,7 +5,8 @@ ActiveAdmin.register Camp do
 
   permit_params :name, :year, :registration_fee, :shirt_price, :sibling_discount,
     :registration_late_fee, :registration_open_date, :registration_late_date,
-    :registration_close_date
+    :registration_close_date, :camp_start_date, :camp_end_date, :campsite,
+    :campsite_address
 
   index do
     selectable_column
@@ -71,12 +72,20 @@ ActiveAdmin.register Camp do
       end
     end
 
+    attributes_table title: "Camp Details" do
+      row :camp_start_date
+      row :camp_end_date
+      row :campsite
+      row :campsite_address
+    end
+
     render 'admin/timestamps', context: self
   end
 
   form do |f|
     f.semantic_errors *f.object.errors.keys
-    inputs 'Details', :year, :name
+    inputs 'Details', :year, :name, :camp_start_date, :camp_end_date, :campsite,
+      :campsite_address
     columns do
       column do
         inputs 'Registration Dates' do
