@@ -39,10 +39,6 @@ class Camper < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def status
-    self[:status].titlecase
-  end
-
   def gender_abbr
     self[:gender][0].upcase
   end

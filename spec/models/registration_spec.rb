@@ -47,8 +47,8 @@ RSpec.describe Registration, type: :model do
 
   describe "#list_additional_shirts" do
     context "without additional shirts" do
-      it "prints \"None\"" do
-        expect(build(:registration).list_additional_shirts).to eq("None")
+      it "returns an empty string" do
+        expect(build(:registration).list_additional_shirts).to be_blank
       end
     end
     context "with additional shirts" do

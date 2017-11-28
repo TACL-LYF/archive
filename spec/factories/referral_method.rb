@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :referral_method do
     name { Faker::Lorem.words(rand(1..5)) }
     allow_details { [true, false].sample }

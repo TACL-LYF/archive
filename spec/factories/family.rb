@@ -1,7 +1,7 @@
 require 'faker'
 Faker::Config.locale = 'en-US'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :family do
     primary_parent_first_name { Faker::Name.first_name }
     primary_parent_last_name { Faker::Name.last_name }

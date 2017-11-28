@@ -12,7 +12,7 @@ class Camp < ApplicationRecord
     grade_breakdown = (3..12).to_a.map { |grade| [grade, 0] }.to_h
     bus_total = 0
 
-    registrations.where(status: :active).each do |r|
+    registrations.active.each do |r|
       shirt_totals[r.shirt_size] += 1
       r.additional_shirts.each do |size, count|
         shirt_totals[size] += count.to_i
@@ -23,14 +23,18 @@ class Camp < ApplicationRecord
     end
 
     return {
-      active: registrations.where(status: :active).size,
-      cancelled: registrations.where(status: :cancelled).size,
-      waitlist: registrations.where(status: :waitlist).size,
+      active: registrations.active.size,
+      cancelled: registrations.cancelled.size,
+      waitlist: registrations.waitlist.size,
       bus_total: bus_total,
       gender_breakdown: gender_breakdown,
       grade_breakdown: grade_breakdown,
       shirt_totals: shirt_totals
     }
+  end
+
+  def display_name
+    "#{year}: #{name}"
   end
 
   def is_late_registration?

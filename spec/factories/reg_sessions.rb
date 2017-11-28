@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :reg_session do
     data "MyText"
   end

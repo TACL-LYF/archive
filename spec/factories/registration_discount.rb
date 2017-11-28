@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :registration_discount do
     camp
     code { Faker::Lorem.word.upcase }
