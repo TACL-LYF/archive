@@ -1,6 +1,6 @@
 LYF Camp 2017 Registration Confirmation
 
-Thank you for registering for LYF Camp 2017! We have received your payment and registration(s) for the following camper(s):
+Thank you for registering for LYF Camp <%= @camp.year %>! We have received your payment and registration(s) for the following camper(s):
 
 ==============================
 <% @breakdown[:campers].each do |camper| %>
@@ -22,7 +22,7 @@ Additional Donation: <%= number_to_currency @breakdown[:additional_donation] %>
 <%= "#{@brand} #{"*"*12}#{@last_four}" %> Total: <%= number_to_currency @breakdown[:total] %>
 ==============================
 
-If your registration needs to be updated, or you would like to include any comments, please email annie.huang@tacl.org.
+If your registration needs to be updated, or you would like to include any comments, please email taylor.chen@tacl.org.
 
 <% if @camp.is_registration_closed? %>
 Because we received your registration after the general registration period, you have been added to our waitlist. We will contact you if space becomes available; if not, we will issue a refund of your registration fee. Please look out for an email from us in the near future.
@@ -35,14 +35,14 @@ A final email will be sent out at the end of May as Camp approaches. Additionall
 
 SAVE THE DATE!
 
-Parent Orientation - June 10th, 2017
-2:00pm - 4:00pm @ TECO Center Milpitas
+Winter Reunion - January 6th, 2018
+2:00pm - 5:00pm @ Taiwanese American Center
+4413 Fortran Ct. San Jose, CA 95134
+
+New Parent Orientation - June 16th, 2018 (Tentative)
+Time TBA @ TECO Center Milpitas
 100 S. Milpitas Blvd. Milpitas, CA 95035
 
-Parent's Program - June 24th, 2017
-1:00pm - 4:00pm @ TECO Center Milpitas
+Parent's Program - June 29th, 2018
+3:30pm - 5:00pm @ TECO Center Milpitas
 100 S. Milpitas Blvd. Milpitas, CA 95035
-
-Summer Reunion, 35th Anniversary - August 19th, 2017
-11:00am - 4:00pm @ Newark Community Center
-35501 Cedar Blvd. Newark, CA 94560
