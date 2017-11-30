@@ -55,7 +55,7 @@
   </div>
   <div class="col-md-8">
     <h5>Additional Shirts:</h5>
-    <p><%= @reg.list_additional_shirts %></p>
+    <p><%= @reg.list_additional_shirts.blank? ? "None" : @reg.list_additional_shirts %></p>
   </div>
 </div>
 <div class="row">

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.3.0'
 
 gem 'rails',                   '5.0.0.1'
+gem 'pg',                      '0.18.4'
 gem 'faker',                   '1.6.3'
 gem 'bootstrap-sass',          '3.3.6'
 gem 'puma',                    '3.4.0'
@@ -24,12 +25,12 @@ gem 'exception_notification'
 gem 'slack-notifier'
 gem 'axlsx_rails'
 gem 'immutable-struct'
+gem 'recipient_interceptor'
 # gem 'will_paginate',           '3.1.0'
 # gem 'bootstrap-will_paginate', '0.0.10'
 
 group :development, :test do
 # gem 'sqlite3',     '1.3.11'
-  gem 'pg', '0.18.4'
   gem 'byebug',      '9.0.0', platform: :mri
   gem 'rspec-rails'
   gem 'factory_bot_rails'
@@ -56,7 +57,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '0.18.4'
   gem 'newrelic_rpm'
 end
 
