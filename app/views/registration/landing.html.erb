@@ -12,13 +12,13 @@
       <p class="vag space-above-chasm">
         <%= number_to_currency(@camp.registration_fee, precision: 0) %><br>
         General Registration<br>
-        (<%= @camp.registration_open_date.strftime("%b %-d, %Y") %> &ndash; <%= @camp.registration_late_date.yesterday.strftime("%b %-d, %Y") %>)
+        (<%= @camp.registration_open_date.strftime("%b %-d, %Y") %> - <%= @camp.registration_late_date.yesterday.strftime("%b %-d, %Y") %>)
       </p>
     <% end %>
     <p class="vag space-above-med">
       <%= number_to_currency(@camp.registration_fee + @camp.registration_late_fee, precision: 0) %><br>
       Late Registration<br>
-      (<%= @camp.registration_late_date.strftime("%b %-d") %> &ndash; <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
+      (<%= @camp.registration_late_date.strftime("%b %-d") %> - <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
     </p>
     <p class="vag space-above-med">
       Waitlist begins <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>
