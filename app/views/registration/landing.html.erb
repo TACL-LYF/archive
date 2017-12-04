@@ -3,7 +3,7 @@
     <%= link_to image_tag("logo.png", size: "136", alt: "TACL-LYF Logo"), "https://lyf.tacl.org", target: "_blank" %>
     <h1>Register for LYF Camp <%= @camp.year %>!</h1>
     <p class="space-above-chasm">
-      <%= @camp.camp_start_date.strftime("%B %-d, %Y") %> &ndash; <%= @camp.camp_end_date.strftime("%B %-d, %Y") %><br>
+      <%= @camp.camp_start_date.strftime("%B %-d, %Y") %> - <%= @camp.camp_end_date.strftime("%B %-d, %Y") %><br>
       <%= @camp.campsite %><br>
       <%= @camp.campsite_address %><br>
       <%= link_to "Registration Policy", "#registration_policy", "data-toggle" => "modal" %> | <%= link_to "Discounts & Financial Aid", "#financial_aid", "data-toggle" => "modal" %>
