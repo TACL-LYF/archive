@@ -12,6 +12,6 @@ class RegistrationPaymentMailer < ApplicationMailer
     @brand = reg_payment.stripe_brand
     mail to: reg_payment.registrations.first.camper.family.primary_parent_email,
          bcc: "lyf.od@tacl.org",
-         subject: "LYF Camp 2017 Registration Confirmation"
+         subject: "LYF Camp #{@camp.year} Registration Confirmation"
   end
 end

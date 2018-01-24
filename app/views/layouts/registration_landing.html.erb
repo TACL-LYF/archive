@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>LYF Camp 2017 Registration</title>
+    <title>LYF Camp <%= @camp.year %> Registration</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'register', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "#{STRIPE_JS_HOST}/v1/", 'application', 'data-turbolinks-track': 'reload' %>
