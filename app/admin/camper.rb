@@ -47,6 +47,7 @@ ActiveAdmin.register Camper do
     column :birthdate
     column :gender
     column :email
+    column :family
     column "Registrations" do |c|
       c.registrations.map{|r| link_to r.camp.year, admin_registration_path(r)}
         .join(", ").chomp(", ").html_safe
@@ -67,6 +68,7 @@ ActiveAdmin.register Camper do
     columns do
       column do
         attributes_table do
+          row :family
           row :first_name
           row :last_name
           row :birthdate
