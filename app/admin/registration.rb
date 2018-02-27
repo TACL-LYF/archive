@@ -113,4 +113,14 @@ ActiveAdmin.register Registration do
     actions
   end
 
+  csv do
+    column :group
+    column :full_name
+    column :street
+    column :suite
+    column :state
+    column :zip
+    column("Registered") { |r| r.camper.registrations.where(camp: Camp.first).count == 1 ? "Y" : "" }
+  end
+
 end

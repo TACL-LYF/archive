@@ -6,8 +6,8 @@ class Registration < ApplicationRecord
   delegate :family, :birthdate, :gender, :medical_conditions_and_medication,
            :diet_and_food_allergies, :returning, :primary_parent_email,
            :primary_parent_phone_number, :secondary_parent_email,
-           :secondary_parent_phone_number, :suite, :street, :zip,
-           to: :camper, allow_nil: true
+           :secondary_parent_phone_number, :suite, :street, :state, :zip,
+           :first_name, :last_name, :full_name, to: :camper, allow_nil: true
   delegate :email, to: :camper, prefix: true, allow_nil: true
 
   before_validation :copy_city_state_from_family
