@@ -26,6 +26,7 @@ gem 'slack-notifier'
 gem 'axlsx_rails'
 gem 'immutable-struct'
 gem 'recipient_interceptor'
+gem 'best_in_place', github: 'bernat/best_in_place'
 # gem 'will_paginate',           '3.1.0'
 # gem 'bootstrap-will_paginate', '0.0.10'
 

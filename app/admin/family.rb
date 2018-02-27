@@ -11,7 +11,7 @@ ActiveAdmin.register Family do
     campers_attributes: [:id, :first_name, :last_name, :birthdate, :gender, :email,
     :medical_conditions_and_medication, :diet_and_food_allergies, :status,
     :returning, :_destroy],
-    referrals_attributes: [:referral_method_id, :details]
+    referrals_attributes: [:id, :referral_method_id, :details, :_destroy]
 
   index do
     selectable_column
@@ -41,7 +41,7 @@ ActiveAdmin.register Family do
     columns do
       column do
         attributes_table title: "Primary Parent Information" do
-          row("First Name") {|f| f.primary_parent_first_name}
+          row("First Name") {|f| f.primary_parent_first_name }
           row("Last Name") {|f| f.primary_parent_last_name }
           row("Email") {|f| f.primary_parent_email }
           row("Phone Number") {|f| f.primary_parent_phone_number }

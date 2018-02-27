@@ -31,6 +31,8 @@ ActiveAdmin.register Registration do
   index do
     selectable_column
     column "Registered", :created_at, sortable: :created_at
+    column(:group) { |r| best_in_place r, :group, as: :select, url: [:admin,r],
+      collection: Registration.groups.keys.map{|group| [group,group] } }
     column :camper, sortable: 'campers.first_name'
     column "Parent", :family, sortable: :primary_parent
     column :grade

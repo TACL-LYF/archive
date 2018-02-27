@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/bernat/best_in_place.git
+  revision: 1b779e60ea912ab9c39d5c999b00c8ac44a8e535
+  specs:
+    best_in_place (3.1.1)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -367,6 +375,7 @@ DEPENDENCIES
   activeadmin
   activeadmin_addons
   axlsx_rails
+  best_in_place!
   bootstrap-sass (= 3.3.6)
   byebug (= 9.0.0)
   capybara
