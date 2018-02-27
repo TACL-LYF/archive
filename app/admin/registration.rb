@@ -9,7 +9,7 @@ ActiveAdmin.register Registration do
   scope :waitlist
 
   permit_params :camp_id, :grade, :shirt_size, :bus, :additional_notes,
-    :preregistration, :jtasa_chapter, :status
+    :preregistration, :jtasa_chapter, :status, :group
 
   member_action :cancel, method: :put do
     resource.update_attributes! status: :cancelled
