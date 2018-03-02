@@ -4,6 +4,18 @@ ActiveAdmin.register RegistrationPayment do
   # no creating or editing
   actions :index, :show
 
+  # send confirmation email action
+  member_action :resend_confirmation, method: :get do
+    RegistrationPaymentMailer.registration_confirmation(resource).deliver_now
+    redirect_to admin_registration_payment_path(resource),
+      notice: "Confirmation email has been resent."
+  end
+
+  action_item :resend_confirmation, only: :show do
+    link_to 'Resend Confirmation',
+      resend_confirmation_admin_registration_payment_path(resource), method: :get
+  end
+
   index do
     selectable_column
     column "Timestamp", :created_at, sortable: :created_at
