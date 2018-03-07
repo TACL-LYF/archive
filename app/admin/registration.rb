@@ -120,6 +120,7 @@ ActiveAdmin.register Registration do
     column :full_name
     column :street
     column :suite
+    column :city
     column :state
     column :zip
     column("Registered") { |r| r.camper.registrations.where(camp: Camp.first).count == 1 ? "Y" : "" }
