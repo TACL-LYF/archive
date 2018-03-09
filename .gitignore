@@ -27,3 +27,4 @@ config/env.yml
 spec/examples.txt
 spec/.DS_Store
 stripe-mock-server.log
+stripe-mock-server.pid

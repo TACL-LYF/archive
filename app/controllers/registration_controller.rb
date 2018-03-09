@@ -291,7 +291,7 @@ class RegistrationController < ApplicationController
       msg = %Q[Oops! You're in the middle of the form, but we seem to have lost]
       msg += %Q[ some of your previously entered information.<br />]
       msg += %Q[Please <a href="/registration/landing">start again from the beginning</a>]
-      msg += %Q[, or email <a href="mailto:annie.huang@tacl.org">annie.huang@tacl.org</a>]
+      msg += %Q[, or email <a href="mailto:rosette.su@tacl.org">rosette.su@tacl.org</a>]
       msg += %Q[ if the problem persists.]
       flash.now[:danger] = msg.html_safe
     end

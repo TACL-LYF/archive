@@ -24,7 +24,7 @@ class Registration < ApplicationRecord
             if: Proc.new { |r| r.required_for_step?(:details) }
   with_options if: Proc.new { |r| r.required_for_step?(:details) } do
     validates :bus, inclusion: { in: [true, false],
-                                 message: "information required" }
+                                 message: "acknowledgement required" }
   end
   with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
     validates :waiver_signature, presence: true, unless: :preregistration
