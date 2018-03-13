@@ -132,13 +132,19 @@ ActiveAdmin.register Camper do
                new_record: "Add Registration",
                allow_destroy: false do |r|
       r.input :camp
+      r.input :status
       r.input :grade
       r.input :shirt_size
       r.input :bus
       r.input :additional_notes, input_html: { rows: 5 }
       r.input :preregistration
       r.input :jtasa_chapter
-      r.input :status
+      r.input :waiver_signature
+      r.input :waiver_date, as: :datepicker,
+        datepicker_options: {
+          min_date: 1.year.ago.to_date,
+          max_date: 1.year.from_now.to_date
+        }
     end
     actions
   end
