@@ -102,6 +102,12 @@ ActiveAdmin.register Registration do
           input :jtasa_chapter
           input :camper_involvement, input_html: { rows: 1 }
           input :additional_notes, input_html: { rows: 5 }
+          input :waiver_signature
+          input :waiver_date, as: :datepicker,
+            datepicker_options: {
+              min_date: 1.year.ago.to_date,
+              max_date: 1.year.from_now.to_date
+            }
         end
       end
       column do
