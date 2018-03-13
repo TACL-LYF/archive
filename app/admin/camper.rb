@@ -13,7 +13,8 @@ ActiveAdmin.register Camper do
     :medical_conditions_and_medication, :diet_and_food_allergies, :status,
     :returning, :family_id,
     registrations_attributes: [:id, :camp_id, :grade, :shirt_size, :bus,
-    :additional_notes, :preregistration, :jtasa_chapter, :status]
+    :additional_notes, :preregistration, :jtasa_chapter, :status,
+    :waiver_signature, :waiver_date]
 
   member_action :preregister, method: :post do
     old_reg = resource.registrations.includes(:camp).order('camps.year desc').first
