@@ -72,11 +72,11 @@
         </div>
       </div>
     </div>
-    <div class="col-md-2 form-group">
+    <div class="col-sm-3 col-md-2 form-group">
       <%= label_tag :card_verificaion, "CVC" %>
       <%= text_field_tag :card_verificaion, nil, name: nil, class: "form-control", "data-stripe" => "cvc" %>
     </div>
-    <div class="col-md-2 form-group">
+    <div class="col-sm-6 col-md-2 form-group">
       <%= label_tag :card_billing_zip, "Billing Zip" %>
       <%= text_field_tag :card_billing_zip, nil, name: nil, class: "form-control", "data-stripe" => "address_zip" %>
     </div>
