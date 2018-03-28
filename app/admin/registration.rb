@@ -3,8 +3,8 @@ ActiveAdmin.register Registration do
 
   belongs_to :camp, optional: true
 
-  scope :all, default: true
-  scope :active
+  scope :all
+  scope :active, default: true
   scope :cancelled
   scope :waitlist
 

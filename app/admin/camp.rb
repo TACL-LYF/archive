@@ -15,7 +15,7 @@ ActiveAdmin.register Camp do
       link_to camp.name, admin_camp_path(camp)
     end
     column "Registrations" do |camp|
-      link_to pluralize(camp.registrations.count, 'registration'), admin_camp_registrations_path(camp)
+      link_to pluralize(camp.registrations.active.count, 'registration'), admin_camp_registrations_path(camp)
     end
     actions
   end
