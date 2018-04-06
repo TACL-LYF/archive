@@ -20,12 +20,14 @@
       Late Registration<br>
       (<%= @camp.registration_late_date.strftime("%b %-d") %> - <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
     </p>
-    <p class="vag space-above-med">
-      Waitlist begins <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>
-    </p>
+    <% if !@camp.is_waitlist_period? %>
+      <p class="vag space-above-med">
+        Waitlist begins <%= @camp.registration_close_date.tomorrow.strftime("%b %-d, %Y") %>
+      </p>
+    <% end %>
     <p class="space-above-med">
-      <% if @camp.is_registration_closed? %>
-        <b>General registration for LYF Camp <%= @camp.year %> is currently closed</b>; however, you can still register to be on our waitlist. If space becomes available for your camper, we will contact you. If not, we will issue a refund of your registration fee.
+      <% if @camp.is_waitlist_period? %>
+        <% if @camp.is_registration_closed? %><b>General registration for LYF Camp <%= @camp.year %> is currently closed</b>; however, you can still register to be on our waitlist.<% else %><span class="vag redmagenta">We have reached our maximum capacity for camp this year.</span><br>You may still submit your registration, but you will be placed on the waitlist.<br><% end %> If space becomes available for your camper, we will contact you. If not, we will issue a refund of your registration fee.
       <% else %>
         LYF Camp has a limited number of spots, so be sure to register early!<br>You'll be placed on a waitlist once maximum capacity is reached.
       <% end %>

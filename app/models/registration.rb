@@ -12,7 +12,7 @@ class Registration < ApplicationRecord
 
   before_validation :copy_city_state_from_family
   before_create :set_waitlist,
-    if: Proc.new { |r| r.camp.is_registration_closed? && !r.preregistration }
+    if: Proc.new { |r| r.camp.is_waitlist_period? && !r.preregistration }
 
   cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
   attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day

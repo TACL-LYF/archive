@@ -12,7 +12,9 @@ class Camp < ApplicationRecord
     grade_breakdown = (3..12).to_a.map { |grade| [grade, 0] }.to_h
     bus_total = 0
 
-    registrations.active.each do |r|
+    active_regs = registrations.active.includes(:camper)
+
+    active_regs.each do |r|
       shirt_totals[r.shirt_size] += 1
       r.additional_shirts.each do |size, count|
         shirt_totals[size] += count.to_i
@@ -43,5 +45,13 @@ class Camp < ApplicationRecord
 
   def is_registration_closed?
     Time.zone.today > registration_close_date
+  end
+
+  def is_waitlist_period?
+    if waitlist_starts_after.nil?
+      is_registration_closed?
+    else
+      is_registration_closed? || registrations.active.count >= waitlist_starts_after
+    end
   end
 end

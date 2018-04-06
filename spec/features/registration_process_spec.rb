@@ -38,7 +38,9 @@ RSpec.feature "RegistrationProcess", type: :feature, js: true do
         registration_fee: 680, registration_late_fee: 40, sibling_discount: 40,
         shirt_price: 15, registration_open_date: Date.new(2016,12,01),
         registration_late_date: Date.new(2017,04,01),
-        registration_close_date: Date.new(2017,05,01))
+        registration_close_date: Date.new(2017,05,01),
+        camp_start_date: Date.new(2017,06,19), camp_end_date: Date.new(2017,06,24),
+        waitlist_starts_after: 100)
 
       visit "/registration"
     end

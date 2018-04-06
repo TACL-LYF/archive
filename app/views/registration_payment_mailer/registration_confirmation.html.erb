@@ -76,9 +76,9 @@
     If your registration needs to be updated, or you would like to include any comments, please email taylor.chen@tacl.org.
   </p>
 
-  <% if @camp.is_registration_closed? %>
+  <% if @is_waitlist %>
     <p>
-      Because we received your registration after the general registration period, you have been added to our waitlist. We will contact you if space becomes available; if not, we will issue a refund of your registration fee. Please look out for an email from us in the near future.
+      Because we received your registration after the general registration period or after we reached our maximum capacity for camp, you have been added to our waitlist. We will contact you if space becomes available; if not, we will issue a refund of your registration fee. Please look out for an email from us in the near future.
     </p>
   <% else %>
     <p>

@@ -6,7 +6,7 @@ ActiveAdmin.register Camp do
   permit_params :name, :year, :registration_fee, :shirt_price, :sibling_discount,
     :registration_late_fee, :registration_open_date, :registration_late_date,
     :registration_close_date, :camp_start_date, :camp_end_date, :campsite,
-    :campsite_address
+    :campsite_address, :waitlist_starts_after
 
   index do
     selectable_column
@@ -38,6 +38,7 @@ ActiveAdmin.register Camp do
           number_row :registration_late_fee, as: :currency
           number_row :shirt_price, as: :currency
           number_row :sibling_discount, as: :currency
+          row :waitlist_starts_after
         end
       end
       column do
@@ -92,6 +93,7 @@ ActiveAdmin.register Camp do
           input :registration_open_date, as: :datepicker
           input :registration_late_date, as: :datepicker
           input :registration_close_date, as: :datepicker
+          input :waitlist_starts_after
         end
       end
       column do

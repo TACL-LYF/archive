@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128010856) do
+ActiveRecord::Schema.define(version: 20180405223635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20171128010856) do
     t.date     "camp_end_date"
     t.string   "campsite"
     t.string   "campsite_address"
+    t.integer  "waitlist_starts_after"
     t.index ["year"], name: "index_camps_on_year", unique: true, using: :btree
   end
 
