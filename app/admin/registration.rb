@@ -24,7 +24,7 @@ ActiveAdmin.register Registration do
 
   controller do
     def scoped_collection
-      super.includes :camper
+      super.includes :camper, camper: :family
     end
   end
 

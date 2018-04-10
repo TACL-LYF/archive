@@ -41,6 +41,12 @@ ActiveAdmin.register Camper do
     link_to 'Preregister', preregister_admin_camper_path(camper), method: :post
   end
 
+  controller do
+    def scoped_collection
+      super.includes :family, :registrations, registrations: :camp
+    end
+  end
+
   index do
     selectable_column
     column :first_name
