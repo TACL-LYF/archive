@@ -50,15 +50,14 @@ class Registration < ApplicationRecord
   end
 
   def list_additional_shirts
-    list = additional_shirts.reject{ |size, n| n == "" }.
-           reduce(""){|str, (size,n)| "#{str}#{prettify_shirt_size(size)} (#{n}), "}.
-           chomp(", ")
+    additional_shirts.reject{ |size, n| n == "" }.
+      reduce(""){|str, (size,n)| "#{str}#{prettify_shirt_size(size)} (#{n}), "}.
+      chomp(", ")
   end
 
   def list_camper_involvement
-    list = camper_involvement.reject{ |role, v| v.blank? }.keys.
-           map{ |role| role.to_s.titlecase }.join(", ").chomp(", ")
-    list.blank? ? "None" : list
+    camper_involvement.reject{ |role, v| v.blank? }.keys.
+      map{ |role| role.to_s.titlecase }.join(", ").chomp(", ")
   end
 
   private

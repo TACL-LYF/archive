@@ -121,15 +121,21 @@ ActiveAdmin.register Registration do
     actions
   end
 
-  csv do
-    column :group
-    column :full_name
-    column :street
-    column :suite
-    column :city
-    column :state
-    column :zip
-    column("Registered") { |r| r.camper.registrations.where(camp: Camp.first).count == 1 ? "Y" : "" }
+  xls(header_format: { weight: :bold}) do
+    whitelist
+    column('Registered') {|r| r.created_at.to_s}
+    column :first_name
+    column :last_name
+    column(:family) {|r| r.camper.family.primary_parent}
+    column :gender
+    column :grade
+    column :shirt_size
+    column('Additional Shirts') {|r| r.list_additional_shirts}
+    column :medical_conditions_and_medication
+    column :diet_and_food_allergies
+    column :additional_notes
+    column :jtasa_chapter
+    column(:camper_involvement) {|r| r.list_camper_involvement}
   end
 
 end
