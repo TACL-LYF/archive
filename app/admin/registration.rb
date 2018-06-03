@@ -126,9 +126,12 @@ ActiveAdmin.register Registration do
     column('Registered') {|r| r.created_at.to_s}
     column :first_name
     column :last_name
-    column(:family) {|r| r.camper.family.primary_parent}
+    column('Parent') {|r| r.camper.family.primary_parent}
+    column('Parent Email') {|r| r.camper.family.primary_parent_email}
+    column('Parent Phone') {|r| r.camper.family.primary_parent_phone_number}
     column :gender
     column :grade
+    column :group
     column :shirt_size
     column('Additional Shirts') {|r| r.list_additional_shirts}
     column :medical_conditions_and_medication
