@@ -2,7 +2,7 @@
 <%= render 'shared/error_messages', object: f.object %>
 <div class="row">
   <div class="col-md-12">
-    <h2>Enter Transaction Amount</h2>
+    <h2>Transaction Amount</h2>
   </div>
 </div>
 <div class="row">
@@ -83,14 +83,6 @@
   <div class="col-md-3 form-group">
     <%= f.label :zip %>
     <%= f.text_field :zip, class: 'form-control', "data-stripe" => "address_zip" %>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12 form-group">
-    <%= f.label :dollar_for_dollar, class: 'checkbox-inline' do %>
-      <%= f.check_box :dollar_for_dollar, {id: "dollar_for_dollar"}, true, false %> I have also pledged to donate for the LYF Dollar for Dollar Matching challenge, my company will also be matching my donation. Our treasurer will follow up with more details to complete the company match. Company name:
-      <%= f.text_field :company, id: "company", class: 'form-control auto-width' %>
-    <% end %>
   </div>
 </div>
 <div class="row">
