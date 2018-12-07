@@ -6,14 +6,14 @@
   <h1 style="text-align: center;">LYF Camp <%= @camp.year %> Registration Confirmation</h1>
 
   <p>
-    Thank you for registering for LYF Camp <%= @camp.year %>! We have received your payment and registration(s) for the following camper(s):
+    Thank you for registering for LYF Camp <%= @camp.year %>! We have received your registration(s) and payment for the following camper(s):
   </p>
 
   <table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none; margin-top: 1.5rem;">
     <% @breakdown[:campers].each do |camper| %>
       <tr>
         <th colspan=2 style="border-top: 1px solid #ccc;">
-          Camper Registration - <%= camper[:name] %> (Shirt Size: <%= camper[:shirt_size] %>)
+          Camper Registration - <%= camper[:name] %>
         </th>
         <th style="text-align: right; border-top: 1px solid #ccc;">
           <%= number_to_currency @breakdown[:registration_fee] %>
@@ -73,7 +73,7 @@
   </table>
 
   <p style="margin-top: 1.5rem;">
-    If your registration needs to be updated, or you would like to include any comments, please email taylor.chen@tacl.org.
+    A copy of the registration information you submitted can be found at the end of this email. If any of this information needs to be updated, or you would like to include any comments, please email emily.chou@tacl.org.
   </p>
 
   <% if @is_waitlist %>
@@ -82,32 +82,32 @@
     </p>
   <% else %>
     <p>
-      A final email will be sent out at the end of May as Camp approaches. Additionally, you will be receiving a Camper Welcome Packet which contains a packing list, camp schedule, camp rules, and Parent's Program information.
+      Be on the lookout for a final email that will be sent towards the end of May as Camp approaches! It will include your Camper Welcome Packet, which contains a packing list, camp schedule, camp rules, and Parent's Program information.
     </p>
   <% end %>
+  <p>We look forward to seeing you at camp!</p>
 
   <hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
 
   <h3 style="margin-top: 1.5rem;">Save the date!</h3>
   <ul>
     <li style="margin-bottom: 0.5rem;">
-      <b>Winter Reunion</b> - January 6th, 2018
+      <b>Winter Reunion</b> - January 6th, 2019
       <ul>
-        <li>2:00pm - 5:00pm @ Taiwanese American Center</li>
-        <li>4413 Fortran Ct. San Jose, CA 95134</li>
+        <li>12:15pm - 2:45pm @ Nazareth Ice Oasis</li>
+        <li>3140 Bay Road, Redwood City, 94063</li>
       </ul>
     </li>
     <li style="margin-bottom: 0.5rem;">
-      <b>New Parent Orientation</b> - June 16th, 2018 (Tentative)
+      <b>New Parent Orientation</b> - June 9th, 2019 (Tentative)
+      <ul>
+        <li>Time and location TBA</li>
+      </ul>
+    </li>
+    <li style="margin-bottom: 0.5rem;">
+      <b>Parent's Program</b> - June 30th, 2019
       <ul>
         <li>Time TBA @ TECO Center Milpitas</li>
-        <li>100 S. Milpitas Blvd. Milpitas, CA 95035</li>
-      </ul>
-    </li>
-    <li style="margin-bottom: 0.5rem;">
-      <b>Parent's Program</b> - June 29th, 2018
-      <ul>
-        <li>4:30pm - 6:00pm @ TECO Center Milpitas</li>
         <li>100 S. Milpitas Blvd. Milpitas, CA 95035</li>
       </ul>
     </li>
@@ -115,15 +115,102 @@
 
   <hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
 
+  <h2 style="margin-top: 1.5rem;">Registration Information</h2>
+
+  <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Parent Information</h3>
+  <table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none;">
+    <tr>
+      <th>Primary Parent</th>
+      <th>Secondary Contact (Optional)</th>
+    </tr>
+    <tr>
+      <td>
+        <b>Name:</b> <%= @family.primary_parent %><br />
+        <b>Email:</b> <%= @family.primary_parent_email %><br />
+        <b>Phone:</b> <%= @family.primary_parent_phone_number %>
+      </td>
+      <td>
+        <b>Name:</b> <%= @family.secondary_parent %><br />
+        <b>Email:</b> <%= @family.secondary_parent_email %><br />
+        <b>Phone:</b> <%= @family.secondary_parent_phone_number %>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2" style="padding-top: 1rem;">Address</th>
+    </tr>
+    <tr>
+      <td valign="top">
+        <b>Street:</b> <%= @family.street %><br />
+        <% unless @family.suite.nil? %>
+        <b>Suite:</b> <%= @family.suite %><br />
+        <% end %>
+        <b>City:</b> <%= @family.city %>
+      </td>
+      <td valign="top">
+        <b>State:</b> <%= @family.state %><br />
+        <b>Zip:</b> <%= @family.zip %>
+      </td>
+    </tr>
+  </table>
+
+  <% @registrations.each do |reg| %>
+  <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Camper Information - <%= "#{reg.first_name} #{reg.last_name}" %></h3>
+  <table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none;">
+    <tr>
+      <td valign="top">
+        <b>Gender:</b> <%= reg.gender.titleize %><br />
+        <b>Birthdate:</b> <%= reg.birthdate %><br />
+        <b>Grade Completed:</b> <%= reg.grade %>
+      </td>
+      <td valign="top">
+        <b>Shirt Size:</b> <%= reg.shirt_size.titleize %><br />
+        <b>Email (Optional):</b> <%= reg.camper.email %><br />
+        <b>JTASA Chapter (Optional):</b> <%= reg.jtasa_chapter %><br />
+      </td>
+    </tr>
+    <% unless reg.camper_involvement.empty? %>
+    <tr>
+      <td colspan="2"><b>Camper Involvement:</b><br />
+        <%= reg.list_camper_involvement %><br /></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td colspan="2">
+        <b>Medical Conditions & Medication:</b><br />
+        <%= reg.medical_conditions_and_medication %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <b>Dietary Restrictions & Allergies:</b><br />
+        <%= reg.diet_and_food_allergies %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"><b>Additional Notes:</b> <%= reg.additional_notes %></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <b>Waiver:</b><br />
+        <small>I, the undersigned, hereby grant permission for the above-named participant to attend the Taiwanese American Citizens League - Leading Youth Forward Camp and to fully participate in the activities thereof. I consent to have pictures and/or video taken during TACL-LYF Camp of the above-named participant to be printed or posted on the internet for advertising, distribution, or other camp-related purposes. In order that the above-named participant may receive necessary medical treatment in the event of injury or illness, I understand that an effort will be made to contact me immediately and hereby authorize any adult person, being an officer, staff member or volunteer of the TACL-LYF Camp, to treat or diagnose the above-named participant. As the parent or legal guardian of the above named participant, I am responsible for the health care decision of such participant and am authorized to consent to the services to be rendered. I agree to pay for the care of the above-named participant and represent that my consent and agreement are legal and that no consent from any other person is required by law. I hereby release and agree to hold harmless TACL, the TACL-LYF Camp, <%= @camp.campsite %>, and each of its officers, directors, employees, staff members, and volunteers from any and all liability arising out of personal injury, property damage or loss, or wrongful death resulting from: (i) the exercise of the authority granted herein, (ii) the above-named participant's participation in the TACL-LYF Camp, and (iii) the negligence, both persuasive and active, or other acts, by any of the releasees. I hereby waive, discharge, and relinquish any action or causes of action which may hereafter arise out of such liability, whether known or unknown. I also consent to the immediate expulsion of the above-named participant from the TACL-LYF Camp for unauthorized excursions outside of the <%= @camp.campsite %> campground.</small>
+      </td>
+    </tr>
+    <tr>
+      <td><b>Waiver Signature:</b> <%= reg.waiver_signature %></td>
+      <td><b>Waiver Date:</b> <%= reg.waiver_date %></td>
+    </tr>
+  </table>
+  <% end %>
+
+  <hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
+
   <table cellpadding="0" cellspacing="0" style="width: 100%; font-weight: bold; text-align: left; border: none; margin-top: 1.5rem; margin-bottom: 2rem;">
     <tr>
       <td>
-        lyf@tacl.org<br>
-        650 260 8225
+        lyf@tacl.org
       </td>
       <td style="text-align: right">
-        PO Box #885<br>
-        Cupertino, CA 95014
+        650 260 8225
       </td>
     </tr>
   </table>
