@@ -8,22 +8,33 @@
   <%= render 'shared/error_messages', object: f.object %>
   <div class="row space-above-wide">
     <div class="col-md-4 form-group">
-      <%= f.label :grade, "Camper Grade" %>
+      <%= f.label :grade, "Camper's Current Grade" %>
       <div class="row">
         <div class="col-md-4">
           <%= f.select(:grade, (4..12).collect {|g| [g.ordinalize, g]}, {include_blank: true}, {class: "form-control"}) %>
         </div>
       </div>
-      <p class="help-block">Please enter the grade that your child will <b>complete</b> in Spring 2018.</p>
+      <p class="help-block">Please enter the grade that your child will <b>complete</b> in Spring <%= @camp.year %>.</p>
     </div>
     <div class="col-md-4 form-group">
+      <%= f.label :grade_entering, "Camper's Grade Next Year" %>
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.select(:grade_entering, (5..12).collect {|g| [g.ordinalize, g]}.push(["Graduated", 13]), {include_blank: true}, {class: "form-control"}) %>
+        </div>
+      </div>
+      <p class="help-block">Please enter your child's grade for the <%= @camp.year %>-<%= @camp.year+1 %> school year.</p>
+    </div>
+  </div>
+  <div class="row space-above-wide">
+    <div class="col-md-8 form-group">
       <%= f.label :shirt_size, "T-shirt Size" %>
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-4">
           <%= f.select "shirt_size", @shirt_sizes.map {|s| [s.to_s.titlecase.gsub(/^(.+?)\s/){|x| x.upcase}, s]}, {include_blank: true}, {class: "form-control"} %>
         </div>
       </div>
-      <p class="help-block">One t-shirt is included in the camp fee. All fits are based on Unisex sizes. Please refer to the size chart <%= link_to 'here', "https://www.bellacanvas.com/bella/images/UNISEX_XS-2XL.jpg", target: '_blank' %>.</p>
+      <p class="help-block">One t-shirt is included in the camp fee. All fits are based on Adult Unisex sizes.<br />Please refer to the size chart <%= link_to 'here', "https://www.bellacanvas.com/bella/images/UNISEX_XS-2XL.jpg", target: '_blank' %>.</p>
     </div>
   </div>
   <div class="row">
@@ -72,7 +83,7 @@
       </div> -->
       <div class="radio space-above-med">
         <%= f.label :bus do %>
-          <%= f.radio_button :bus, true %> I have read the above and acknowledge that my camper will be taking the bus from TECO to Silver Spur and back.
+          <%= f.radio_button :bus, true %> I have read the above and acknowledge that my camper will be taking the bus from TECO to Silver Spur and back. If I need to make separate transportation arrangements for my camper, I will note them in the Additional Notes section on the next page.
         <% end %>
       </div>
     </div>

@@ -240,7 +240,7 @@ class RegistrationController < ApplicationController
     def reg_params(step)
       permitted_attrs = case step
         when "details"
-          [:grade, :shirt_size, :jtasa_chapter, :bus].push(*Registration.stored_attributes[:additional_shirts])
+          [:grade, :grade_entering, :shirt_size, :jtasa_chapter, :bus].push(*Registration.stored_attributes[:additional_shirts])
         when "waiver"
           [:additional_notes, :waiver_signature, :waiver_year, :waiver_month, :waiver_day]
         when "camper_involvement"

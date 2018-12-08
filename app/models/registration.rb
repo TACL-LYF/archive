@@ -15,13 +15,17 @@ class Registration < ApplicationRecord
     if: Proc.new { |r| r.camp.is_waitlist_period? && !r.preregistration }
 
   cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
-  attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day
+  attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day, :grade_entering
 
   validates :camp, :camper, :city, :state, presence: true
-  validates :grade, inclusion: 3..12,
-            if: Proc.new { |r| r.required_for_step?(:details) }
-  validates :shirt_size, presence: true,
-            if: Proc.new { |r| r.required_for_step?(:details) }
+  # validates :grade, inclusion: 3..12,
+  #           if: Proc.new { |r| r.required_for_step?(:details) }
+  # validates :shirt_size, presence: true,
+  #           if: Proc.new { |r| r.required_for_step?(:details) }
+  with_options if: Proc.new { |r| r.required_for_step?(:details) } do
+    validates :grade, inclusion: 3..12
+    validates :grade_entering, :shirt_size, presence: true
+  end
   with_options if: Proc.new { |r| r.required_for_step?(:details) } do
     validates :bus, inclusion: { in: [true, false],
                                  message: "acknowledgement required" }
