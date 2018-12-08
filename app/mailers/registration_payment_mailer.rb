@@ -14,7 +14,7 @@ class RegistrationPaymentMailer < ApplicationMailer
     @brand = reg_payment.stripe_brand
     @is_waitlist = reg_payment.registrations.first.waitlist?
     mail to: @family.primary_parent_email,
-         bcc: "lyf.od@tacl.org",
+         bcc: "lyf.treasurer@tacl.org",
          subject: "LYF Camp #{@camp.year} Registration Confirmation"
   end
 end

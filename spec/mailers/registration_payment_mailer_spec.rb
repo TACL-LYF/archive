@@ -15,7 +15,7 @@ RSpec.describe RegistrationPaymentMailer, type: :mailer do
       expect(mail.from).to eq(["lyf@tacl.org"])
     end
     it "renders the bcc email" do
-      expect(mail.bcc).to eq(["lyf.od@tacl.org"])
+      expect(mail.bcc).to eq(["lyf.treasurer@tacl.org"])
     end
 
     it "renders the total amount charged" do
