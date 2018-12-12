@@ -6,7 +6,7 @@
 </div>
 <div class="row space-above-wide">
   <div class="col-md-12">
-    <p>Returning campers who will have completed grade 10 by LYF Camp 2017 will have the opportunity to take on leadership roles at camp as an Activity Coordinator. These opportunities include leading or co-leading a clinic, a Large Group Icebreaker or Family activity, running a Night Market booth, and monitoring bus transit(s). We hope these opportunities will provide campers chances to take on leading a group of campers, to practice leadership and planning skills, and to get a taste of what LYF staff do before and during camp!</p>
+    <p>Returning campers who will have completed grade 10 by LYF Camp <%= @camp.year %> will have the opportunity to take on leadership roles at camp as an Activity Coordinator. These opportunities include leading or co-leading a clinic, a Large Group Icebreaker or Family activity, running a Night Market booth, and monitoring bus transit(s). We hope these opportunities will provide campers chances to take on leading a group of campers, to practice leadership and planning skills, and to get a taste of what LYF staff do before and during camp!</p>
   </div>
 </div>
 <%= form_for @reg, url: wizard_path, method: :put do |f| %>

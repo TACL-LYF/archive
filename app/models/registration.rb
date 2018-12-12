@@ -15,27 +15,25 @@ class Registration < ApplicationRecord
     if: Proc.new { |r| r.camp.is_waitlist_period? && !r.preregistration }
 
   cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
-  attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day, :grade_entering
+  attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day,
+                :grade_entering, :admin_skip_validations
 
   validates :camp, :camper, :city, :state, presence: true
-  # validates :grade, inclusion: 3..12,
-  #           if: Proc.new { |r| r.required_for_step?(:details) }
-  # validates :shirt_size, presence: true,
-  #           if: Proc.new { |r| r.required_for_step?(:details) }
   with_options if: Proc.new { |r| r.required_for_step?(:details) } do
     validates :grade, inclusion: 3..12
-    validates :grade_entering, :shirt_size, presence: true
-  end
-  with_options if: Proc.new { |r| r.required_for_step?(:details) } do
+    validates :shirt_size, presence: true
     validates :bus, inclusion: { in: [true, false],
                                  message: "acknowledgement required" }
   end
-  with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
-    validates :waiver_signature, presence: true, unless: :preregistration
-    validates :waiver_year, :waiver_month, :waiver_day, presence: true,
-              unless: "!waiver_date.nil? || preregistration"
-    validate :waiver_signature_matches_name, on: :create, unless: :preregistration
-    validate :waiver_date_matches_date, on: :create, unless: :preregistration
+  with_options unless: :admin_skip_validations do
+    validates :grade_entering, presence: true,
+              if: Proc.new { |r| r.required_for_step?(:details) }
+    with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
+      validates :waiver_signature, presence: true
+      validates :waiver_year, :waiver_month, :waiver_day, presence: true
+      validate :waiver_signature_matches_name, on: :create
+      validate :waiver_date_matches_date, on: :create
+    end
   end
 
   enum status: { active: 0, cancelled: 1, waitlist: 2 }

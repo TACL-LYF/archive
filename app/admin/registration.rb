@@ -10,7 +10,7 @@ ActiveAdmin.register Registration do
 
   permit_params :camp_id, :grade, :shirt_size, :bus, :additional_notes,
     :preregistration, :jtasa_chapter, :status, :group, :camper_id,
-    :additional_shirts
+    :additional_shirts, :camper_involvement
 
   member_action :cancel, method: :put do
     resource.update_attributes! status: :cancelled
@@ -140,6 +140,10 @@ ActiveAdmin.register Registration do
     column :additional_notes
     column :jtasa_chapter
     column(:camper_involvement) {|r| r.list_camper_involvement}
+  end
+
+  before_save do |reg|
+    reg.admin_skip_validations = true
   end
 
 end
