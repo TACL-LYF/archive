@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405223635) do
+ActiveRecord::Schema.define(version: 20190206000115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,9 +210,13 @@ ActiveRecord::Schema.define(version: 20180405223635) do
     t.string "jtasa_chapter"
     t.boolean "preregistration", default: false
     t.integer "status", default: 0, null: false
+    t.jsonb "additional_shirts_json", default: {}, null: false
+    t.jsonb "camper_involvement_json", default: {}, null: false
+    t.index ["additional_shirts_json"], name: "index_registrations_on_additional_shirts_json", using: :gin
     t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
     t.index ["camp_id"], name: "index_registrations_on_camp_id"
     t.index ["camper_id"], name: "index_registrations_on_camper_id"
+    t.index ["camper_involvement_json"], name: "index_registrations_on_camper_involvement_json", using: :gin
     t.index ["registration_payment_id"], name: "index_registrations_on_registration_payment_id"
   end
 
