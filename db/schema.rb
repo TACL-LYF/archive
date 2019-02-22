@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190206000115) do
+ActiveRecord::Schema.define(version: 20190215000207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,9 +59,7 @@ ActiveRecord::Schema.define(version: 20190206000115) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "returning"
-    t.integer "possible_dupe_of_id"
     t.index ["family_id"], name: "index_campers_on_family_id"
-    t.index ["possible_dupe_of_id"], name: "index_campers_on_possible_dupe_of_id"
   end
 
   create_table "camps", id: :serial, force: :cascade do |t|
@@ -204,19 +202,19 @@ ActiveRecord::Schema.define(version: 20190206000115) do
     t.integer "camper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "additional_shirts"
+    t.text "additional_shirts_old"
     t.integer "registration_payment_id"
-    t.text "camper_involvement"
+    t.text "camper_involvement_old"
     t.string "jtasa_chapter"
     t.boolean "preregistration", default: false
     t.integer "status", default: 0, null: false
-    t.jsonb "additional_shirts_json", default: {}, null: false
-    t.jsonb "camper_involvement_json", default: {}, null: false
-    t.index ["additional_shirts_json"], name: "index_registrations_on_additional_shirts_json", using: :gin
+    t.jsonb "additional_shirts", default: {}, null: false
+    t.jsonb "camper_involvement", default: {}, null: false
+    t.index ["additional_shirts"], name: "index_registrations_on_additional_shirts", using: :gin
     t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
     t.index ["camp_id"], name: "index_registrations_on_camp_id"
     t.index ["camper_id"], name: "index_registrations_on_camper_id"
-    t.index ["camper_involvement_json"], name: "index_registrations_on_camper_involvement_json", using: :gin
+    t.index ["camper_involvement"], name: "index_registrations_on_camper_involvement", using: :gin
     t.index ["registration_payment_id"], name: "index_registrations_on_registration_payment_id"
   end
 
@@ -237,7 +235,6 @@ ActiveRecord::Schema.define(version: 20190206000115) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "campers", "campers", column: "possible_dupe_of_id"
   add_foreign_key "campers", "families"
   add_foreign_key "referrals", "families"
   add_foreign_key "referrals", "referral_methods"

@@ -39,8 +39,10 @@ class Registration < ApplicationRecord
   enum status: { active: 0, cancelled: 1, waitlist: 2 }
   enum shirt_size: Hash[SHIRT_SIZES.zip (0..SHIRT_SIZES.size)]
   enum group: ('A'..'Z').to_a.map!(&:to_sym)
-  store :additional_shirts, accessors: SHIRT_SIZES
-  store :camper_involvement, accessors: CAMPER_ROLES
+  #store :additional_shirts, accessors: SHIRT_SIZES
+  #store :camper_involvement, accessors: CAMPER_ROLES
+  store_accessor :additional_shirts, SHIRT_SIZES
+  store_accessor :camper_involvement, CAMPER_ROLES
 
   def pretty_shirt_size
     prettify_shirt_size(self.shirt_size)
