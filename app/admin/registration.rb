@@ -41,7 +41,7 @@ ActiveAdmin.register Registration do
     column :shirt_size do |r|
       r.pretty_shirt_size
     end
-    list_column :additional_shirts, sortable: false
+    column :additional_shirts, sortable: false
     column :bus, sortable: false
     column :jtasa_chapter
     column "Medical", :medical_conditions_and_medication
@@ -69,10 +69,10 @@ ActiveAdmin.register Registration do
           row :preregistration
           row :grade
           row :shirt_size
-          list_row :additional_shirts
+          row :additional_shirts
           row :bus
           row :jtasa_chapter
-          list_row :camper_involvement
+          row :camper_involvement
           row :additional_notes
           row :registration_payment
         end
@@ -98,10 +98,10 @@ ActiveAdmin.register Registration do
           input :preregistration
           input :grade
           input :shirt_size
-          input :additional_shirts, input_html: { rows: 1 }
+          input :additional_shirts, as: :text, input_html: { rows: 1 }
           input :bus
           input :jtasa_chapter
-          input :camper_involvement, input_html: { rows: 1 }
+          input :camper_involvement, as: :text, input_html: { rows: 1 }
           input :additional_notes, input_html: { rows: 5 }
           input :waiver_signature
           input :waiver_date, as: :datepicker,
