@@ -156,4 +156,10 @@ ActiveAdmin.register Camper do
     actions
   end
 
+  before_save do |camper|
+    camper.registrations.each do |r|
+      r.admin_skip_validations = true
+    end
+  end
+
 end
