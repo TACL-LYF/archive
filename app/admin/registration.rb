@@ -38,10 +38,8 @@ ActiveAdmin.register Registration do
     column "Parent", :family, sortable: :primary_parent
     column :grade
     column :gender
-    column :shirt_size do |r|
-      r.pretty_shirt_size
-    end
-    column :additional_shirts, sortable: false
+    column :shirt_size, :pretty_shirt_size
+    column "Additional Shirts", :list_additional_shirts
     column :bus, sortable: false
     column :jtasa_chapter
     column "Medical", :medical_conditions_and_medication
@@ -69,10 +67,10 @@ ActiveAdmin.register Registration do
           row :preregistration
           row :grade
           row :shirt_size
-          row :additional_shirts
+          row "Additional Shirts", :list_additional_shirts
           row :bus
           row :jtasa_chapter
-          row :camper_involvement
+          row "Camper Involvement", :list_camper_involvement
           row :additional_notes
           row :registration_payment
         end

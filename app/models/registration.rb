@@ -54,13 +54,15 @@ class Registration < ApplicationRecord
   end
 
   def list_additional_shirts
-    additional_shirts.reject{ |size, n| n == "" }.
+    as = [nil, "{}", ""].include?(additional_shirts) ? Hash.new : additional_shirts
+    as.reject{ |size, n| n == "" }.
       reduce(""){|str, (size,n)| "#{str}#{prettify_shirt_size(size)} (#{n}), "}.
       chomp(", ")
   end
 
   def list_camper_involvement
-    camper_involvement.reject{ |role, v| v.blank? }.keys.
+    ci = [nil, "{}", ""].include?(camper_involvement) ? Hash.new : camper_involvement
+    ci.reject{ |role, v| v.blank? }.keys.
       map{ |role| role.to_s.titlecase }.join(", ").chomp(", ")
   end
 
