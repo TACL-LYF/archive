@@ -25,14 +25,15 @@ class Family < ApplicationRecord
               :secondary_parent_first_name, :secondary_parent_last_name,
               length: { maximum: 50 }
     validates :primary_parent_email, length: { maximum: 255 },
-              format: VALID_EMAIL_REGEX, unless: "primary_parent_email.blank?"
+              format: VALID_EMAIL_REGEX,
+              unless: -> { primary_parent_email.blank? }
     validates :secondary_parent_email, length: { maximum: 255 },
               format: VALID_EMAIL_REGEX, allow_blank: true
     validates :primary_parent_phone_number, phone: true,
-              unless: "primary_parent_phone_number.blank?"
+              unless: -> { primary_parent_phone_number.blank? }
     validates :secondary_parent_phone_number, phone: { allow_blank: true }
-    validates :state, length: { is: 2 }, unless: "state.blank?"
-    validates :zip, length: { minimum: 5 }, unless: "zip.blank?"
+    validates :state, length: { is: 2 }, unless: -> { state.blank? }
+    validates :zip, length: { minimum: 5 }, unless: -> { zip.blank? }
   end
 
   def primary_parent

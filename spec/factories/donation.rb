@@ -10,6 +10,6 @@ FactoryBot.define do
     city { Faker::Address.city }
     state { Faker::Address.state_abbr }
     zip { Faker::Address.zip }
-    amount "50.00"
+    amount { "50.00" }
   end
 end

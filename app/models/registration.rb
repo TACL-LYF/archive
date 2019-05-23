@@ -54,7 +54,7 @@ class Registration < ApplicationRecord
   end
 
   def list_additional_shirts
-    as = [nil, "{}", ""].include?(additional_shirts) ? Hash.new : additional_shirts
+    as = [nil,  "{}", ""].include?(additional_shirts) ? Hash.new : additional_shirts
     as.reject{ |size, n| n == "" }.
       reduce(""){|str, (size,n)| "#{str}#{prettify_shirt_size(size)} (#{n}), "}.
       chomp(", ")

@@ -9,8 +9,8 @@ FactoryBot.define do
     birthdate { Faker::Date.between(18.years.ago, 9.years.ago) }
     returning { [true, false].sample }
     email { Faker::Internet.safe_email }
-    medical_conditions_and_medication "N/A"
-    diet_and_food_allergies "N/A"
-    status :active
+    medical_conditions_and_medication { "N/A" }
+    diet_and_food_allergies { "N/A" }
+    status { :active }
   end
 end

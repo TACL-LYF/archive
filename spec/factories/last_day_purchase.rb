@@ -11,6 +11,6 @@ FactoryBot.define do
     state { Faker::Address.state_abbr }
     zip { Faker::Address.zip }
     camper_names { Faker::Name.name }
-    amount "680.00"
+    amount { "680.00" }
   end
 end

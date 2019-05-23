@@ -7,7 +7,7 @@ class Donation < ApplicationRecord
   validates :zip, length: { minimum: 5 }
   validates :amount, presence: true
   validates :amount, numericality: { greater_than: 0 },
-            format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, unless: 'amount.nil?'
+            format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, unless: -> { amount.nil? }
   validates :stripe_last_four, length: { is: 4 },
             numericality: { only_integer: true }, allow_blank: true
 

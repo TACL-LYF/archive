@@ -2,14 +2,14 @@ require 'faker'
 
 FactoryBot.define do
   factory :registration_payment do
-    reg_step "donation"
+    reg_step { "donation" }
     transient do
-      registrations_count 1
+      registrations_count { 1 }
     end
 
     factory :registration_payment_for_multiple_registrations do
       transient do
-        registrations_count 2
+        registrations_count { 2 }
       end
     end
 

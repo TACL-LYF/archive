@@ -20,13 +20,13 @@ class Camper < ApplicationRecord
     validates :first_name, :last_name, presence: true, length: { maximum: 50 }
     validates :family, :gender, presence: true
     validates :birth_year, :birth_month, :birth_day, presence: true,
-              unless: "!birthdate.nil?"
+              unless: -> { !birthdate.nil? }
     validates :email, length: { maximum: 255 }, format: VALID_EMAIL_REGEX,
               allow_blank: true
     validates :returning, inclusion: { in: [true, false],
                                  message: "information required" }
     validate :birthdate_is_valid,
-             unless: "birth_year.nil? || birth_month.nil? || birth_day.nil?"
+             unless: -> { birth_year.nil? || birth_month.nil? || birth_day.nil? }
   end
   validates :medical_conditions_and_medication, :diet_and_food_allergies,
             presence: { message: "required. If none, please write \"N/A\"" },

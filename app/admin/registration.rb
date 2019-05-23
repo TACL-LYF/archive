@@ -67,10 +67,10 @@ ActiveAdmin.register Registration do
           row :preregistration
           row :grade
           row :shirt_size
-          row "Additional Shirts", :list_additional_shirts
+          row('Additional Shirts') {|r| r.list_additional_shirts}
           row :bus
           row :jtasa_chapter
-          row "Camper Involvement", :list_camper_involvement
+          row('Camper Involvement') {|r| r.list_camper_involvement}
           row :additional_notes
           row :registration_payment
         end
@@ -142,6 +142,8 @@ ActiveAdmin.register Registration do
 
   before_save do |reg|
     reg.admin_skip_validations = true
+    reg.camper_involvement = eval(reg.camper_involvement)
+    reg.additional_shirts = eval(reg.additional_shirts)
   end
 
 end

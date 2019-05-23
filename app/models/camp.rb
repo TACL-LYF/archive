@@ -17,9 +17,11 @@ class Camp < ApplicationRecord
     active_regs.each do |r|
       shirt_totals[r.shirt_size] += 1
       a_s = r.additional_shirts
-      a_s = eval(a_s) unless a_s.is_a?(Hash)
-      a_s.each do |size, count|
-        shirt_totals[size] += count.to_i
+      unless [nil, "", {}, "{}"].include?(a_s)
+        a_s = eval(a_s) unless a_s.is_a?(Hash)
+        a_s.each do |size, count|
+          shirt_totals[size] += count.to_i
+        end
       end
       gender_breakdown[r.gender] += 1
       grade_breakdown[r.grade] += 1

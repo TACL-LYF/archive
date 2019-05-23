@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :reg_session do
-    data "MyText"
+    data { "MyText" }
   end
 end
