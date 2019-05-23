@@ -13,7 +13,7 @@ ActiveAdmin.register Registration do
     :additional_shirts, :camper_involvement
 
   member_action :cancel, method: :put do
-    resource.update_attributes! status: :cancelled
+    resource.update_attributes!(status: :cancelled, admin_skip_validations: true)
     redirect_to resource_path, notice: "This registration has been cancelled."
   end
 
