@@ -47,7 +47,7 @@ ActiveAdmin.register RegistrationPayment do
           table_for registration_payment.registrations do |r|
             column("Year") { |reg| reg.camp.year }
             column :camper
-            list_column :additional_shirts
+            column("Additional Shirts") {|reg| reg.list_additional_shirts}
           end
         end
       end
