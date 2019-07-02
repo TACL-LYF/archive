@@ -16,7 +16,7 @@ class RegistrationPayment < ApplicationRecord
 
   before_create :process_payment
 
-  serialize :breakdown, Hash
+  serialize :breakdown_old, Hash
 
   cattr_accessor :reg_steps do %w[donation payment] end
   attr_accessor :reg_step, :donation_amount, :stripe_token
@@ -76,6 +76,11 @@ class RegistrationPayment < ApplicationRecord
     calculate_payment_breakdown
     self.total = breakdown[:total]
     return total
+  end
+
+  def copy_breakdown_from_old
+    self.breakdown = self.breakdown_old
+    self.save
   end
 
   private
