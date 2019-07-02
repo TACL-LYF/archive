@@ -27,12 +27,15 @@ ActiveAdmin.register RegistrationPayment do
     number_column :additional_donation, as: :currency
     column :discount_code
     number_column :total, as: :currency
+    column :payment_type
+    column :check_number
     column "Stripe Charge" do |rp|
       link_to "Open in Stripe",
         CreditCardService.get_link(rp.stripe_charge_id),
         target: '_blank'
     end
     column :stripe_brand
+    column :stripe_last_four
     actions
   end
 
@@ -60,6 +63,8 @@ ActiveAdmin.register RegistrationPayment do
       end
       column do
         attributes_table title: "Payment Details" do
+          row :payment_type
+          row :check_number
           row :stripe_brand
           row :stripe_last_four
           row :stripe_charge_id do |rp|

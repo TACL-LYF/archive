@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190206000115) do
+ActiveRecord::Schema.define(version: 20190702060459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,9 +96,10 @@ ActiveRecord::Schema.define(version: 20190206000115) do
     t.string "company"
     t.string "stripe_charge_id"
     t.string "stripe_brand"
-    t.integer "stripe_last_four"
+    t.integer "stripe_last_four_integer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_last_four", limit: 4
   end
 
   create_table "families", id: :serial, force: :cascade do |t|
@@ -133,8 +134,9 @@ ActiveRecord::Schema.define(version: 20190206000115) do
     t.string "company"
     t.string "stripe_charge_id"
     t.string "stripe_brand"
-    t.string "stripe_last_four"
+    t.string "stripe_last_four_integer"
     t.string "camper_names"
+    t.string "stripe_last_four", limit: 4
   end
 
   create_table "referral_methods", id: :serial, force: :cascade do |t|
@@ -179,11 +181,15 @@ ActiveRecord::Schema.define(version: 20190206000115) do
     t.decimal "additional_donation", precision: 10, scale: 2
     t.string "discount_code"
     t.string "stripe_charge_id"
-    t.text "breakdown"
+    t.text "breakdown_old"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "stripe_brand"
-    t.integer "stripe_last_four"
+    t.integer "stripe_last_four_integer"
+    t.jsonb "breakdown", default: {}, null: false
+    t.string "stripe_last_four", limit: 4
+    t.integer "payment_type", default: 0
+    t.string "check_number"
   end
 
   create_table "registrations", id: :serial, force: :cascade do |t|

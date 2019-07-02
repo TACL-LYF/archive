@@ -8,15 +8,20 @@ class RegistrationPayment < ApplicationRecord
             numericality: { greater_than_or_equal_to: 0 },
             format: { with: /\A\d+(?:\.\d{0,2})?\z/ },
             if: Proc.new { |r| r.required_for_step?(:donation) }
-  with_options if: Proc.new { |r| r.required_for_step?(:payment) } do
-    validates :total, :stripe_charge_id, :stripe_brand, presence: true
-    validates :stripe_last_four, presence: true, length: { is: 4 },
-              numericality: { only_integer: true }
-  end
+  validates :total, :payment_type, presence: true,
+            if: Proc.new { |r| r.required_for_step?(:payment) }
+  validates :stripe_charge_id, :stripe_brand, :stripe_last_four, presence: true,
+            if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type == 0 }
+  validates :stripe_last_four, numericality: { only_integer: true },
+            if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type == 0 }
+  validates :check_number, presence: true,
+            if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type == 1 }
 
   before_create :process_payment
 
   serialize :breakdown_old, Hash
+
+  enum payment_type: { card: 0, check: 1, cash: 2 }
 
   cattr_accessor :reg_steps do %w[donation payment] end
   attr_accessor :reg_step, :donation_amount, :stripe_token
