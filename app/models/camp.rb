@@ -39,7 +39,7 @@ class Camp < ApplicationRecord
     }
   end
 
-  def display_name
+  def to_s
     "#{year}: #{name}"
   end
 

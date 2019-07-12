@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'registration_payment/show'
+
+  get 'registration_payment/edit'
+
+  get 'registration_payment/update'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :donations, only: [:new], except: [:create] do
@@ -13,6 +19,8 @@ Rails.application.routes.draw do
   end
   get '/lastdaypurchases/confirm', to: 'last_day_purchases#confirm', as: :last_day_purchase_confirmation
   get '/lastdaypurchases', to: redirect('/lastdaypurchases/new')
+
+  resources :registration_payments, only: [:show, :update], param: :payment_token
 
   devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
 

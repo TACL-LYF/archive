@@ -1,5 +1,6 @@
 ActiveAdmin.register Camp do
   menu priority: 1
+  includes :registrations
 
   config.sort_order = 'year_desc'
 
@@ -21,10 +22,10 @@ ActiveAdmin.register Camp do
   end
 
   filter :name_contains, label: "Name"
-  filter :registration_fee, as: :range_select
-  filter :registration_late_fee, as: :range_select
-  filter :shirt_price, as: :range_select
-  filter :sibling_discount, as: :range_select
+  filter :registration_fee, as: :numeric_range_filter
+  filter :registration_late_fee, as: :numeric_range_filter
+  filter :shirt_price, as: :numeric_range_filter
+  filter :sibling_discount, as: :numeric_range_filter
 
   show do
     @summary = resource.get_summary

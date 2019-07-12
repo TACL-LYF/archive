@@ -52,7 +52,7 @@ class RegistrationController < ApplicationController
       @payment.valid? if flash[:form_has_errors]
     when "payment"
       @payment = build_payment
-      @payment.calculate_total unless @reg_session.payment.blank?
+      @payment.set_total unless @reg_session.payment.blank?
       @breakdown = @payment.breakdown
     end
     render_wizard

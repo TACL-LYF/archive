@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LYF Camp 2020 Pre-registration Payment</title>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <%= stylesheet_link_tag 'last_day_purchases', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag "#{STRIPE_JS_HOST}/v3/" %>
+    <%= javascript_tag do %>
+      var stripe = Stripe('<%= "#{STRIPE_PUBLIC_KEY}" %>');
+      var elements = stripe.elements();
+    <% end %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+      </script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <% flash.each do |message_type, message| %>
+        <% unless message_type == 'form_has_errors' %>
+          <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+        <% end %>
+      <% end %>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="row">
+            <div class="col-md-12">
+              <%= link_to image_tag("logo.png", size: "100", alt: "TACL-LYF Logo", class: "logo pull-left"), "https://lyf.tacl.org", target: "_blank" %>
+              <h1 class="space-above-med">LYF Camp 2020<br>Pre-Registration Payment</h1>
+            </div>
+          </div>
+          <%= yield %>
+        </div>
+      </div>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
+  </body>
+</html>

@@ -23,7 +23,7 @@ ActiveAdmin.register LastDayPurchase do
 
   filter :first_name_or_last_name_cont, as: :string, label: "Name"
   filter :camper_names_contains, as: :string, label: "Camper Name(s)"
-  filter :amount, as: :range_select
+  filter :amount, as: :numeric_range_filter
   filter :dollar_for_dollar, as: :select
   filter :company_contains, label: "Company Name"
 

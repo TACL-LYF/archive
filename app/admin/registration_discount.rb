@@ -14,7 +14,7 @@ ActiveAdmin.register RegistrationDiscount do
   end
 
   filter :camp
-  filter :discount_percent, as: :range_select
+  filter :discount_percent, as: :numeric_range_filter
   filter :redeemed
 
   show title: :code do |f|

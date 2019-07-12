@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190702060459) do
+ActiveRecord::Schema.define(version: 20190704190826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,9 @@ ActiveRecord::Schema.define(version: 20190702060459) do
     t.string "stripe_last_four", limit: 4
     t.integer "payment_type", default: 0
     t.string "check_number"
+    t.boolean "paid", default: false
+    t.string "payment_token"
+    t.index ["payment_token"], name: "index_registration_payments_on_payment_token", unique: true
   end
 
   create_table "registrations", id: :serial, force: :cascade do |t|

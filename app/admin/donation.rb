@@ -23,7 +23,7 @@ ActiveAdmin.register Donation do
   end
 
   filter :first_name_or_last_name_cont, as: :string, label: "Donor Name"
-  filter :amount, as: :range_select
+  filter :amount, as: :numeric_range_filter
   filter :company_match, as: :select
   filter :company_contains, label: "Company Name"
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register Camper do
-  includes :registrations
+  includes :registrations, :family
   config.sort_order = 'first_name_asc'
   menu priority: 4
 
@@ -19,18 +19,19 @@ ActiveAdmin.register Camper do
   member_action :preregister, method: :post do
     old_reg = resource.registrations.includes(:camp).order('camps.year desc').first
     new_camp = Camp.first
-    new_registration = Registration.create(
+    new_registration = Registration.new(
       camper: resource,
       camp: new_camp,
       status: 'active',
       preregistration: true,
-      grade: old_reg.grade+1,
+      grade: [12, old_reg.grade+(new_camp.year.to_i-old_reg.camp.year.to_i)].min,
       shirt_size: old_reg.shirt_size,
-      additional_shirts: old_reg.additional_shirts,
       bus: old_reg.bus,
       jtasa_chapter: old_reg.jtasa_chapter,
       camper_involvement: old_reg.camper_involvement,
-      additional_notes: old_reg.additional_notes)
+      additional_notes: old_reg.additional_notes,
+      admin_skip_validations: true)
+    new_registration.save!
     redirect_to edit_admin_registration_path(new_registration),
       notice: "#{resource.full_name} is now preregistered for #{new_camp.year}. Edit registration details below and save."
   end

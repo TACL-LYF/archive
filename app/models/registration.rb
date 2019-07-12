@@ -44,11 +44,16 @@ class Registration < ApplicationRecord
   store_accessor :additional_shirts, SHIRT_SIZES
   store_accessor :camper_involvement, CAMPER_ROLES
 
+  def display_name
+    "#{camper.full_name} (#{camp.year})"
+  end
+
   def pretty_shirt_size
     prettify_shirt_size(self.shirt_size)
   end
 
   def total_additional_shirts
+    self.additional_shirts = eval(self.additional_shirts) unless self.additional_shirts.is_a? Hash
     num_shirts = additional_shirts.values.map(&:to_i).reduce(:+)
     return num_shirts || 0
   end

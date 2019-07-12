@@ -3,6 +3,8 @@ ActiveAdmin.register Registration do
 
   belongs_to :camp, optional: true
 
+  includes :camper, :camp
+
   scope :all
   scope :active, default: true
   scope :cancelled
@@ -10,7 +12,7 @@ ActiveAdmin.register Registration do
 
   permit_params :camp_id, :grade, :shirt_size, :bus, :additional_notes,
     :preregistration, :jtasa_chapter, :status, :group, :camper_id,
-    :additional_shirts, :camper_involvement
+    :additional_shirts, :camper_involvement, :registration_payment_id
 
   member_action :cancel, method: :put do
     resource.update_attributes!(status: :cancelled, admin_skip_validations: true)
@@ -54,11 +56,11 @@ ActiveAdmin.register Registration do
   filter :created_at, label: "Registered"
   filter :status, as: :select, multiple: true, collection: Registration.statuses
   filter :preregistration
-  filter :grade, as: :range_select
+  filter :grade, as: :numeric_range_filter
   filter :shirt_size, as: :select, multiple: true, collection: Registration.shirt_sizes
   filter :bus
 
-  show title: proc {|r| "#{r.camper.full_name} - #{r.camp.year} Registration"} do
+  show do
     columns do
       column do
         attributes_table do
@@ -101,12 +103,7 @@ ActiveAdmin.register Registration do
           input :jtasa_chapter
           input :camper_involvement, as: :text, input_html: { rows: 1 }
           input :additional_notes, input_html: { rows: 5 }
-          input :waiver_signature
-          input :waiver_date, as: :datepicker,
-            datepicker_options: {
-              min_date: 1.year.ago.to_date,
-              max_date: 1.year.from_now.to_date
-            }
+          input :registration_payment
         end
       end
       column do
