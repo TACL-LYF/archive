@@ -1,0 +1,51 @@
+<h1 style="text-align: center;">LYF Camp <%= @camp.year %> Pre-registration Confirmation</h1>
+
+<p>
+  Thank you for pre-registering for LYF Camp <%= @camp.year %>! We have received your payment for the following <%= "camper".pluralize(@registrations.count) %>:
+</p>
+
+<table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none; margin-top: 1.5rem;">
+  <% @registrations.each do |r| %>
+    <tr>
+      <th colspan=2 style="border-top: 1px solid #ccc;">
+        Preregistration - <%= r.camper.full_name %><% unless r.camper.registrations.count > 1 %> (New Camper)<% end %>
+      </th>
+      <th style="text-align: right; border-top: 1px solid #ccc;">
+        <%= number_to_currency @breakdown["registration_fee"] %>
+      </th>
+    </tr>
+  <% end %>
+  <% if @breakdown["additional_donation"] %>
+    <tr>
+      <th colspan=2 style="border-top: 1px solid #ccc;">
+        Additional Donation
+      </th>
+      <th style="text-align: right; border-top: 1px solid #ccc;">
+        <%= number_to_currency @breakdown["additional_donation"] %>
+      </th>
+    </tr>
+  <% end %>
+  <tr>
+    <th style="border-top: 1px solid #ccc;">
+      Payment Method: <%= @payment_method %>
+    </th>
+    <th style="text-align: right; border-top: 1px solid #ccc;">
+      Total:
+    </th>
+    <th style="text-align: right; border-top: 1px solid #ccc;">
+      <%= number_to_currency @breakdown["total"] %>
+    </th>
+  </tr>
+</table>
+
+<p style="margin-top: 1.5rem;">
+  We will be contacting you early next year to double check your campers' registration information with you and make note of any updates. We expect to have the 2020 camp dates finalized by December of this year, but it will most likely be around the 3rd week of June. Please keep an eye on your email for updates from us.
+</p>
+
+<p>We look forward to seeing you at camp!</p>
+
+<hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
+
+<p><small>
+  <u>Registration Cancellation Policy</u>: Cancellations made before February 1st, 2020 will receive a full refund. Cancellations made from February 1st &ndash; March 31st, 2020 will receive a 50% refund. There will be no refunds for cancellations made on or after April 1st, 2020. However, for any cancellation that does not receive a full refund, the remaining amount may be applied towards a future year's camp registration fee for that camper or any sibling of that camper. To cancel your registration, please send an email with your name and your camper's name to <b>lyf@tacl.org</b>.
+</small></p>

@@ -1,34 +1,13 @@
-<div style="max-width: 600px; margin: 0 auto;">
-  <p style="text-align: center;">
-    <%= link_to image_tag('http://lyf.tacl.org/wp-content/themes/tacllyftwentyfifteen/images/logo@2x.png', size: '130', alt: 'TACL-LYF Logo'), 'http://lyf.tacl.org', target: '_blank' %>
-  </p>
+<h1 style="text-align: center;">TACL-LYF Donation Confirmation</h1>
 
-  <h1 style="text-align: center;">TACL-LYF Donation Confirmation</h1>
+<p>
+  Thank you for your donation to TACL-LYF!
+</p>
 
-  <p>
-    Thank you for your donation to TACL-LYF!
-  </p>
+<p>
+  We have received your donation of <b><%= number_to_currency @donation.amount %></b> via <%= "#{@donation.stripe_brand} #{"*"*12}#{@donation.stripe_last_four}" %>.<% if @donation.amount >= 100 %> Please look out for an email with a donation receipt for charitable tax deductions from us shortly.<% end %>
+</p>
 
-  <p>
-    We have received your donation of <b><%= number_to_currency @donation.amount %></b> via <%= "#{@donation.stripe_brand} #{"*"*12}#{@donation.stripe_last_four}" %>.<% if @donation.amount >= 100 %> Please look out for an email with a donation receipt for charitable tax deductions from us shortly.<% end %>
-  </p>
-
-  <p>
-    If you have any questions, please email lyf.treasurer@tacl.org.
-  </p>
-
-  <hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
-
-  <table cellpadding="0" cellspacing="0" style="width: 100%; font-weight: bold; text-align: left; border: none; margin-top: 1.5rem; margin-bottom: 2rem;">
-    <tr>
-      <td>
-        lyf@tacl.org<br>
-        650 260 8225
-      </td>
-      <td style="text-align: right">
-        PO Box #885<br>
-        Cupertino, CA 95014
-      </td>
-    </tr>
-  </table>
-</div>
+<p>
+  If you have any questions, please email lyf.treasurer@tacl.org.
+</p>

@@ -8,8 +8,8 @@ class RegistrationPaymentsController < ApplicationController
     @reg_payment.stripe_token = process_params[:stripe_token]
     begin
       if @reg_payment.save
-        # TODO: send a confirmation email
-        flash[:notice] = "You have successfully pre-registered!"
+        RegistrationPaymentMailer.prereg_confirmation(@reg_payment).deliver_now
+        flash[:info] = "You have successfully pre-registered!"
         redirect_to registration_payment_path
       else
         render 'show'

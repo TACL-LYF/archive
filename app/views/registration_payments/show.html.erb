@@ -36,7 +36,7 @@
 <div class="row">
   <div class="col-md-12">
     <% if @reg_payment.paid %>
-    <p>We have received your payment and sent a confirmation to <b><%= @reg_payment.registrations.first.camper.family.primary_parent_email %></b><% unless @reg_payment.registrations.first.camper.family.secondary_parent_email.blank? %> and CCed it to <b><%= @reg_payment.registrations.first.camper.family.secondary_parent_email %></b><% end %> (please check your spam folder or either of the Updates or Promotions tabs in Gmail). If you would like us to resend it, or you have any questions or concerns about your registration, please email us at <b>lyf@tacl.org</b>.
+    <p>We have received your payment and sent a confirmation to <b><%= @reg_payment.registrations.first.camper.family.primary_parent_email %></b><% unless @reg_payment.registrations.first.camper.family.secondary_parent_email.blank? %> and CCed it to <b><%= @reg_payment.registrations.first.camper.family.secondary_parent_email %></b><% end %> (please check your spam folder or any Updates or Promotions tabs in your inbox). If you would like us to resend it, or you have any questions or concerns about your registration, please email us at <b>lyf@tacl.org</b>.
     </p>
     <% else %>
     <p>To confirm your pre-registration and secure your spot, please pay using the form below by <b>Sunday, July 28th</b>. If we do not receive your payment by then, you will still be able to register when General Registration opens at the end of the year, but you will no longer be eligible for the pre-registration rate.</p>
@@ -71,6 +71,6 @@
 <% end %>
 <div class="row space-above-massive">
   <div class="col-md-12">
-    <p><small><u>Registration Cancellation Policy</u>: Cancellations made before February 1st, 2020 will receive a full refund. Cancellations made from February 1st &ndash; March 31st, 2020 will receive a 50% refund. There will be no refunds for cancellations made on or after April 1st, 2020. However, for any cancellation that does not receive a full refund, the remaining amount may be applied to next year's camp registration fee. To cancel your registration, please send an email with your name and your camper's name to <b>lyf@tacl.org</b>.</small></p>
+    <p><small><u>Registration Cancellation Policy</u>: Cancellations made before February 1st, 2020 will receive a full refund. Cancellations made from February 1st &ndash; March 31st, 2020 will receive a 50% refund. There will be no refunds for cancellations made on or after April 1st, 2020. However, for any cancellation that does not receive a full refund, the remaining amount may be applied to a future year's camp registration fee for that camper or any sibling of that camper. To cancel your registration, please send an email with your name and your camper's name to <b>lyf@tacl.org</b>.</small></p>
   </div>
 </div>

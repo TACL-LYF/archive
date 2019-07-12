@@ -55,7 +55,7 @@ class RegistrationPayment < ApplicationRecord
     }
 
     unless discount.nil?
-      breakdown[:discount] = {
+      breakdown["discount"] = {
         code: discount.code,
         percent: discount.discount_percent,
         amount: fee * (discount.discount_percent.to_f/100)
@@ -67,7 +67,7 @@ class RegistrationPayment < ApplicationRecord
     registrations.each_with_index do |r, i|
       extra_shirts_total = r.total_additional_shirts * shirt_price
       running_total += fee
-      running_total -= breakdown[:discount][:amount] unless discount.blank?
+      running_total -= breakdown["discount"]["amount"] unless discount.blank?
       running_total += extra_shirts_total
       c = {
         name: r.camper.full_name,
@@ -76,14 +76,14 @@ class RegistrationPayment < ApplicationRecord
         extra_shirts_total: extra_shirts_total
       }
       if discount.blank? && i != 0 && !(late_reg || prereg)
-        c[:sibling_discount] = sibling_discount
+        c["sibling_discount"] = sibling_discount
         running_total -= sibling_discount
       end
       campers << c
     end
 
-    breakdown[:campers] = campers
-    breakdown[:total] = running_total
+    breakdown["campers"] = campers
+    breakdown["total"] = running_total
     return breakdown
   end
 
