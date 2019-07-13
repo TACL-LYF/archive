@@ -12,12 +12,12 @@ class RegistrationPayment < ApplicationRecord
             if: Proc.new { |r| r.required_for_step?(:donation) }
   validates :total, :payment_type, presence: true,
             if: Proc.new { |r| r.required_for_step?(:payment) }
-  validates :stripe_charge_id, :stripe_brand, :stripe_last_four, presence: true,
-            if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_card? && r.paid }
-  validates :stripe_last_four, numericality: { only_integer: true },
-            if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_card? && r.paid }
-  validates :check_number, presence: true,
-            if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_check? && r.paid }
+  # validates :stripe_charge_id, :stripe_brand, :stripe_last_four, presence: true,
+  #           if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_card? && r.paid }
+  # validates :stripe_last_four, numericality: { only_integer: true },
+  #           if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_card? && r.paid }
+  # validates :check_number, presence: true,
+  #           if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_check? && r.paid }
 
   # before_save :set_total, unless: :paid
   # before_save :process_payment, if: Proc.new {|rp| rp.payment_type_card? && !rp.stripe_token.blank? && !rp.paid }
