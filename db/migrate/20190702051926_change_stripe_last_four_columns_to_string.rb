@@ -8,15 +8,15 @@ class ChangeStripeLastFourColumnsToString < ActiveRecord::Migration[5.1]
     add_column :last_day_purchases, :stripe_last_four, :string, limit: 4
 
     RegistrationPayment.all.each do |rp|
-      rp.update_attribute("stripe_last_four", rp.stripe_last_four_integer.to_s.rjust(4, '0'))
+      rp.update_columns(stripe_last_four: rp.stripe_last_four_integer.to_s.rjust(4, '0'))
     end
 
     Donation.all.each do |d|
-      d.update_attribute("stripe_last_four", d.stripe_last_four_integer.to_s.rjust(4, '0'))
+      d.update_columns(stripe_last_four: d.stripe_last_four_integer.to_s.rjust(4, '0'))
     end
 
     LastDayPurchase.all.each do |ldp|
-      ldp.update_attribute("stripe_last_four", ldp.stripe_last_four_integer.to_s.rjust(4, '0'))
+      ldp.update_columns(stripe_last_four: ldp.stripe_last_four_integer.to_s.rjust(4, '0'))
     end
   end
 

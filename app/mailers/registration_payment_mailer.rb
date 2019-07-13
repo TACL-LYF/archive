@@ -1,5 +1,5 @@
 class RegistrationPaymentMailer < ApplicationMailer
-  default from: 'lyf@tacl.org'
+  default from: 'TACL-LYF <lyf@tacl.org>'
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
