@@ -19,8 +19,8 @@ class RegistrationPayment < ApplicationRecord
   validates :check_number, presence: true,
             if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_check? && r.paid }
 
-  before_save :set_total, unless: :paid
-  before_save :process_payment, if: Proc.new {|rp| rp.payment_type_card? && !rp.stripe_token.blank? && !rp.paid }
+  # before_save :set_total, unless: :paid
+  # before_save :process_payment, if: Proc.new {|rp| rp.payment_type_card? && !rp.stripe_token.blank? && !rp.paid }
 
   serialize :breakdown_old, Hash
 
