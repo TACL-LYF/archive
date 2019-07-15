@@ -13,9 +13,21 @@ ActiveAdmin.register RegistrationPayment do
       notice: "Confirmation email has been resent."
   end
 
+  member_action :send_prereg_confirmation, method: :get do
+    RegistrationPaymentMailer.prereg_confirmation(resource).deliver_now
+    redirect_to admin_registration_payment_path(resource),
+      notice: "Prereg Confirmation email has been sent."
+  end
+
   action_item :resend_confirmation, only: :show do
     link_to 'Resend Confirmation',
       resend_confirmation_admin_registration_payment_path(resource), method: :get
+  end
+
+  action_item :send_prereg_confirmation, only: :show do
+    link_to 'Send Prereg Confirmation',
+      send_prereg_confirmation_admin_registration_payment_path(resource),
+      method: :get
   end
 
   index do
