@@ -37,7 +37,7 @@ ActiveAdmin.register Camper do
   end
 
   action_item :preregister, only: :show, if: proc{
-      resource.registrations.where(camp: Camp.first).count == 0
+      resource.active? && resource.registrations.where(camp: Camp.first).count == 0
     } do
     link_to 'Preregister', preregister_admin_camper_path(camper), method: :post
   end
