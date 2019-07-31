@@ -15,6 +15,16 @@
       </th>
     </tr>
   <% end %>
+  <% if @breakdown["discount"] %>
+    <tr>
+      <td colspan=2 style="padding-left: 20px;">
+        <%= @breakdown["discount"]["description"] %>
+      </td>
+      <td style="text-align: right;">
+        - <%= number_to_currency @breakdown["discount"]["amount"] %>
+      </td>
+    </tr>
+  <% end %>
   <% if @breakdown["additional_donation"] %>
     <tr>
       <th colspan=2 style="border-top: 1px solid #ccc;">

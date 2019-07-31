@@ -43,7 +43,7 @@ class RegistrationPayment < ApplicationRecord
     # fee = camp.registration_fee + (late_reg ? camp.registration_late_fee : 0)
     sibling_discount = camp.sibling_discount
     shirt_price = camp.shirt_price
-    discount = RegistrationDiscount.get(self.discount_code) unless self.discount_code.blank?
+    discount = self.registration_discount || (RegistrationDiscount.get(self.discount_code) unless self.discount_code.blank?)
 
     # keep a running total for this payment as we loop through registrations
     running_total = self.additional_donation || 0
@@ -56,9 +56,8 @@ class RegistrationPayment < ApplicationRecord
 
     unless discount.nil?
       breakdown["discount"] = {
-        code: discount.code,
-        percent: discount.discount_percent,
-        amount: fee * (discount.discount_percent.to_f/100)
+        description: discount.description,
+        amount: discount.discount_type_percent? ? fee * (discount.discount_percent.to_f/100) : discount.discount_amount.to_f
       }
       set_discount(discount)
     end
@@ -67,7 +66,7 @@ class RegistrationPayment < ApplicationRecord
     registrations.each_with_index do |r, i|
       extra_shirts_total = r.total_additional_shirts * shirt_price
       running_total += fee
-      running_total -= breakdown["discount"]["amount"] unless discount.blank?
+      running_total -= breakdown["discount"][:amount] unless discount.blank?
       running_total += extra_shirts_total
       c = {
         name: r.camper.full_name,
@@ -140,6 +139,9 @@ class RegistrationPayment < ApplicationRecord
         self.stripe_brand = charge_obj.source.brand
         self.stripe_last_four = charge_obj.source.last4
         self.paid = true
+        if !self.registration_discount.nil?
+          self.registration_discount.update_attributes(redeemed: true)
+        end
         return true
       else
         errors.add(:base, :payment_failed,

@@ -14,7 +14,7 @@ RSpec.describe RegistrationDiscount, type: :model do
   end
   it "is invalid without a integer discount percent" do
     [nil, 0, 1.5, 101].each do |val|
-      expect(build(:registration_discount, camp: camp, discount_percent: val)).to_not be_valid
+      expect(build(:registration_discount, camp: camp, discount_type: 1, discount_amount: val)).to_not be_valid
     end
   end
 

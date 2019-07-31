@@ -7,7 +7,7 @@ We have received your registration(s) and payment for the following camper(s):
 <% @breakdown["campers"].each do |camper| %>
 Camper Registration - <%= camper["name"] %>: <%= number_to_currency @breakdown["registration_fee"] %>
 <% if @breakdown.key?(:discount) %>
-- <%= "Discount from code #{@breakdown["discount"]["code"]} (#{@breakdown["discount"]["percent"]}%)" %>: - <%= number_to_currency @breakdown["discount"]["amount"] %>
+- <%= @breakdown["discount"]["description"] %>: - <%= number_to_currency @breakdown["discount"]["amount"] %>
 <% elsif camper.key?(:sibling_discount) %>
 - Sibling Discount: - <%= number_to_currency camper["sibling_discount"] %>
 <% end %>

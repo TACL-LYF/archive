@@ -21,7 +21,7 @@
         </tr>
         <% if @breakdown.key?(:discount) %>
         <tr>
-          <td colspan=2><%= "Discount from code #{@breakdown[:discount][:code]} (#{@breakdown[:discount][:percent]}%)" %></td>
+          <td colspan=2><%= @breakdown[:discount][:description] %></td>
           <td class="text-right">- <%= number_to_currency @breakdown[:discount][:amount] %></td>
         </tr>
         <% elsif camper.key?(:sibling_discount) %>

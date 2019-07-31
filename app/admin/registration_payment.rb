@@ -4,7 +4,7 @@ ActiveAdmin.register RegistrationPayment do
   includes :registrations
 
   permit_params :paid, :additional_donation, :payment_type, :check_number,
-    registration_ids: []
+    :discount_code, registration_ids: []
 
   # send confirmation email action
   member_action :resend_confirmation, method: :get do
@@ -27,7 +27,7 @@ ActiveAdmin.register RegistrationPayment do
   end
 
   action_item :send_prereg_confirmation, only: :show, if: proc{
-      resource.paid && resource.registrations.first.preregistration
+      resource.paid && resource.registrations.any? && resource.registrations.first.preregistration
     } do
     link_to 'Send Prereg Confirmation',
       send_prereg_confirmation_admin_registration_payment_path(resource),
@@ -67,7 +67,7 @@ ActiveAdmin.register RegistrationPayment do
       column span: 2 do
         panel "Registrations" do
           table_for registration_payment.registrations do |r|
-            column("Year") { |reg| reg.camp.year }
+            column("Year") { |reg| link_to reg.camp.year, admin_registration_path(reg) }
             column :camper
             column("Additional Shirts") {|reg| reg.list_additional_shirts}
           end
@@ -76,7 +76,8 @@ ActiveAdmin.register RegistrationPayment do
       column do
         attributes_table title: "Totals" do
           number_row :additional_donation, as: :currency
-          number_row :discount_code, as: :currency
+          number_row :discount_code
+          row :registration_discount
           number_row :total, as: :currency
         end
       end
@@ -113,6 +114,7 @@ ActiveAdmin.register RegistrationPayment do
           input :registrations, as: :select, multiple: true,
             collection: Registration.includes(:camper, :camp)
           input :additional_donation
+          input :discount_code
         end
       end
       column do

@@ -6,6 +6,11 @@ Thank you for pre-registering for LYF Camp <%= @camp.year %>! We have received y
 <% @registrations.each do |r| %>
 Preregistration - <%= r.camper.full_name %><% unless r.camper.registrations.count > 1 %> (New Camper)<% end %>: <%= number_to_currency @breakdown["registration_fee"] %>
 <% end %>
+<% if @breakdown["discount"] %>
+------------------------------------------------------------
+<%= @breakdown["discount"]["description"] %>: - <%= number_to_currency @breakdown["discount"]["amount"] %>
+------------------------------------------------------------
+<% end %>
 <% if @breakdown["additional_donation"] %>
 ------------------------------------------------------------
 Additional Donation: <%= number_to_currency @breakdown["additional_donation"] %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190704190826) do
+ActiveRecord::Schema.define(version: 20190730025212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,12 +166,14 @@ ActiveRecord::Schema.define(version: 20190704190826) do
 
   create_table "registration_discounts", id: :serial, force: :cascade do |t|
     t.string "code"
-    t.integer "discount_percent"
+    t.integer "discount_amount"
     t.boolean "redeemed", default: false, null: false
     t.integer "camp_id"
     t.integer "registration_payment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "discount_type", default: 0
+    t.string "description"
     t.index ["camp_id"], name: "index_registration_discounts_on_camp_id"
     t.index ["registration_payment_id"], name: "index_registration_discounts_on_registration_payment_id"
   end

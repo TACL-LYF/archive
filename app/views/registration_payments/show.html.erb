@@ -19,6 +19,16 @@
           <th class="text-right"><%= number_to_currency @reg_payment.breakdown["registration_fee"] %></th>
         </tr>
       <% end %>
+      <% if @reg_payment.breakdown["discount"] %>
+        <tr>
+          <td colspan=2 style="padding-left: 20px;">
+            <%= @reg_payment.breakdown["discount"]["description"] %>
+          </td>
+          <td style="text-align: right;">
+            - <%= number_to_currency @reg_payment.breakdown["discount"]["amount"] %>
+          </td>
+        </tr>
+      <% end %>
       <% if @reg_payment.breakdown["additional_donation"] %>
         <tr>
           <th colspan=2>Additional Donation</th>

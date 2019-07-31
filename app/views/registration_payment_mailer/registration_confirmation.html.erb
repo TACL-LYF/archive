@@ -17,7 +17,7 @@
     <% if @breakdown.key?(:discount) %>
     <tr>
       <td colspan=2 style="padding-left: 20px;">
-        <%= "Discount from code #{@breakdown["discount"]["code"]} (#{@breakdown["discount"]["percent"]}%)" %>
+        <%= @breakdown["discount"]["description"] %>
       </td>
       <td style="text-align: right;">
         - <%= number_to_currency @breakdown["discount"]["amount"] %>
