@@ -61,6 +61,7 @@ ActiveAdmin.register RegistrationPayment do
   filter :total, as: :numeric_range_filter
   filter :additional_donation, as: :numeric_range_filter
   filter :stripe_brand_contains
+  filter :created_at
 
   show do
     columns do
