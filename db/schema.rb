@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190730025212) do
+ActiveRecord::Schema.define(version: 20191204015831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20190730025212) do
     t.integer "stripe_last_four_integer"
     t.jsonb "breakdown", default: {}, null: false
     t.string "stripe_last_four", limit: 4
-    t.integer "payment_type", default: 0
+    t.integer "payment_type", default: 1
     t.string "check_number"
     t.boolean "paid", default: false
     t.string "payment_token"

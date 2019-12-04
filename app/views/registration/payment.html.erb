@@ -14,38 +14,38 @@
   <div class="col-md-12">
     <% unless @breakdown.blank? %>
     <table class="table table-condensed">
-      <% @breakdown[:campers].each do |camper| %>
+      <% @breakdown["campers"].each do |camper| %>
         <tr>
-          <th colspan=2>Camper Registration - <%= camper[:name] %> (Shirt Size: <%= camper[:shirt_size] %>)</th>
-          <th class="text-right"><%= number_to_currency @breakdown[:registration_fee] %></th>
+          <th colspan=2>Camper Registration - <%= camper["name"] %> (Shirt Size: <%= camper["shirt_size"] %>)</th>
+          <th class="text-right"><%= number_to_currency @breakdown["registration_fee"] %></th>
         </tr>
-        <% if @breakdown.key?(:discount) %>
+        <% if @breakdown.key?("discount") %>
         <tr>
-          <td colspan=2><%= @breakdown[:discount][:description] %></td>
-          <td class="text-right">- <%= number_to_currency @breakdown[:discount][:amount] %></td>
+          <td colspan=2><%= @breakdown["discount"]["description"] %></td>
+          <td class="text-right">- <%= number_to_currency @breakdown["discount"]["amount"] %></td>
         </tr>
-        <% elsif camper.key?(:sibling_discount) %>
+        <% elsif camper.key?("sibling_discount") %>
         <tr>
           <td colspan=2>Sibling Discount</td>
-          <td class="text-right">- <%= number_to_currency camper[:sibling_discount] %></td>
+          <td class="text-right">- <%= number_to_currency camper["sibling_discount"] %></td>
         </tr>
         <% end %>
-        <% if camper[:extra_shirts_total] > 0 %>
+        <% if camper["extra_shirts_total"].to_i > 0 %>
         <tr>
-          <td colspan=2><%= "Extra Shirts (#{number_to_currency @breakdown[:shirt_price]} each) - #{camper[:extra_shirts]}" %></td>
-          <td class="text-right"><%= number_to_currency camper[:extra_shirts_total] %></td>
+          <td colspan=2><%= "Extra Shirts (#{number_to_currency @breakdown["shirt_price"]} each) - #{camper["extra_shirts"]}" %></td>
+          <td class="text-right"><%= number_to_currency camper["extra_shirts_total"] %></td>
         </tr>
         <% end %>
       <% end %>
-      <% if @breakdown[:additional_donation] %>
+      <% if @breakdown["additional_donation"] %>
         <tr>
           <th colspan=2>Additional Donation</th>
-          <th class="text-right"><%= number_to_currency @breakdown[:additional_donation] %></th>
+          <th class="text-right"><%= number_to_currency @breakdown["additional_donation"] %></th>
         </tr>
       <% end %>
       <tr>
         <th colspan=2 class="text-right">Total:</th>
-        <th class="text-right"><%= number_to_currency @breakdown[:total] %></th>
+        <th class="text-right"><%= number_to_currency @breakdown["total"] %></th>
       </tr>
     </table>
     <% end %>

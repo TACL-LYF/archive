@@ -6,13 +6,13 @@ We have received your registration(s) and payment for the following camper(s):
 ============================================================
 <% @breakdown["campers"].each do |camper| %>
 Camper Registration - <%= camper["name"] %>: <%= number_to_currency @breakdown["registration_fee"] %>
-<% if @breakdown.key?(:discount) %>
-- <%= @breakdown["discount"]["description"] %>: - <%= number_to_currency @breakdown["discount"]["amount"] %>
-<% elsif camper.key?(:sibling_discount) %>
-- Sibling Discount: - <%= number_to_currency camper["sibling_discount"] %>
+<% if @breakdown.key?("discount") %>
+    <%= @breakdown["discount"]["description"] %>: - <%= number_to_currency @breakdown["discount"]["amount"] %>
+<% elsif camper.key?("sibling_discount") %>
+    Sibling Discount: - <%= number_to_currency camper["sibling_discount"] %>
 <% end %>
 <% if camper["extra_shirts_total"].to_i > 0 %>
-- <%= "Extra Shirts (#{number_to_currency @breakdown["shirt_price"]} each) - #{camper["extra_shirts"]}" %>: <%= number_to_currency camper["extra_shirts_total"] %>
+    <%= "Extra Shirts (#{number_to_currency @breakdown["shirt_price"]} each) - #{camper["extra_shirts"]}" %>: <%= number_to_currency camper["extra_shirts_total"] %>
 <% end %>
 ------------------------------------------------------------
 <% end %>
@@ -45,14 +45,11 @@ We look forward to seeing you at camp!
 
 SAVE THE DATE!
 
-Winter Reunion - January 6th, 2019
-12pm - 3pm @ Nazareth Ice Oasis
-3140 Bay Road, Redwood City, 94063
+Winter Reunion - January 11th, 2019
+2 - 5pm @ Taiwanese American Center
+4413 Fortran Ct, San Jose, CA 95134
 
-New Parent Orientation - June 8th, 2019 (Tentative)
-Time and location TBA
-
-Parent's Program - June 30th, 2019
+Parent's Program - June 28th, 2019
 Time TBA @ TECO Center Milpitas
 100 S. Milpitas Blvd. Milpitas, CA 95035
 
@@ -104,5 +101,5 @@ Waiver Date: <%= reg.waiver_date %>
 
 ============================================================
 
+TACL-LYF
 lyf@tacl.org
-650 260 8225
