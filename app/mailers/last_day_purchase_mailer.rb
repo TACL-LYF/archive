@@ -10,6 +10,6 @@ class LastDayPurchaseMailer < ApplicationMailer
 
     mail to: @last_day_purchase.email,
          bcc: "lyf.treasurer@tacl.org",
-         subject: "LYF Camp 2019 Pre-registration Payment Confirmation"
+         subject: "LYF Camp 2020 Pre-registration Payment Confirmation"
   end
 end
