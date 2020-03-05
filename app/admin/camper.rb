@@ -157,6 +157,22 @@ ActiveAdmin.register Camper do
     actions
   end
 
+  xls(header_format: { weight: :bold}) do
+    whitelist
+    column :status
+    column :first_name
+    column :last_name
+    column :birthdate
+    column :gender
+    column :email
+    column('Primary Parent') {|c| c.family.primary_parent}
+    column('Primary Parent Email') {|c| c.family.primary_parent_email}
+    column('Secondary Parent') {|c| c.family.secondary_parent}
+    column('Secondary Parent Email') {|c| c.family.secondary_parent_email}
+    column :medical_conditions_and_medication
+    column :diet_and_food_allergies
+  end
+
   before_save do |camper|
     camper.registrations.each do |r|
       r.admin_skip_validations = true
