@@ -6,9 +6,13 @@
       <%= @camp.camp_start_date.strftime("%B %-d, %Y") %> - <%= @camp.camp_end_date.strftime("%B %-d, %Y") %><br>
       <%= @camp.campsite %><br>
       <%= @camp.campsite_address %><br>
-      <%= link_to "Registration Policy", "#registration_policy", "data-toggle" => "modal" %> | <%= link_to "Discounts & Financial Aid", "#financial_aid", "data-toggle" => "modal" %>
+      <%= link_to "Discounts & Financial Aid", "#financial_aid", "data-toggle" => "modal" %>
     </p>
-    <% unless @camp.is_late_registration? %>
+    <p class="space-above-chasm">
+      <b><u>IMPORTANT:</u><br />
+      Please see our <%= link_to "updated COVID-19 registration policies", "#registration_policy", "data-toggle" => "modal" %></b>
+    </p>
+    <!-- <% unless @camp.is_late_registration? %>
       <p class="vag space-above-chasm">
         <%= number_to_currency(@camp.registration_fee, precision: 0) %><br>
         General Registration<br>
@@ -19,6 +23,11 @@
       <%= number_to_currency(@camp.registration_fee + @camp.registration_late_fee, precision: 0) %><br>
       Late Registration<br>
       (<%= @camp.registration_late_date.strftime("%b %-d") %> - <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
+    </p> -->
+    <p class="vag space-above-chasm">
+      <%= number_to_currency(@camp.registration_fee, precision: 0) %><br>
+      General Registration<br>
+      (<%= @camp.registration_open_date.strftime("%b %-d, %Y") %> - <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
     </p>
     <% if !@camp.is_waitlist_period? %>
       <p class="vag space-above-med">
