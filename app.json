@@ -1,5 +1,6 @@
 {
   "name": "archives",
+  "stack": "heroku-20",
   "scripts": {
     "postdeploy": "rails db:seed"
   },
