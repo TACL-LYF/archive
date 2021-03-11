@@ -14,7 +14,7 @@ class Registration < ApplicationRecord
   before_create :set_waitlist,
     if: Proc.new { |r| r.camp.is_waitlist_period? && !r.preregistration }
 
-  cattr_accessor :reg_steps do %w[details camper_involvement waiver review] end
+  cattr_accessor :reg_steps do %w[details waiver review] end
   attr_accessor :reg_step, :waiver_year, :waiver_month, :waiver_day,
                 :grade_entering, :admin_skip_validations
 
@@ -22,13 +22,12 @@ class Registration < ApplicationRecord
   with_options if: Proc.new { |r| r.required_for_step?(:details) } do
     validates :grade, inclusion: 3..12
     validates :shirt_size, presence: true
-    validates :bus, inclusion: { in: [true, false],
-                                 message: "acknowledgement required" }
   end
   with_options unless: :admin_skip_validations do
     validates :grade_entering, presence: true,
               if: Proc.new { |r| r.required_for_step?(:details) }
     with_options if: Proc.new { |r| r.required_for_step?(:waiver) } do
+      validates :camp_preference, presence: true
       validates :waiver_signature, presence: true
       validates :waiver_year, :waiver_month, :waiver_day, presence: true
       validate :waiver_signature_matches_name, on: :create
@@ -39,6 +38,7 @@ class Registration < ApplicationRecord
   enum status: { active: 0, cancelled: 1, waitlist: 2 }
   enum shirt_size: Hash[SHIRT_SIZES.zip (0..SHIRT_SIZES.size)]
   enum group: ('A'..'Z').to_a.map!(&:to_sym)
+  enum camp_preference: { physical: 1, virtual: 2, both: 3}
   #store :additional_shirts, accessors: SHIRT_SIZES
   #store :camper_involvement, accessors: CAMPER_ROLES
   store_accessor :additional_shirts, SHIRT_SIZES

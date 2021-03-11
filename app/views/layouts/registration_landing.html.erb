@@ -4,8 +4,7 @@
     <title>LYF Camp <%= @camp.year %> Registration</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'register', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "#{STRIPE_JS_HOST}/v1/", 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_tag "Stripe.setPublishableKey(\'#{STRIPE_PUBLIC_KEY}\');" %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= favicon_link_tag 'favicon.ico' %>
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">

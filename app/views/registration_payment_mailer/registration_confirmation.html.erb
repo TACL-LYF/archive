@@ -1,7 +1,13 @@
 <h1 style="text-align: center;">LYF Camp <%= @camp.year %> Registration Confirmation</h1>
 
 <p>
-  Thank you for registering for LYF Camp <%= @camp.year %>! We have received your registration(s) and payment for the following camper(s):
+  Thank you for registering for LYF Camp <%= @camp.year %>! We have received your registration(s) for the camper(s) listed below.
+</p>
+<p>
+  As camp approaches and the COVID-19 situation is amenable to holding a physical camp, we will invoice registered campers for the cost of camp (minus applicable discounts). Payment information for credit or debit card will be collected then through a separate online form.
+</p>
+<p>
+  If the situation is determined to be unsafe for a physical camp, we will hold a virtual camp instead. In the event we switch to a virtual camp, registration costs will be adjusted and registered campers will have the option to confirm or cancel their registration.
 </p>
 
 <table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none; margin-top: 1.5rem;">
@@ -44,22 +50,9 @@
     </tr>
     <% end %>
   <% end %>
-  <% if @breakdown["additional_donation"] %>
-    <tr>
-      <th colspan=2 style="border-top: 1px solid #ccc;">
-        Additional Donation
-      </th>
-      <th style="text-align: right; border-top: 1px solid #ccc;">
-        <%= number_to_currency @breakdown["additional_donation"] %>
-      </th>
-    </tr>
-  <% end %>
   <tr>
-    <th style="border-top: 1px solid #ccc;">
-      <%= "#{@brand} #{"*"*12}#{@last_four}" %>
-    </th>
-    <th style="text-align: right; border-top: 1px solid #ccc;">
-      Total:
+    <th colspan="2" style="text-align: right; border-top: 1px solid #ccc;">
+      Expected Total:
     </th>
     <th style="text-align: right; border-top: 1px solid #ccc;">
       <%= number_to_currency @breakdown["total"] %>
@@ -77,30 +70,10 @@
   </p>
 <% else %>
   <p>
-    Be on the lookout for a final email that will be sent towards the end of May as Camp approaches! It will include your Camper Welcome Packet, which contains a packing list, camp schedule, camp rules, and Parent's Program information.
+    Be on the lookout for a final email that will be sent as Camp approaches! It will include your Camper Welcome Packet, which contains a packing list, camp schedule, camp rules, and Parent's Program information.
   </p>
 <% end %>
 <p>We look forward to seeing you at camp!</p>
-
-<hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
-
-<h3 style="margin-top: 1.5rem;">Save the date!</h3>
-<ul>
-  <li style="margin-bottom: 0.5rem;">
-    <b>Winter Reunion</b> - January 11th, 2020
-    <ul>
-      <li>2 - 5pm @ Taiwanese American Center</li>
-      <li>4413 Fortran Ct, San Jose, CA 95134</li>
-    </ul>
-  </li>
-  <li style="margin-bottom: 0.5rem;">
-    <b>Parent's Program</b> - June 28th, 2020
-    <ul>
-      <li>Time TBA @ TECO Center Milpitas</li>
-      <li>100 S. Milpitas Blvd. Milpitas, CA 95035</li>
-    </ul>
-  </li>
-</ul>
 
 <hr style="border: none; height: 1px; background-color: #ccc; margin-top: 1.5rem;">
 
@@ -154,26 +127,22 @@
     <td valign="top">
       <b>Shirt Size:</b> <%= reg.shirt_size.titleize %><br />
       <b>Email (Optional):</b> <%= reg.camper.email %><br />
-      <b>JTASA Chapter (Optional):</b> <%= reg.jtasa_chapter %><br />
     </td>
   </tr>
-  <% unless reg.camper_involvement.empty? %>
-  <tr>
-    <td colspan="2"><b>Camper Involvement:</b><br />
-      <%= reg.list_camper_involvement %><br /></td>
-  </tr>
-  <% end %>
   <tr>
     <td colspan="2">
-      <b>Medical Conditions & Medication:</b><br />
+      <b>Medical Conditions &amp; Medication:</b><br />
       <%= reg.medical_conditions_and_medication %>
     </td>
   </tr>
   <tr>
     <td colspan="2">
-      <b>Dietary Restrictions & Allergies:</b><br />
+      <b>Dietary Restrictions &amp; Allergies:</b><br />
       <%= reg.diet_and_food_allergies %>
     </td>
+  </tr>
+  <tr>
+    <td colspan="2"><b>Physical or Virtual Camp Preference:</b> <%= reg.camp_preference.titleize %></td>
   </tr>
   <tr>
     <td colspan="2"><b>Additional Notes:</b> <%= reg.additional_notes %></td>

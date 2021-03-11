@@ -19,14 +19,14 @@ class RegistrationPayment < ApplicationRecord
   validates :check_number, presence: true,
             if: Proc.new { |r| r.required_for_step?(:payment) && r.payment_type_check? && r.paid }
 
-  before_save :set_total, unless: :paid
+  before_validation :set_total, unless: :paid
   before_save :process_payment, if: Proc.new {|rp| rp.payment_type_card? && !rp.stripe_token.blank? && !rp.paid }
 
   serialize :breakdown_old, Hash
 
-  enum payment_type: { card: 1, check: 2, cash: 3 }, _prefix: true
+  enum payment_type: { pending: 0, card: 1, check: 2, cash: 3 }, _prefix: true
 
-  cattr_accessor :reg_steps do %w[donation payment] end
+  cattr_accessor :reg_steps do %w[summary] end
   attr_accessor :reg_step, :donation_amount, :stripe_token
 
   def calculate_payment_breakdown

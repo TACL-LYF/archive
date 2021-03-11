@@ -1,0 +1,57 @@
+<% provide(:title, 'Payment') %>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Registration Summary</h2>
+  </div>
+</div>
+<div class="row space-above-wide">
+  <div class="col-md-12">
+    <p>After registration closes and if the COVID-19 situation is amenable to holding a physical camp, we will invoice registered campers for the cost of camp (minus applicable discounts). Payment information for credit or debit card will be collected then through a separate online form.</p>
+    <p>Please find a summary of your expected payment below.</p>
+  </div>
+</div>
+<div class="row space-above-wide">
+  <div class="col-md-12">
+    <% unless @breakdown.blank? %>
+    <table class="table table-condensed">
+      <% @breakdown["campers"].each do |camper| %>
+        <tr>
+          <th colspan=2>Camper Registration - <%= camper["name"] %> (Shirt Size: <%= camper["shirt_size"] %>)</th>
+          <th class="text-right"><%= number_to_currency @breakdown["registration_fee"] %></th>
+        </tr>
+        <% if @breakdown.key?("discount") %>
+        <tr>
+          <td colspan=2><%= @breakdown["discount"]["description"] %></td>
+          <td class="text-right">- <%= number_to_currency @breakdown["discount"]["amount"] %></td>
+        </tr>
+        <% elsif camper.key?("sibling_discount") %>
+        <tr>
+          <td colspan=2>Sibling Discount</td>
+          <td class="text-right">- <%= number_to_currency camper["sibling_discount"] %></td>
+        </tr>
+        <% end %>
+        <% if camper["extra_shirts_total"].to_i > 0 %>
+        <tr>
+          <td colspan=2><%= "Extra Shirts (#{number_to_currency @breakdown["shirt_price"]} each) - #{camper["extra_shirts"]}" %></td>
+          <td class="text-right"><%= number_to_currency camper["extra_shirts_total"] %></td>
+        </tr>
+        <% end %>
+      <% end %>
+      <tr>
+        <th colspan=2 class="text-right">Total:</th>
+        <th class="text-right"><%= number_to_currency @breakdown["total"] %></th>
+      </tr>
+    </table>
+    <% end %>
+  </div>
+</div>
+<%= form_for :wizard, url: wizard_path, html: {id: "registration_form"}, method: :put do |f| %>
+  <div class="row space-above-chasm">
+    <div class="col-md-2">
+      <%= link_to "Back", previous_wizard_path, class: "btn btn-white btn-block" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.submit "Submit Registration", class: "btn btn-block" %>
+    </div>
+  </div>
+<% end %>

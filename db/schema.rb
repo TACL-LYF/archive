@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191204015831) do
+ActiveRecord::Schema.define(version: 2021_03_11_021307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(version: 20191204015831) do
     t.integer "status", default: 0, null: false
     t.jsonb "additional_shirts", default: {}, null: false
     t.jsonb "camper_involvement", default: {}, null: false
+    t.integer "camp_preference", default: 0
     t.index ["additional_shirts"], name: "index_registrations_on_additional_shirts", using: :gin
     t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
     t.index ["camp_id"], name: "index_registrations_on_camp_id"

@@ -47,12 +47,11 @@ class RegistrationController < ApplicationController
       @reg = build_reg(@reg_session.camper, @reg_session.reg)
     when "siblings"
       @regs = @reg_session.campers.collect{ |c| c["first_name"]+" "+c["last_name"]}
-    when "donation"
+    when "summary"
+      @reg_session.payment = {}
+      @reg_session.save
       @payment = build_payment
-      @payment.valid? if flash[:form_has_errors]
-    when "payment"
-      @payment = build_payment
-      @payment.set_total unless @reg_session.payment.blank?
+      @payment.set_total unless @payment.blank?
       @breakdown = @payment.breakdown
     end
     render_wizard
@@ -143,71 +142,45 @@ class RegistrationController < ApplicationController
           redirect_to wizard_path
         end
       end
-    when "donation"
-      if params[:registration_payment][:additional_donation] == "other"
-        amount = params[:registration_payment][:donation_amount]
-        params[:registration_payment][:additional_donation] = amount
-      end
-      @reg_session.payment.merge!(payment_params(step).to_h).delete_if {|k,v| v.blank? || v == "0"}
-      @reg_session.save
-      if build_payment.valid?
-        redirect_to wizard_path(next_step)
-      else
-        flash[:form_has_errors] = true
-        redirect_to wizard_path
-      end
-    when "payment"
-      if params[:apply_code]
-        code = params[:registration_payment][:discount_code]
-        discount = RegistrationDiscount.get(code)
-        if discount.nil?
-          flash[:danger] = "Error: #{code} is not a valid code"
-          redirect_to wizard_path
-        else
-          @reg_session.payment[:discount_code] = code
-          @reg_session.save
-          flash[:info] = "Code #{code} successfully applied"
-          redirect_to wizard_path
-        end
-      else
-        begin
-          @family = Family.new(@reg_session.family)
-          city = @family.city
-          state = @family.state
-          stripe_token = stripe_params(step)[:stripe_card_token]
-          @family.transaction do
-            @payment = RegistrationPayment.new(@reg_session.payment.merge(stripe_token: stripe_token))
-            campers = @reg_session.campers
-            campers.each_with_index do |camper, i|
-              reg_fields = @reg_session.regs[i].merge(camp: Camp.first, city: city,
-                state: state)
-              c = @family.campers.build(camper)
-              r = c.registrations.build(reg_fields)
-              @payment.registrations << r
-            end
-            if @family.save!
-              if @payment.save!
-                RegistrationPaymentMailer.registration_confirmation(@payment).deliver_now
-                delete_reg_session
-                redirect_to wizard_path(:confirmation)
-              else
-                flash[:form_has_errors] = true
-                redirect_to wizard_path
-              end
+    when "summary"
+      begin
+        @family = Family.new(@reg_session.family)
+        city = @family.city
+        state = @family.state
+        @family.transaction do
+          @payment = RegistrationPayment.new(@reg_session.payment)
+          campers = @reg_session.campers
+          campers.each_with_index do |camper, i|
+            reg_fields = @reg_session.regs[i].merge(camp: Camp.first, city: city,
+              state: state)
+            c = @family.campers.build(camper)
+            r = c.registrations.build(reg_fields)
+            @payment.registrations << r
+          end
+          @payment.payment_type = :pending
+          @payment.paid = false
+          if @family.save!
+            if @payment.save!
+              RegistrationPaymentMailer.registration_confirmation(@payment).deliver_now
+              delete_reg_session
+              redirect_to wizard_path(:confirmation)
             else
-              flash[:danger] = "Something went wrong."
+              flash[:form_has_errors] = true
               redirect_to wizard_path
             end
+          else
+            flash[:danger] = "Something went wrong."
+            redirect_to wizard_path
           end
-        rescue ActiveRecord::RecordNotSaved => e
-          flash[:danger] = @payment.errors.full_messages.join(" ").chomp(" ")
-          redirect_to wizard_path
-        rescue => e
-          logger.warn "Error submitting registration form"
-          logger.warn e
-          flash[:danger] = "Something went wrong."
-          redirect_to wizard_path
         end
+      rescue ActiveRecord::RecordNotSaved => e
+        flash[:danger] = @payment.errors.full_messages.join(" ").chomp(" ")
+        redirect_to wizard_path
+      rescue => e
+        logger.warn "Error submitting registration form"
+        logger.warn e
+        flash[:danger] = "Something went wrong."
+        redirect_to wizard_path
       end
     end
   end
@@ -242,9 +215,7 @@ class RegistrationController < ApplicationController
         when "details"
           [:grade, :grade_entering, :shirt_size, :jtasa_chapter, :bus].push(*Registration.stored_attributes[:additional_shirts])
         when "waiver"
-          [:additional_notes, :waiver_signature, :waiver_year, :waiver_month, :waiver_day]
-        when "camper_involvement"
-          Registration.stored_attributes[:camper_involvement]
+          [:camp_preference, :additional_notes, :waiver_signature, :waiver_year, :waiver_month, :waiver_day]
         end
       params.require(:registration).permit(permitted_attrs).merge(reg_step: step)
     end
@@ -275,11 +246,11 @@ class RegistrationController < ApplicationController
         unless %w[landing parent confirmation].include?(step)
           if reg_session.family.blank?
             set_interrupted_session_flash
-          elsif reg_session.camper.blank? && %w[details camper_involvement waiver review].include?(step)
+          elsif reg_session.camper.blank? && %w[details waiver review].include?(step)
             set_interrupted_session_flash
           elsif reg_session.reg.blank? && %w[camper_involvement waiver review].include?(step)
             set_interrupted_session_flash
-          elsif (reg_session.regs.blank? || reg_session.campers.blank?) && %w[siblings donation payment].include?(step)
+          elsif (reg_session.regs.blank? || reg_session.campers.blank?) && %w[siblings summary].include?(step)
             set_interrupted_session_flash
           end
         end
@@ -350,8 +321,7 @@ class RegistrationController < ApplicationController
         referral: [ "referral" ],
         camper_information: [ "camper", "details", "waiver", "camper_involvement", "review" ],
         register_a_sibling: [ "siblings" ],
-        add_a_donation: [ "donation" ],
-        payment: [ "payment" ],
+        registration_summary: [ "summary" ],
         confirmation: [ "confirmation" ]
       }
       return outline

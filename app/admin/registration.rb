@@ -42,8 +42,7 @@ ActiveAdmin.register Registration do
     column :gender
     column :shirt_size, :pretty_shirt_size
     column "Additional Shirts", :list_additional_shirts
-    column :bus, sortable: false
-    column :jtasa_chapter
+    column :camp_preference
     column "Medical", :medical_conditions_and_medication
     column "Diet/Allergies", :diet_and_food_allergies
     column "Notes", :additional_notes, sortable: false

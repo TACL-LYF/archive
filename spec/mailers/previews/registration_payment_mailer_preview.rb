@@ -4,12 +4,12 @@ class RegistrationPaymentMailerPreview < ActionMailer::Preview
   # Preview this email at
   # http://localhost:3000/rails/mailers/registration_payment_mailer/registration_confirmation
   def registration_confirmation
-    reg_payment = RegistrationPayment.find(238)
+    reg_payment = RegistrationPayment.last
     RegistrationPaymentMailer.registration_confirmation(reg_payment)
   end
 
   def prereg_confirmation
-    reg_payment = RegistrationPayment.find(234)
+    reg_payment = RegistrationPayment.last
     RegistrationPaymentMailer.prereg_confirmation(reg_payment)
   end
 end

@@ -1,11 +1,26 @@
 <% provide(:title, "Additional Notes and Waiver".html_safe) %>
 <div class="row">
   <div class="col-md-12">
-    <h2>Additional Notes</h2>
+    <h2>Physical & Virtual Camp Considerations</h2>
   </div>
 </div>
 <%= form_for @reg, url: wizard_path, method: :put do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
+  <div class="row space-above-wide">
+    <div class="col-md-12 form-group">
+      <%= f.label :camp_preference, "Is this camper interested in attending physical (i.e. in-person) camp, virtual (i.e. online) camp, or both?", class: 'show' %>
+      <%= collection_radio_buttons(:registration, :camp_preference, Registration.camp_preferences, :first, :first) do |b| %>
+        <div class="radio space-above-med">
+          <%= b.label(class: 'radio-inline') { b.radio_button + b.text.titlecase } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Additional Notes</h2>
+    </div>
+  </div>
   <div class="row space-above-wide">
     <div class="col-md-12 form-group">
       <%= f.label :additional_notes, "(Optional)" %>
@@ -16,7 +31,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Waiver</h2>
-      <p><small>I, the undersigned, hereby grant permission for the above-named participant to attend the Taiwanese American Citizens League - Leading Youth Forward Camp and to fully participate in the activities thereof. I consent to have pictures and/or video taken during TACL-LYF Camp of the above-named participant to be printed or posted on the internet for advertising, distribution, or other camp-related purposes. In order that the above-named participant may receive necessary medical treatment in the event of injury or illness, I understand that an effort will be made to contact me immediately and hereby authorize any adult person, being an officer, staff member or volunteer of the TACL-LYF Camp, to treat or diagnose the above-named participant. As the parent or legal guardian of the above-named participant, I am responsible for the health care decision of such participant and am authorized to consent to the services to be rendered. I agree to pay for the care of the above-named participant and represent that my consent and agreement are legal and that no consent from any other person is required by law. I hereby release and agree to hold harmless TACL, the TACL-LYF Camp, <%= @camp.campsite %>, and each of its officers, directors, employees, staff members, and volunteers from any and all liability arising out of personal injury, property damage or loss, or wrongful death resulting from: (i) the exercise of the authority granted herein, (ii) the above-named participant's participation in the TACL-LYF Camp, and (iii) the negligence, both persuasive and active, or other acts, by any of the releasees. I hereby waive, discharge, and relinquish any action or causes of action which may hereafter arise out of such liability, whether known or unknown. I also consent to the immediate expulsion of the above-named participant from the TACL-LYF Camp for unauthorized excursions outside of the <%= @camp.campsite %> campground.</small></p>
+      <p><small>I, the undersigned, hereby grant permission for the above-named participant to attend the Taiwanese American Citizens League - Leading Youth Forward Camp and to fully participate in the activities thereof. I consent to have pictures and/or video taken during TACL-LYF Camp of the above-named participant to be printed or posted on the internet for advertising, distribution, or other camp-related purposes. In order that the above-named participant may receive necessary medical treatment in the event of injury or illness, I understand that an effort will be made to contact me immediately and hereby authorize any adult person, being an officer, staff member or volunteer of the TACL-LYF Camp, to treat or diagnose the above-named participant. As the parent or legal guardian of the above named participant, I am responsible for the health care decision of such participant and am authorized to consent to the services to be rendered. I agree to pay for the care of the above-named participant and represent that my consent and agreement are legal and that no consent from any other person is required by law. I hereby release and agree to hold harmless TACL, the TACL-LYF Camp, <%= @camp.campsite %> and United Camps Conferences and Retreats (UCCR), and each of its officers, directors, employees, staff members, and volunteers from any and all liability arising out of personal injury, property damage or loss, or wrongful death resulting from: (i) the exercise of the authority granted herein, (ii) the above-named participant’s participation in the TACL-LYF Camp, and (iii) the negligence, both persuasive and active, or other acts, by any of the releasees. I hereby waive, discharge, and relinquish any action or causes of action which may hereafter arise out of such liability, whether known or unknown. I also consent to the immediate expulsion of the above-named participant from the TACL-LYF Camp for unauthorized excursions outside of the <%= @camp.campsite %> campground.</small></p>
     </div>
   </div>
   <div class="row space-above-med">

@@ -6,11 +6,7 @@
       <%= @camp.camp_start_date.strftime("%B %-d, %Y") %> - <%= @camp.camp_end_date.strftime("%B %-d, %Y") %><br>
       <%= @camp.campsite %><br>
       <%= @camp.campsite_address %><br>
-      <%= link_to "Discounts & Financial Aid", "#financial_aid", "data-toggle" => "modal" %>
-    </p>
-    <p class="space-above-chasm">
-      <b><u>IMPORTANT:</u><br />
-      Please see our <%= link_to "updated COVID-19 registration policies", "#registration_policy", "data-toggle" => "modal" %></b>
+      <%= link_to "Registration Policy", "#registration_policy", "data-toggle" => "modal" %> | <%= link_to "Discounts & Financial Aid", "#financial_aid", "data-toggle" => "modal" %>
     </p>
     <!-- <% unless @camp.is_late_registration? %>
       <p class="vag space-above-chasm">
