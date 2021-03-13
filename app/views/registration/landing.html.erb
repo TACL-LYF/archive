@@ -20,6 +20,9 @@
       Late Registration<br>
       (<%= @camp.registration_late_date.strftime("%b %-d") %> - <%= @camp.registration_close_date.strftime("%b %-d, %Y") %>)
     </p> -->
+    <p class="space-above-chasm">
+      Registration for our in-person camp is now open! As camp approaches, if a physical camp is determined to be unsafe due to COVID-19, we will hold a virtual camp instead. Registration costs for a virtual camp will be adjusted, and registered campers will have the option to confirm or cancel their registration.
+    </p>
     <p class="vag space-above-chasm">
       <%= number_to_currency(@camp.registration_fee, precision: 0) %><br>
       General Registration<br>
