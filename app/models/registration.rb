@@ -38,7 +38,7 @@ class Registration < ApplicationRecord
   enum status: { active: 0, cancelled: 1, waitlist: 2 }
   enum shirt_size: Hash[SHIRT_SIZES.zip (0..SHIRT_SIZES.size)]
   enum group: ('A'..'Z').to_a.map!(&:to_sym)
-  enum camp_preference: { physical: 1, virtual: 2, both: 3}
+  enum camp_preference: { in_person: 1, virtual: 2, both: 3}
   #store :additional_shirts, accessors: SHIRT_SIZES
   #store :camper_involvement, accessors: CAMPER_ROLES
   store_accessor :additional_shirts, SHIRT_SIZES

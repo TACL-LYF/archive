@@ -3,11 +3,11 @@ LYF Camp <%= @camp.year %> Registration Confirmation
 Thank you for registering for LYF Camp <%= @camp.year %>!
 We have received your registration(s) for the camper(s) listed below.
 
-As camp approaches and the COVID-19 situation is amenable to holding a physical camp, we will invoice
+As camp approaches and the COVID-19 situation is amenable to holding an in-person camp, we will invoice
 registered campers for the cost of camp (minus applicable discounts). Payment information for credit or
 debit card will be collected then through a separate online form.
 
-If the situation is determined to be unsafe for a physical camp, we will hold a virtual camp instead.
+If the situation is determined to be unsafe for an in-person camp, we will hold a virtual camp instead.
 In the event we switch to a virtual camp, registration costs will be adjusted and registered campers
 will have the option to confirm or cancel their registration.
 
@@ -81,7 +81,7 @@ Shirt Size: <%= reg.shirt_size.titleize %>
 Email (Optional): <%= reg.camper.email %>
 Medical Conditions &amp; Medication: <%= reg.medical_conditions_and_medication %>
 Dietary Restrictions &amp; Allergies: <%= reg.diet_and_food_allergies %>
-Physical or Virtual Camp Preference: <%= reg.camp_preference.titleize %>
+In-Person or Virtual Camp Preference: <%= reg.camp_preference.titleize %>
 Additional Notes: <%= reg.additional_notes %>
 
 Waiver: I, the undersigned, hereby grant permission for the above-named participant to attend the Taiwanese American Citizens League - Leading Youth Forward Camp and to fully participate in the activities thereof. I consent to have pictures and/or video taken during TACL-LYF Camp of the above-named participant to be printed or posted on the internet for advertising, distribution, or other camp-related purposes. In order that the above-named participant may receive necessary medical treatment in the event of injury or illness, I understand that an effort will be made to contact me immediately and hereby authorize any adult person, being an officer, staff member or volunteer of the TACL-LYF Camp, to treat or diagnose the above-named participant. As the parent or legal guardian of the above-named participant, I am responsible for the health care decision of such participant and am authorized to consent to the services to be rendered. I agree to pay for the care of the above-named participant and represent that my consent and agreement are legal and that no consent from any other person is required by law. I hereby release and agree to hold harmless TACL, the TACL-LYF Camp, <%= @camp.campsite %>, and each of its officers, directors, employees, staff members, and volunteers from any and all liability arising out of personal injury, property damage or loss, or wrongful death resulting from: (i) the exercise of the authority granted herein, (ii) the above-named participant's participation in the TACL-LYF Camp, and (iii) the negligence, both persuasive and active, or other acts, by any of the releasees. I hereby waive, discharge, and relinquish any action or causes of action which may hereafter arise out of such liability, whether known or unknown. I also consent to the immediate expulsion of the above-named participant from the TACL-LYF Camp for unauthorized excursions outside of the <%= @camp.campsite %> campground.
