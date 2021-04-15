@@ -17,11 +17,6 @@
   },
   "formation": {
   },
-  "addons": [
-    {
-      "plan": "sendgrid:starter"
-    }
-  ],
   "buildpacks": [
     {
       "url": "heroku/ruby"
