@@ -66,6 +66,7 @@ ActiveAdmin.register Registration do
           tag_row :status
           row :camper
           row :preregistration
+          row :camp_preference
           row :grade
           row :shirt_size
           row('Additional Shirts') {|r| r.list_additional_shirts}
@@ -95,6 +96,7 @@ ActiveAdmin.register Registration do
           input :camp
           input :camper
           input :preregistration
+          input :camp_preference
           input :grade
           input :shirt_size
           input :additional_shirts, as: :text, input_html: { rows: 1 }
@@ -121,19 +123,22 @@ ActiveAdmin.register Registration do
     column('Registered') {|r| r.created_at.to_s}
     column :first_name
     column :last_name
+    column :camper_email
     column('Parent') {|r| r.camper.family.primary_parent}
     column('Parent Email') {|r| r.camper.family.primary_parent_email}
     column('Parent Phone') {|r| r.camper.family.primary_parent_phone_number}
+    column('Secondary Parent') {|r| r.camper.family.secondary_parent}
+    column('Secondary Parent Email') {|r| r.camper.family.secondary_parent_email}
+    column('Secondary Parent Phone') {|r| r.camper.family.secondary_parent_phone_number}
     column :gender
     column :grade
     column :group
     column :shirt_size
     column('Additional Shirts') {|r| r.list_additional_shirts}
+    column :camp_preference
     column :medical_conditions_and_medication
     column :diet_and_food_allergies
     column :additional_notes
-    column :jtasa_chapter
-    column(:camper_involvement) {|r| r.list_camper_involvement}
   end
 
   before_save do |reg|
