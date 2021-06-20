@@ -12,7 +12,8 @@ ActiveAdmin.register Registration do
 
   permit_params :camp_id, :grade, :shirt_size, :bus, :additional_notes,
     :preregistration, :jtasa_chapter, :status, :group, :camper_id,
-    :additional_shirts, :camper_involvement, :registration_payment_id
+    :additional_shirts, :camper_involvement, :registration_payment_id,
+    :camp_preference, :covid_vaccinated
 
   member_action :cancel, method: :put do
     resource.update_attributes!(status: :cancelled, admin_skip_validations: true)
@@ -42,7 +43,7 @@ ActiveAdmin.register Registration do
     column :gender
     column :shirt_size, :pretty_shirt_size
     column "Additional Shirts", :list_additional_shirts
-    column :camp_preference
+    column :covid_vaccinated
     column "Medical", :medical_conditions_and_medication
     column "Diet/Allergies", :diet_and_food_allergies
     column "Notes", :additional_notes, sortable: false
@@ -66,6 +67,7 @@ ActiveAdmin.register Registration do
           tag_row :status
           row :camper
           row :preregistration
+          row :covid_vaccinated
           row :camp_preference
           row :grade
           row :shirt_size
@@ -96,6 +98,7 @@ ActiveAdmin.register Registration do
           input :camp
           input :camper
           input :preregistration
+          input :covid_vaccinated
           input :camp_preference
           input :grade
           input :shirt_size
@@ -135,6 +138,7 @@ ActiveAdmin.register Registration do
     column :group
     column :shirt_size
     column('Additional Shirts') {|r| r.list_additional_shirts}
+    column :covid_vaccinated
     column :camp_preference
     column :medical_conditions_and_medication
     column :diet_and_food_allergies
