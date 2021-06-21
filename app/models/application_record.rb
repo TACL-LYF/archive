@@ -20,6 +20,6 @@ class ApplicationRecord < ActiveRecord::Base
     "November",
     "December"
   ]
-  CAMPER_BIRTH_YEARS_FOR_SELECT = ((Date.current.year-20)..(Date.current.year-5)).to_a.unshift(["Year", nil])
+  CAMPER_BIRTH_YEARS_FOR_SELECT = ((Date.current.year-20)..(Date.current.year-12)).to_a.unshift(["Year", nil])
   CURRENT_YEARS_FOR_SELECT = ((Date.current.year-5)..(Date.current.year+5)).to_a.unshift(["Year", nil])
 end

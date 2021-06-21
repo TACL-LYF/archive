@@ -11,7 +11,7 @@
       <%= f.label :grade, "Camper's Current Grade" %>
       <div class="row">
         <div class="col-md-4">
-          <%= f.select(:grade, (4..12).collect {|g| [g.ordinalize, g]}, {include_blank: true}, {class: "form-control"}) %>
+          <%= f.select(:grade, (5..12).collect {|g| [g.ordinalize, g]}, {include_blank: true}, {class: "form-control"}) %>
         </div>
       </div>
       <p class="help-block">Please enter the grade that your child will <b>complete</b> in Spring <%= @camp.year %>.</p>
@@ -20,7 +20,7 @@
       <%= f.label :grade_entering, "Camper's Grade Next Year" %>
       <div class="row">
         <div class="col-md-4">
-          <%= f.select(:grade_entering, (5..12).collect {|g| [g.ordinalize, g]}.push(["Graduated", 13]), {include_blank: true}, {class: "form-control"}) %>
+          <%= f.select(:grade_entering, (6..12).collect {|g| [g.ordinalize, g]}.push(["Graduated", 13]), {include_blank: true}, {class: "form-control"}) %>
         </div>
       </div>
       <p class="help-block">Please enter your child's grade for the <%= @camp.year %>-<%= @camp.year+1 %> school year.</p>
