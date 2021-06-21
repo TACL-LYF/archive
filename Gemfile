@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 ruby '~> 2.7.2'
 
-gem 'rails',                   '5.2.4.5'
+gem 'rails',                   '5.2.4.6'
 gem 'pg',                      '1.0.0'
 gem 'faker',                   '1.8.7'
 gem 'bootstrap-sass',          '3.4.1'
-gem 'puma',                    '>= 3.12.4'
+gem 'puma',                    '>= 5.3.1'
 gem 'sassc-rails'
 gem 'uglifier',                '4.1.8'
 gem 'coffee-rails',            '4.2.2'
