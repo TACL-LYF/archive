@@ -13,7 +13,7 @@ ActiveAdmin.register Registration do
   permit_params :camp_id, :grade, :shirt_size, :bus, :additional_notes,
     :preregistration, :jtasa_chapter, :status, :group, :camper_id,
     :additional_shirts, :camper_involvement, :registration_payment_id,
-    :camp_preference, :covid_vaccinated
+    :camp_preference, :covid_vaccinated, :internal_notes
 
   member_action :cancel, method: :put do
     resource.update_attributes!(status: :cancelled, admin_skip_validations: true)
@@ -35,8 +35,8 @@ ActiveAdmin.register Registration do
   index do
     selectable_column
     column "Registered", :created_at, sortable: :created_at
-    column(:group) { |r| best_in_place r, :group, as: :select, url: [:admin,r],
-      collection: Registration.groups.keys.map{|group| [group,group] } }
+    # column(:group) { |r| best_in_place r, :group, as: :select, url: [:admin,r],
+    #   collection: Registration.groups.keys.map{|group| [group,group] } }
     column :camper, sortable: 'campers.first_name'
     column "Parent", :family, sortable: :primary_parent
     column :grade
@@ -48,6 +48,7 @@ ActiveAdmin.register Registration do
     column "Diet/Allergies", :diet_and_food_allergies
     column "Notes", :additional_notes, sortable: false
     tag_column :status
+    column :internal_notes
     actions dropdown: true
   end
 
@@ -82,7 +83,9 @@ ActiveAdmin.register Registration do
       column do
         attributes_table do
           row :group
+          row :camp_family
           row :cabin
+          row :internal_notes
         end
       end
     end
@@ -115,6 +118,7 @@ ActiveAdmin.register Registration do
           input :group
           input :camp_family
           input :cabin
+          input :internal_notes
         end
       end
     end
