@@ -1,15 +1,17 @@
 class RegistrationPaymentsController < ApplicationController
   def show
     @reg_payment = RegistrationPayment.find_by_payment_token(params[:payment_token])
+    @camp = @reg_payment.registrations.first.camp
   end
 
   def update
-    @reg_payment = RegistrationPayment.find_by_payment_token(process_params[:payment_token])
-    @reg_payment.stripe_token = process_params[:stripe_token]
+    @reg_payment = RegistrationPayment.find_by_payment_token(regpayment_params[:payment_token])
+    @reg_payment.payment_type = :card
+    @reg_payment.stripe_token = regpayment_params[:stripe_token]
     begin
-      if @reg_payment.save
+      if @reg_payment.save!
         RegistrationPaymentMailer.prereg_confirmation(@reg_payment).deliver_now
-        flash[:info] = "You have successfully pre-registered!"
+        flash[:info] = "Your payment has been completed!"
         redirect_to registration_payment_path
       else
         render 'show'
@@ -25,7 +27,7 @@ class RegistrationPaymentsController < ApplicationController
   end
 
   private
-    def process_params
-      params.permit(:payment_token, :stripe_token)
+    def regpayment_params
+      params.permit(:utf8, :_method, :authenticity_token, :payment_token, :stripe_token)
     end
 end

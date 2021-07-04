@@ -1,12 +1,12 @@
 <%= form_for @reg_payment, url: {action: :update}, validate: true, html: {id: "registration_payment_form"} do |f| %>
-  <div class="row space-above-chasm">
-    <div class="col-mod-12">
-      <%= render 'shared/error_messages', object: f.object %>
-    </div>
+<div class="row space-above-chasm">
+  <div class="col-mod-12">
+    <%= render 'shared/error_messages', object: f.object %>
   </div>
+</div>
 <div class="row">
   <div class="col-md-12">
-    <p>Thank you for pre-registering for LYF Camp 2020!<% unless @reg_payment.paid %> At Closing Ceremony, you informed us that you wanted to pre-register the following <%= "camper".pluralize(@reg_payment.registrations.count) %>.<% unless @reg_payment.additional_donation.blank? %> You also pledged an additional donation of <b><%= number_to_currency @reg_payment.additional_donation %></b> - thank you so much for your continued support!<% end %><% end %> Here is a breakdown of your payment:</p>
+    <p>Thank you for registering for LYF Camp <%= @camp.year %>!<% unless @reg_payment.paid %><% unless @reg_payment.additional_donation.blank? %> In addition to registering the following <%= "camper".pluralize(@reg_payment.registrations.count) %>, you also pledged an additional donation of <b><%= number_to_currency @reg_payment.additional_donation %></b> - thank you so much for your continued support!<% end %><% end %> Here is a breakdown of your payment:</p>
   </div>
 </div>
 <div class="row space-above-med">
@@ -15,7 +15,7 @@
     <table class="table table-condensed">
       <% @reg_payment.registrations.each do |r| %>
         <tr>
-          <th colspan=2>Preregistration - <%= r.camper.full_name %><% unless r.camper.registrations.count > 1 %> (New Camper)<% end %></th>
+          <th colspan=2>Registration - <%= r.camper.full_name %></th>
           <th class="text-right"><%= number_to_currency @reg_payment.breakdown["registration_fee"] %></th>
         </tr>
       <% end %>
@@ -49,10 +49,11 @@
     <p>We have received your payment and sent a confirmation to <b><%= @reg_payment.registrations.first.camper.family.primary_parent_email %></b><% unless @reg_payment.registrations.first.camper.family.secondary_parent_email.blank? %> and CCed it to <b><%= @reg_payment.registrations.first.camper.family.secondary_parent_email %></b><% end %> (please check your spam folder or any Updates or Promotions tabs in your inbox). If you would like us to resend it, or you have any questions or concerns about your registration, please email us at <b>lyf@tacl.org</b>.
     </p>
     <% else %>
-    <p>To confirm your pre-registration and secure your spot, please pay using the form below by <b>Sunday, July 28th</b>. If we do not receive your payment by then, you will still be able to register when General Registration opens at the end of the year, but you will no longer be eligible for the pre-registration rate.</p>
-    <p>Once you have submitted the form, a confirmation email will be sent to <b><%= @reg_payment.registrations.first.camper.family.primary_parent_email%></b><% unless @reg_payment.registrations.first.camper.family.secondary_parent_email.blank? %> and CCed to <b><%= @reg_payment.registrations.first.camper.family.secondary_parent_email %></b><% end %>.</p>
+    <p>To confirm your registration and secure your spot, please pay using the form below by <b>Saturday, July 24th</b>. If we do not receive your payment by then, your registration will be cancelled.</p>
+    <p>Once you have submitted the payment form, a confirmation email will be sent to <b><%= @reg_payment.registrations.first.camper.family.primary_parent_email%></b><% unless @reg_payment.registrations.first.camper.family.secondary_parent_email.blank? %> and CCed to <b><%= @reg_payment.registrations.first.camper.family.secondary_parent_email %></b><% end %>.</p>
     <p>If you have any questions or concerns, please email us at <b>lyf@tacl.org</b>.</p>
     <% end %>
+    <p>We are requiring all campers to be vaccinated for this year's camp. Please email photo proof of each camper's vaccination status to <b>lyf@tacl.org</b> by <b>Saturday, July 24th</b>.</p>
   </div>
 </div>
 <% unless @reg_payment.paid %>
@@ -81,6 +82,6 @@
 <% end %>
 <div class="row space-above-massive">
   <div class="col-md-12">
-    <p><small><u>Registration Cancellation Policy</u>: Cancellations made before February 1st, 2020 will receive a full refund. Cancellations made from February 1st - March 31st, 2020 will receive a 50% refund. There will be no refunds for cancellations made on or after April 1st, 2020. However, for any cancellation that does not receive a full refund, the remaining amount may be applied to a future year's camp registration fee for that camper or any sibling of that camper. To cancel your registration, please send an email with your name and your camper's name to <b>lyf@tacl.org</b>.</small></p>
+    <p><small><u>Registration Cancellation Policy</u>: In this time of uncertainty, we want parents to feel flexible and comfortable with their decision to send kids to camp. This year, we will have a no-worry cancellation policy. Cancellations can be made up until camp. If you have already paid for registration and would like to cancel, we will apply 2021 registration fees to 2022 camp by default, and will issue refunds upon request. To cancel your registration, please send an email with your name and your camper's name to <b>lyf@tacl.org</b>.</small></p>
   </div>
 </div>

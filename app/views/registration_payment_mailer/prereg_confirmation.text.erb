@@ -1,10 +1,11 @@
-LYF Camp <%= @camp.year %> Registration Confirmation
+LYF Camp <%= @camp.year %> Registration Payment Confirmation
 
-Thank you for pre-registering for LYF Camp <%= @camp.year %>! We have received your payment for the following <%= "camper".pluralize(@registrations.count) %>:
+Thank you for registering for LYF Camp <%= @camp.year %>!
+We have received your payment for the following <%= "camper".pluralize(@registrations.count) %>:
 
 ============================================================
 <% @registrations.each do |r| %>
-Preregistration - <%= r.camper.full_name %><% unless r.camper.registrations.count > 1 %> (New Camper)<% end %>: <%= number_to_currency @breakdown["registration_fee"] %>
+Registration - <%= r.camper.full_name %>: <%= number_to_currency @breakdown["registration_fee"] %>
 <% end %>
 <% if @breakdown["discount"] %>
 ------------------------------------------------------------
@@ -21,13 +22,21 @@ Total: <%= number_to_currency @breakdown["total"] %>
 Payment Method: <%= @payment_method %>
 ============================================================
 
-We will be contacting you early next year to double check your campers' registration information with you and make note of any updates. We expect to have the 2020 camp dates finalized by December of this year, but it will most likely be around the 3rd week of June. Please keep an eye on your email for updates from us.
+We are requiring all campers to be vaccinated for this year's camp.
+Please email photo proof of each camper's vaccination status to lyf@tacl.org
+by Saturday, July 24th.
 
 We look forward to seeing you at camp!
 
 ============================================================
 
-Registration Cancellation Policy: Cancellations made before February 1st, 2020 will receive a full refund. Cancellations made from February 1st - March 31st, 2020 will receive a 50% refund. There will be no refunds for cancellations made on or after April 1st, 2020. However, for any cancellation that does not receive a full refund, the remaining amount may be applied towards a future year's camp registration fee for that camper or any sibling of that camper. To cancel your registration, please send an email with your name and your camper's name to lyf@tacl.org.
+Registration Cancellation Policy: In this time of uncertainty, we want parents
+to feel flexible and comfortable with their decision to send kids to camp. This
+year, we will have a no-worry cancellation policy. Cancellations can be made up
+until camp. If you have already paid for registration and would like to cancel,
+we will apply 2021 registration fees to 2022 camp by default, and will issue
+refunds upon request. To cancel your registration, please send an email with
+your name and your camper's name to lyf@tacl.org.
 
 ============================================================
 
