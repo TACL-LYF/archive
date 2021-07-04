@@ -9,7 +9,7 @@ class RegistrationPaymentMailerPreview < ActionMailer::Preview
   end
 
   def prereg_confirmation
-    reg_payment = RegistrationPayment.last
+    reg_payment = RegistrationPayment.find(241)
     RegistrationPaymentMailer.prereg_confirmation(reg_payment)
   end
 end

@@ -2,6 +2,7 @@ class RegistrationPaymentsController < ApplicationController
   def show
     @reg_payment = RegistrationPayment.find_by_payment_token(params[:payment_token])
     @camp = @reg_payment.registrations.first.camp
+    @breakdown = @reg_payment.breakdown
   end
 
   def update

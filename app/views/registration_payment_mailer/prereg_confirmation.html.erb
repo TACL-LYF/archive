@@ -5,17 +5,16 @@
 </p>
 
 <table cellpadding="5" cellspacing="0" style="width: 100%; text-align: left; border: none; margin-top: 1.5rem;">
-  <% @registrations.each do |r| %>
+  <% @breakdown["campers"].each do |camper| %>
     <tr>
       <th colspan=2 style="border-top: 1px solid #ccc;">
-        Registration - <%= r.camper.full_name %>
+        Camper Registration - <%= camper["name"] %>
       </th>
       <th style="text-align: right; border-top: 1px solid #ccc;">
         <%= number_to_currency @breakdown["registration_fee"] %>
       </th>
     </tr>
-  <% end %>
-  <% if @breakdown["discount"] %>
+    <% if @breakdown.key?("discount") %>
     <tr>
       <td colspan=2 style="padding-left: 20px;">
         <%= @breakdown["discount"]["description"] %>
@@ -24,6 +23,26 @@
         - <%= number_to_currency @breakdown["discount"]["amount"] %>
       </td>
     </tr>
+    <% elsif camper.key?("sibling_discount") %>
+    <tr>
+      <td colspan=2 style="padding-left: 20px;">
+        Sibling Discount
+      </td>
+      <td style="text-align: right;">
+        - <%= number_to_currency camper["sibling_discount"] %>
+      </td>
+    </tr>
+    <% end %>
+    <% if camper["extra_shirts_total"].to_i > 0 %>
+    <tr>
+      <td colspan=2 style="padding-left: 20px;">
+        <%= "Extra Shirts (#{number_to_currency @breakdown["shirt_price"]} each) - #{camper["extra_shirts"]}" %>
+      </td>
+      <td style="text-align: right;">
+        <%= number_to_currency camper["extra_shirts_total"] %>
+      </td>
+    </tr>
+    <% end %>
   <% end %>
   <% if @breakdown["additional_donation"] %>
     <tr>
@@ -36,11 +55,8 @@
     </tr>
   <% end %>
   <tr>
-    <th style="border-top: 1px solid #ccc;">
-      Payment Method: <%= @payment_method %>
-    </th>
-    <th style="text-align: right; border-top: 1px solid #ccc;">
-      Total:
+    <th colspan="2" style="text-align: right; border-top: 1px solid #ccc;">
+      Expected Total:
     </th>
     <th style="text-align: right; border-top: 1px solid #ccc;">
       <%= number_to_currency @breakdown["total"] %>

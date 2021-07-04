@@ -4,22 +4,23 @@ Thank you for registering for LYF Camp <%= @camp.year %>!
 We have received your payment for the following <%= "camper".pluralize(@registrations.count) %>:
 
 ============================================================
-<% @registrations.each do |r| %>
-Registration - <%= r.camper.full_name %>: <%= number_to_currency @breakdown["registration_fee"] %>
+<% @breakdown["campers"].each do |camper| %>
+Camper Registration - <%= camper["name"] %>: <%= number_to_currency @breakdown["registration_fee"] %>
+<% if @breakdown.key?("discount") %>
+    <%= @breakdown["discount"]["description"] %>: - <%= number_to_currency @breakdown["discount"]["amount"] %>
+<% elsif camper.key?("sibling_discount") %>
+    Sibling Discount: - <%= number_to_currency camper["sibling_discount"] %>
 <% end %>
-<% if @breakdown["discount"] %>
-------------------------------------------------------------
-<%= @breakdown["discount"]["description"] %>: - <%= number_to_currency @breakdown["discount"]["amount"] %>
+<% if camper["extra_shirts_total"].to_i > 0 %>
+    <%= "Extra Shirts (#{number_to_currency @breakdown["shirt_price"]} each) - #{camper["extra_shirts"]}" %>: <%= number_to_currency camper["extra_shirts_total"] %>
+<% end %>
 ------------------------------------------------------------
 <% end %>
 <% if @breakdown["additional_donation"] %>
-------------------------------------------------------------
 Additional Donation: <%= number_to_currency @breakdown["additional_donation"] %>
 ------------------------------------------------------------
 <% end %>
 Total: <%= number_to_currency @breakdown["total"] %>
-============================================================
-Payment Method: <%= @payment_method %>
 ============================================================
 
 We are requiring all campers to be vaccinated for this year's camp.
