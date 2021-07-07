@@ -43,6 +43,8 @@ class Camp < ApplicationRecord
     "#{year}: #{name}"
   end
 
+  alias_method :display_name, :to_s
+
   def is_late_registration?
     Time.zone.today > registration_late_date
   end

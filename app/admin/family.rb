@@ -76,8 +76,9 @@ ActiveAdmin.register Family do
             column :birthdate
             column :gender
             column "Registrations" do |c|
-              c.registrations.map{ |r| link_to r.camp.year, admin_registration_path(r) }
-                .join(", ").chomp(", ").html_safe
+              c.registrations.map{ |r|
+                link_to r.camp.year, admin_registration_path(r), class: "reg_#{r.status}"
+              }.join(", ").chomp(", ").html_safe
             end
             column :status
           end

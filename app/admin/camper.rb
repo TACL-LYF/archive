@@ -56,9 +56,10 @@ ActiveAdmin.register Camper do
     column :gender
     column :email
     column :family
-    column "Registrations" do |c|
-      c.registrations.map{|r| link_to r.camp.year, admin_registration_path(r)}
-        .join(", ").chomp(", ").html_safe
+    column :registrations do |c|
+      c.registrations.map{ |r|
+        link_to r.camp.year, admin_registration_path(r), class: "reg_#{r.status}"
+      }.join(", ").chomp(", ").html_safe
     end
     tag_column :status
     actions
@@ -97,6 +98,7 @@ ActiveAdmin.register Camper do
     panel "Registrations" do
       table_for camper.registrations do
         column :camp
+        tag_column :status
         column :grade
         column :shirt_size
         column :bus

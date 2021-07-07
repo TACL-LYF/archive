@@ -22,3 +22,10 @@
   &.waitlist { background: #f0ad4e; }
   &.cancelled { background: #d9534f; }
 }
+
+a.reg_cancelled {
+  text-decoration: underline line-through;
+}
+a.reg_cancelled:hover {
+  text-decoration: line-through;
+}

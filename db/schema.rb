@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_022755) do
+ActiveRecord::Schema.define(version: 2021_07_06_205710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 2021_06_22_022755) do
     t.boolean "covid_vaccinated", default: false
     t.text "internal_notes"
     t.index ["additional_shirts"], name: "index_registrations_on_additional_shirts", using: :gin
-    t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id", unique: true
+    t.index ["camp_id", "camper_id"], name: "index_registrations_on_camp_id_and_camper_id"
     t.index ["camp_id"], name: "index_registrations_on_camp_id"
     t.index ["camper_id"], name: "index_registrations_on_camper_id"
     t.index ["camper_involvement"], name: "index_registrations_on_camper_involvement", using: :gin
