@@ -21,7 +21,7 @@ class RegistrationPaymentMailer < ApplicationMailer
     mail to: @family.primary_parent_email,
          cc: @family.secondary_parent_email,
          bcc: "lyf.treasurer@tacl.org",
-         subject: "LYF Camp #{@camp.year} Pre-Registration Confirmation"
+         subject: "LYF Camp #{@camp.year} Registration Payment Confirmation"
   end
 
   def registration_confirmation(reg_payment)
